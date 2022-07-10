@@ -79,8 +79,8 @@ func newLog(storage Storage) *RaftLog {
 	}
 	return &RaftLog{
 		storage:         storage,
-		committed:       firstIndex, // FIXME
-		applied:         firstIndex, // FIXME
+		committed:       firstIndex - 1, // FIXME
+		applied:         firstIndex - 1, // FIXME
 		stabled:         lastIndex,
 		entries:         entries,
 		pendingSnapshot: nil,
@@ -105,6 +105,7 @@ func (l *RaftLog) unstableEntries() []pb.Entry {
 // nextEnts returns all the committed but not applied entries
 func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 	// Your Code Here (2A).
+	//log.Infof("ents:%v, first:%d, applied:%d, committed:%d", l.entries, l.first, l.applied, l.committed)
 	return l.entries[l.applied-l.first+1 : l.committed-l.first+1]
 }
 

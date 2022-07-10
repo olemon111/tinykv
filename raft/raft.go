@@ -429,7 +429,8 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 		log.Infof("%d handle append entries from %d, ents:%v, r.ents:%v", r.id, m.From, m.Entries, r.RaftLog.entries)
 	}
 	prevLogTerm, err := r.RaftLog.Term(m.Index)
-	if err != nil || prevLogTerm != m.LogTerm { // does not contain an entry with same index and term, send reject response
+	// skip prevLogIndex == 0 && prevLogTerm == 0, which means entries empty, should not reject
+	if m.Index != 0 && (err != nil || prevLogTerm != m.LogTerm) { // does not contain an entry with same index and term, send reject response
 		r.sendMsg(pb.Message{
 			MsgType: pb.MessageType_MsgAppendResponse,
 			To:      m.From,
@@ -441,6 +442,7 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 			//Commit:               r.RaftLog.committed,
 			Reject: true,
 		})
+		return
 	}
 	r.becomeFollower(m.Term, m.From)
 	// reset election timer // FIXME: not sure if necessary
