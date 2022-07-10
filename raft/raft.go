@@ -200,8 +200,8 @@ func newRaft(c *Config) *Raft {
 		electionElapsed:  0,
 		//leadTransferee:   0, // TODO:
 		//PendingConfIndex: 0, // TODO:
-		debug: true,
-		//debug: false,
+		//debug: true,
+		debug: false,
 	}
 }
 
@@ -683,6 +683,7 @@ func (r *Raft) handlePropose(m pb.Message) error {
 		}
 		r.appendEntries(entries)
 		r.updateCommitted()
+		return nil
 	}
 	return ErrProposalDropped
 }
