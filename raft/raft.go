@@ -329,22 +329,18 @@ func (r *Raft) becomeLeader() {
 	r.State = StateLeader
 	r.Vote = r.id
 	r.resetVotes()
-	//index := uint64(0)
-	//if len(r.RaftLog.entries) > 0 {
+	// init Progress of peers
+	for _, p := range r.Prs {
+		p.Match = r.RaftLog.LastIndex()
+		p.Next = p.Match + 1
+	}
+	// commit noop entry
 	index := r.RaftLog.LastIndex() + 1
-	//}
-	//r.appendEntry(pb.Entry{
-	//	EntryType: pb.EntryType_EntryNormal,
-	//	Term:      r.Term,
-	//	Index:     index,
-	//	Data:      nil, // noop entry
-	//})
 	entries := []*pb.Entry{
 		&pb.Entry{
 			EntryType: pb.EntryType_EntryNormal,
 			Term:      r.Term,
 			Index:     index,
-			Data:      nil, // noop entry
 		},
 	}
 	err := r.Step(pb.Message{
@@ -358,7 +354,6 @@ func (r *Raft) becomeLeader() {
 		return
 	}
 	r.broadcastAppend()
-	//r.broadcastHeartbeat() // FIXME
 }
 
 // Step the entrance of handle message, see `MessageType`
@@ -469,6 +464,9 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	}
 	// update committed
 	if m.Commit > r.RaftLog.committed {
+		//if r.debug {
+		//	log.Infof("%d follower update m.committed:%v, r.last:%v", r.id, m.Commit, r.RaftLog.LastIndex())
+		//}
 		r.RaftLog.setCommitted(min(m.Commit, r.RaftLog.LastIndex()))
 	}
 	// respond to leader
@@ -729,7 +727,10 @@ func (r *Raft) updateCommitted() {
 		}
 		if 2*cnt > len(r.Prs) { // beyond half committed
 			r.RaftLog.setCommitted(i)
-			// FIXME: maybe more action?
+			//if r.debug {
+			//	log.Infof("%d leader update r.committed:%v, r.last:%v", r.id, r.RaftLog.committed, r.RaftLog.LastIndex())
+			//}
+			r.broadcastAppend() // for followers to update committed
 			break
 		}
 	}
