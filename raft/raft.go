@@ -200,8 +200,8 @@ func newRaft(c *Config) *Raft {
 		electionElapsed:  0,
 		//leadTransferee:   0, // TODO:
 		//PendingConfIndex: 0, // TODO:
-		//debug: true,
-		debug: false,
+		debug: true,
+		//debug: false,
 	}
 }
 
