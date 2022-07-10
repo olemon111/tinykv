@@ -65,14 +65,24 @@ func newLog(storage Storage) *RaftLog {
 	// TODO:
 	firstIndex, err := storage.FirstIndex()
 	if err != nil {
-		log.Panic(err)
+		log.Panicf("storage.firstIndex error: %v", err)
+	}
+	lastIndex, err := storage.LastIndex()
+	if err != nil {
+		log.Panicf("storage.lastIndex error: %v", err)
+	}
+	//log.Infof("first:%v, last:%v", firstIndex, lastIndex)
+	var entries []pb.Entry
+	if firstIndex <= lastIndex {
+		entries, _ = storage.Entries(firstIndex, lastIndex+1)
+		//log.Infof("first:%d, last:%d, ents:%v", firstIndex, lastIndex, entries)
 	}
 	return &RaftLog{
 		storage:         storage,
-		committed:       0,
-		applied:         0,
-		stabled:         0,
-		entries:         nil,
+		committed:       firstIndex, // FIXME
+		applied:         firstIndex, // FIXME
+		stabled:         lastIndex,
+		entries:         entries,
 		pendingSnapshot: nil,
 		first:           firstIndex,
 	}
@@ -88,13 +98,14 @@ func (l *RaftLog) maybeCompact() {
 // unstableEntries return all the unstable entries
 func (l *RaftLog) unstableEntries() []pb.Entry {
 	// Your Code Here (2A).
+	//log.Infof("unstable ents, ents:%v, stabled:%v, first:%v", l.entries, l.stabled, l.first)
 	return l.entries[l.stabled-l.first+1:]
 }
 
 // nextEnts returns all the committed but not applied entries
 func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 	// Your Code Here (2A).
-	return l.entries[l.applied-l.first+1 : l.committed-l.first]
+	return l.entries[l.applied-l.first+1 : l.committed-l.first+1]
 }
 
 // LastIndex return the last index of the log entries
@@ -102,9 +113,10 @@ func (l *RaftLog) LastIndex() uint64 {
 	// Your Code Here (2A).
 	length := len(l.entries)
 	if length > 0 {
+		//log.Infof("last ent:%v, lastIndex:%v", l.entries[length-1], l.entries[length-1].Index)
 		return l.entries[length-1].Index
 	}
-	return l.first // FIXME: not sure
+	return l.first - 1
 }
 
 // Term return the term of the entry in the given index
@@ -133,7 +145,7 @@ func (l *RaftLog) appendEntry(ent pb.Entry) bool {
 
 // delete entries after specific index (index included)
 func (l *RaftLog) deleteFollowingEntries(index uint64) error {
-	if index-l.first > uint64(len(l.entries)) {
+	if index-l.first >= uint64(len(l.entries)) {
 		err := errors.New("delete entries error")
 		return err
 	}
@@ -144,8 +156,16 @@ func (l *RaftLog) deleteFollowingEntries(index uint64) error {
 // get entries after specific index (index included)
 func (l *RaftLog) getFollowingEntries(index uint64) []*pb.Entry {
 	var res []*pb.Entry
-	for ; index < uint64(len(l.entries)); index++ {
-		res = append(res, &l.entries[index])
+	for ; index-l.first < uint64(len(l.entries)); index++ {
+		res = append(res, &l.entries[index-l.first])
 	}
 	return res
+}
+
+func (l *RaftLog) setCommitted(i uint64) {
+	l.committed = i
+}
+
+func (l *RaftLog) setApplied(i uint64) {
+	l.applied = i
 }

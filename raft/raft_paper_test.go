@@ -27,6 +27,7 @@ package raft
 
 import (
 	"fmt"
+	"github.com/pingcap-incubator/tinykv/log"
 	"reflect"
 	"sort"
 	"testing"
@@ -488,6 +489,7 @@ func TestLeaderCommitPrecedingEntries2AB(t *testing.T) {
 		{{Term: 1, Index: 1}},
 	}
 	for i, tt := range tests {
+		println("round", i)
 		storage := NewMemoryStorage()
 		storage.Append(tt)
 		r := newTestRaft(1, []uint64{1, 2, 3}, 10, 1, storage)
@@ -502,6 +504,7 @@ func TestLeaderCommitPrecedingEntries2AB(t *testing.T) {
 
 		li := uint64(len(tt))
 		wents := append(tt, pb.Entry{Term: 3, Index: li + 1}, pb.Entry{Term: 3, Index: li + 2, Data: []byte("some data")})
+		log.Infof("%v", r.RaftLog.entries)
 		if g := r.RaftLog.nextEnts(); !reflect.DeepEqual(g, wents) {
 			t.Errorf("#%d: ents = %+v, want %+v", i, g, wents)
 		}

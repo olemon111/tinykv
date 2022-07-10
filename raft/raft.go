@@ -170,15 +170,7 @@ func newRaft(c *Config) *Raft {
 	}
 	// Your Code Here (2A).
 	// init raftLog
-	raftLog := &RaftLog{
-		storage:         c.Storage,
-		committed:       0,
-		applied:         0,
-		stabled:         0,
-		entries:         nil,
-		pendingSnapshot: nil,
-		first:           0,
-	}
+	raftLog := newLog(c.Storage)
 	// init peers
 	prs := make(map[uint64]*Progress)
 	for _, p := range c.peers {
@@ -217,23 +209,23 @@ func newRaft(c *Config) *Raft {
 // current commit index to the given peer. Returns true if a message was sent.
 func (r *Raft) sendAppend(to uint64) bool {
 	// Your Code Here (2A).
-	index := r.RaftLog.LastIndex()
-	logTerm, err := r.RaftLog.Term(index)
-	if err != nil {
-		return false
-	}
 	entries := r.RaftLog.getFollowingEntries(r.Prs[to].Next)
+	prevLogIndex := r.Prs[to].Match
+	prevLogTerm, _ := r.RaftLog.Term(prevLogIndex)
 
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgAppend,
 		To:      to,
 		From:    r.id,
 		Term:    r.Term,
-		LogTerm: logTerm, // refers to prevLogTerm in paper
-		Index:   index,   // refers to prevLogIndex in paper
+		Index:   prevLogIndex, // refers to prevLogIndex in paper
+		LogTerm: prevLogTerm,  // refers to prevLogTerm in paper
 		Entries: entries,
 		Commit:  r.RaftLog.committed,
 	}
+	//if r.debug {
+	//	log.Infof("%d send append to %d, msg:%v", r.id, to, msg)
+	//}
 	r.sendMsg(msg)
 	return true
 }
@@ -337,16 +329,34 @@ func (r *Raft) becomeLeader() {
 	r.State = StateLeader
 	r.Vote = r.id
 	r.resetVotes()
-	index := uint64(0)
-	if len(r.RaftLog.entries) > 0 {
-		index = r.RaftLog.LastIndex() + 1
+	//index := uint64(0)
+	//if len(r.RaftLog.entries) > 0 {
+	index := r.RaftLog.LastIndex() + 1
+	//}
+	//r.appendEntry(pb.Entry{
+	//	EntryType: pb.EntryType_EntryNormal,
+	//	Term:      r.Term,
+	//	Index:     index,
+	//	Data:      nil, // noop entry
+	//})
+	entries := []*pb.Entry{
+		&pb.Entry{
+			EntryType: pb.EntryType_EntryNormal,
+			Term:      r.Term,
+			Index:     index,
+			Data:      nil, // noop entry
+		},
 	}
-	r.appendEntry(pb.Entry{
-		EntryType: pb.EntryType_EntryNormal,
-		Term:      r.Term,
-		Index:     index,
-		Data:      nil, // noop entry
+	err := r.Step(pb.Message{
+		MsgType: pb.MessageType_MsgPropose,
+		To:      r.id,
+		From:    r.id,
+
+		Entries: entries,
 	})
+	if err != nil {
+		return
+	}
 	r.broadcastAppend()
 	//r.broadcastHeartbeat() // FIXME
 }
@@ -356,7 +366,7 @@ func (r *Raft) becomeLeader() {
 func (r *Raft) Step(m pb.Message) error {
 	// Your Code Here (2A).
 	if r.debug {
-		log.Infof("\t\t%d step msg:%v", r.id, m)
+		log.Infof("\t\t%d step msg:%v, r.ents:%v", r.id, m, r.RaftLog.entries)
 	}
 	// check local message
 	if m.Term == 0 {
@@ -460,9 +470,20 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 		}
 	}
 	// update committed
-	if m.Commit > r.RaftLog.committed { // FIXME: not fully understand this rule in paper
-		r.RaftLog.committed = min(m.Commit, r.RaftLog.LastIndex())
+	if m.Commit > r.RaftLog.committed {
+		r.RaftLog.setCommitted(min(m.Commit, r.RaftLog.LastIndex()))
 	}
+	// respond to leader
+	index := r.RaftLog.LastIndex()
+	logTerm, _ := r.RaftLog.Term(index)
+	r.sendMsg(pb.Message{
+		MsgType: pb.MessageType_MsgAppendResponse,
+		To:      m.From,
+		From:    r.id,
+		Term:    r.Term,
+		LogTerm: logTerm,
+		Index:   index, // to update leader's match
+	})
 }
 
 // handleHeartbeat handle Heartbeat RPC request
@@ -510,21 +531,21 @@ func (r *Raft) broadcastHeartbeat() {
 
 func (r *Raft) sendRequestVote(to uint64) {
 	index := r.RaftLog.LastIndex()
-	logTerm, err := r.RaftLog.Term(index)
-	if err != nil {
-		return
-	}
+	logTerm, _ := r.RaftLog.Term(index)
+	//logTerm, err := r.RaftLog.Term(index)
+	//if err != nil {
+	//	return
+	//}
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgRequestVote,
 		To:      to,
 		From:    r.id,
 		Term:    r.Term,
-		LogTerm: logTerm,
-		Index:   index,
-		Commit:  r.RaftLog.committed,
+		LogTerm: logTerm, // lastLogTerm
+		Index:   index,   // lastLogIndex
 	}
 	if r.debug {
-		log.Infof("%d send req vote to %d, msg:%v", r.id, to, msg)
+		log.Infof("%d send req vote to %d, msg:%v, r.ents:%v", r.id, to, msg, r.RaftLog.entries)
 	}
 	r.sendMsg(msg)
 }
@@ -541,6 +562,9 @@ func (r *Raft) broadcastRequestVote() {
 }
 
 func (r *Raft) broadcastAppend() {
+	if r.debug {
+		log.Infof("%d broadcast append", r.id)
+	}
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendAppend(p)
@@ -594,6 +618,7 @@ func (r *Raft) appendEntries(ens []*pb.Entry) bool {
 	for _, en := range ens {
 		r.appendEntry(*en)
 	}
+	r.broadcastAppend()
 	return true
 }
 
@@ -648,16 +673,20 @@ func (r *Raft) handleBeat(m pb.Message) {
 
 func (r *Raft) handlePropose(m pb.Message) error {
 	if r.State == StateLeader {
+		if r.debug {
+			log.Infof("%d handle propose", r.id)
+		}
 		var entries []*pb.Entry
 		for _, en := range m.Entries {
 			entries = append(entries, &pb.Entry{
 				EntryType: en.EntryType,
 				Term:      r.Term,
-				Index:     r.RaftLog.LastIndex(),
+				Index:     r.RaftLog.LastIndex() + 1,
 				Data:      en.Data,
 			})
 		}
 		r.appendEntries(entries)
+		r.updateCommitted()
 	}
 	return ErrProposalDropped
 }
@@ -667,9 +696,12 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 		return
 	}
 	// update progress
+	if r.debug {
+		log.Infof("%d handle append resp from %d, index:%v", r.id, m.From, m.Index)
+	}
 	// TODO:
-	r.Prs[m.From].Match = m.Commit
-	r.Prs[m.From].Next = m.Commit + 1 // FIXME:
+	r.Prs[m.From].Match = m.Index
+	r.Prs[m.From].Next = m.Index + 1 // FIXME:
 
 	r.updateCommitted()
 }
@@ -684,6 +716,9 @@ func (r *Raft) updateCommitted() {
 	if r.RaftLog.committed == r.RaftLog.LastIndex() { // updated
 		return
 	}
+	// update self for count
+	r.Prs[r.id].Match = r.RaftLog.LastIndex()
+	r.Prs[r.id].Next = r.Prs[r.id].Match + 1
 	for i := r.RaftLog.LastIndex(); i > r.RaftLog.committed; i-- {
 		if t, _ := r.RaftLog.Term(i); t != r.Term { // only current term
 			break
@@ -695,7 +730,7 @@ func (r *Raft) updateCommitted() {
 			}
 		}
 		if 2*cnt > len(r.Prs) { // beyond half committed
-			r.RaftLog.committed = i
+			r.RaftLog.setCommitted(i)
 			// FIXME: maybe more action?
 			break
 		}
