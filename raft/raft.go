@@ -395,7 +395,7 @@ func (r *Raft) Step(m pb.Message) error {
 		return nil
 	}
 	if m.Term > r.Term {
-		r.becomeFollower(m.Term, m.From)
+		r.becomeFollower(m.Term, None)
 	}
 	// handle messages from peers
 	// now m.Term == r.Term
@@ -540,10 +540,7 @@ func (r *Raft) broadcastHeartbeat() {
 func (r *Raft) sendRequestVote(to uint64) {
 	index := r.RaftLog.LastIndex()
 	logTerm, _ := r.RaftLog.Term(index)
-	//logTerm, err := r.RaftLog.Term(index)
-	//if err != nil {
-	//	return
-	//}
+
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgRequestVote,
 		To:      to,
@@ -654,6 +651,7 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 		r.becomeLeader()
 		// clear votes for future campaign
 	}
+	// step down
 	if 2*rejectCnt > len(r.Prs) {
 		r.becomeFollower(r.Term, None)
 	}
