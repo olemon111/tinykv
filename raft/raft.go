@@ -200,8 +200,8 @@ func newRaft(c *Config) *Raft {
 		electionElapsed:  0,
 		//leadTransferee:   0, // TODO:
 		//PendingConfIndex: 0, // TODO:
-		//debug: true,
-		debug: false,
+		debug: true,
+		//debug: false,
 	}
 }
 
@@ -587,14 +587,14 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 	reject := true
 	if r.State == StateFollower && (r.Vote == None || r.Vote == m.From) {
 		lastIndex := r.RaftLog.LastIndex()
-		logTerm, _ := r.RaftLog.Term(lastIndex)
-		if m.Term > logTerm || (m.Term == logTerm && m.Index > lastIndex) { // at least up-to-date, vote
+		lastLogTerm, _ := r.RaftLog.Term(lastIndex)
+		if lastLogTerm < m.LogTerm || (lastLogTerm == m.LogTerm && lastIndex <= m.Index) { // at least up-to-date, vote
 			r.Vote = m.From
 			reject = false
 		}
 	}
 	if r.debug {
-		log.Infof("%d handle req vote from %d, reject:%v", r.id, m.From, reject)
+		log.Infof("%d handle req vote from %d, reject:%v, ents:%v, m.ents:%v", r.id, m.From, reject, r.RaftLog.entries, m.Entries)
 	}
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgRequestVoteResponse,
