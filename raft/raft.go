@@ -200,8 +200,8 @@ func newRaft(c *Config) *Raft {
 		electionElapsed:  0,
 		//leadTransferee:   0, // TODO:
 		//PendingConfIndex: 0, // TODO:
-		debug: true,
-		//debug: false,
+		//debug: true,
+		debug: false,
 	}
 }
 
@@ -436,11 +436,7 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 			To:      m.From,
 			From:    r.id,
 			Term:    r.Term,
-			// FIXME: not sure whether contains
-			//LogTerm:              ,
-			//Index:                0,
-			//Commit:               r.RaftLog.committed,
-			Reject: true,
+			Reject:  true,
 		})
 		return
 	}

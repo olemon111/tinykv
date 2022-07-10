@@ -146,12 +146,22 @@ func (l *RaftLog) appendEntry(ent pb.Entry) bool {
 
 // delete entries after specific index (index included)
 func (l *RaftLog) deleteFollowingEntries(index uint64) error {
+	//log.Infof("delete ents:%v, index:%d, first:%d", l.entries, index, l.first)
 	if index-l.first >= uint64(len(l.entries)) {
 		err := errors.New("delete entries error")
 		return err
 	}
 	l.entries = l.entries[:index-l.first] // TODO: not sure
+	// update
+	l.setStabled(min(l.stabled, l.LastIndex()))
+	l.setCommitted(min(l.committed, l.LastIndex()))
+	l.setApplied(min(l.committed, l.LastIndex()))
+	//log.Infof("after delete ents:%v, stabled:%v", l.entries, l.stabled)
 	return nil
+}
+
+func (l *RaftLog) setStabled(i uint64) {
+	l.stabled = i
 }
 
 // get entries after specific index (index included)
