@@ -184,10 +184,16 @@ func newRaft(c *Config) *Raft {
 		Next:  1,
 	}
 
+	hardState, _, err := c.Storage.InitialState() // FIXME: ConfState not used
+
+	if err != nil {
+		return nil
+	}
+
 	return &Raft{
 		id:               c.ID,
-		Term:             0,
-		Vote:             None,
+		Term:             hardState.Term,
+		Vote:             hardState.Vote,
 		RaftLog:          raftLog,
 		Prs:              prs,
 		State:            StateFollower,
@@ -436,8 +442,6 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 		return
 	}
 	r.becomeFollower(m.Term, m.From)
-	// reset election timer // FIXME: not sure if necessary
-	r.electionElapsed = 0
 	// check conflicts(same index but different terms)
 	startIndex := len(m.Entries)
 	for i, en := range m.Entries {
@@ -457,10 +461,8 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 		}
 	}
 	// append new entries
-	if startIndex < len(m.Entries) {
-		for ; startIndex < len(m.Entries); startIndex++ {
-			r.appendEntry(*m.Entries[startIndex])
-		}
+	for ; startIndex < len(m.Entries); startIndex++ {
+		r.appendEntry(*m.Entries[startIndex])
 	}
 	// update committed
 	if m.Commit > r.RaftLog.committed {
@@ -577,13 +579,16 @@ func (r *Raft) handleHup(m pb.Message) {
 		return
 	}
 	if r.debug {
-		log.Infof("%d handle hup", r.id)
+		log.Infof("%d handle hup, term:%v", r.id, r.Term)
 	}
 	r.becomeCandidate()
 	r.broadcastRequestVote()
 }
 
 func (r *Raft) handleRequestVote(m pb.Message) {
+	if r.debug {
+		log.Infof("%d handle req vote, r.vote:%d", r.id, r.Vote)
+	}
 	reject := true
 	if r.State == StateFollower && (r.Vote == None || r.Vote == m.From) {
 		lastIndex := r.RaftLog.LastIndex()
@@ -594,7 +599,7 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 		}
 	}
 	if r.debug {
-		log.Infof("%d handle req vote from %d, reject:%v, ents:%v, m.ents:%v", r.id, m.From, reject, r.RaftLog.entries, m.Entries)
+		log.Infof("%d handle req vote from %d, reject:%v, ents:%v, m.ents:%v, r.vote:%d", r.id, m.From, reject, r.RaftLog.entries, m.Entries, r.Vote)
 	}
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgRequestVoteResponse,
@@ -692,15 +697,20 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 	if r.State != StateLeader {
 		return
 	}
-	// update progress
-	if r.debug {
-		log.Infof("%d handle append resp from %d, index:%v", r.id, m.From, m.Index)
+	if m.Reject { // rejected by follower
+		// decrement nextIndex and retries to append entry
+		r.Prs[m.From].Next--
+		r.Prs[m.From].Match = min(r.Prs[m.From].Match, r.Prs[m.From].Next-1) // FIXME: not sure
+		r.sendAppend(m.From)
+	} else { // accepted by follower
+		// update progress
+		r.Prs[m.From].Match = m.Index
+		r.Prs[m.From].Next = m.Index + 1
+		r.updateCommitted()
 	}
-	// TODO:
-	r.Prs[m.From].Match = m.Index
-	r.Prs[m.From].Next = m.Index + 1 // FIXME:
-
-	r.updateCommitted()
+	if r.debug {
+		log.Infof("%d handle append resp from %d, index:%v, reject:%v", r.id, m.From, m.Index, m.Reject)
+	}
 }
 
 func (r *Raft) resetElectionTimer() {
