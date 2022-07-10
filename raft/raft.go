@@ -441,8 +441,12 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 		})
 		return
 	}
+	// now accept
 	r.becomeFollower(m.Term, m.From)
+	//may delete with prevLogIndex && prevLogTerm // FIXME: updated to test case
+	//_ = r.RaftLog.deleteFollowingEntries(m.Index + 1)
 	// check conflicts(same index but different terms)
+	lastMatch := m.Index // index of last matched entry
 	startIndex := len(m.Entries)
 	for i, en := range m.Entries {
 		term, err := r.RaftLog.Term(en.Index)
@@ -459,17 +463,23 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 			startIndex = i
 			break
 		}
+		lastMatch = en.Index
+	}
+	// delete redundant entries if exists
+	if startIndex >= 0 && startIndex < len(m.Entries) {
+		_ = r.RaftLog.deleteFollowingEntries(m.Entries[startIndex].Index + 1)
 	}
 	// append new entries
 	for ; startIndex < len(m.Entries); startIndex++ {
 		r.appendEntry(*m.Entries[startIndex])
+		lastMatch = m.Entries[startIndex].Index
 	}
 	// update committed
 	if m.Commit > r.RaftLog.committed {
-		//if r.debug {
-		//	log.Infof("%d follower update m.committed:%v, r.last:%v", r.id, m.Commit, r.RaftLog.LastIndex())
-		//}
-		r.RaftLog.setCommitted(min(m.Commit, r.RaftLog.LastIndex()))
+		if r.debug {
+			log.Infof("%d follower update m.committed:%v, r.lastIndex:%v, last:%d", r.id, m.Commit, r.RaftLog.LastIndex(), lastMatch)
+		}
+		r.RaftLog.setCommitted(min(m.Commit, min(r.RaftLog.LastIndex(), lastMatch)))
 	}
 	// respond to leader
 	index := r.RaftLog.LastIndex()
@@ -586,9 +596,6 @@ func (r *Raft) handleHup(m pb.Message) {
 }
 
 func (r *Raft) handleRequestVote(m pb.Message) {
-	if r.debug {
-		log.Infof("%d handle req vote, r.vote:%d", r.id, r.Vote)
-	}
 	reject := true
 	if r.State == StateFollower && (r.Vote == None || r.Vote == m.From) {
 		lastIndex := r.RaftLog.LastIndex()
