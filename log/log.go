@@ -140,6 +140,7 @@ type Logger struct {
 	_log         *log.Logger
 	level        LogLevel
 	highlighting bool
+	debug        bool // verified for debug
 }
 
 func (l *Logger) SetHighlighting(highlighting bool) {
@@ -191,12 +192,16 @@ func (l *Logger) Fatalf(format string, v ...interface{}) {
 	os.Exit(-1)
 }
 
-func (l *Logger) Panic(v ...interface{}) {
-	l._log.Panic(v...)
+func (l *Logger) Panic(v ...interface{}) { // verified for debug
+	if l.debug {
+		l._log.Panic(v...)
+	}
 }
 
-func (l *Logger) Panicf(format string, v ...interface{}) {
-	l._log.Panicf(format, v...)
+func (l *Logger) Panicf(format string, v ...interface{}) { // verified for debug
+	if l.debug {
+		l._log.Panicf(format, v...)
+	}
 }
 
 func (l *Logger) Error(v ...interface{}) {
@@ -223,12 +228,16 @@ func (l *Logger) Debugf(format string, v ...interface{}) {
 	l.logf(LOG_DEBUG, format, v...)
 }
 
-func (l *Logger) Info(v ...interface{}) {
-	l.log(LOG_INFO, v...)
+func (l *Logger) Info(v ...interface{}) { // verified for debug
+	if l.debug {
+		l.log(LOG_INFO, v...)
+	}
 }
 
-func (l *Logger) Infof(format string, v ...interface{}) {
-	l.logf(LOG_INFO, format, v...)
+func (l *Logger) Infof(format string, v ...interface{}) { // verified for debug
+	if l.debug {
+		l.logf(LOG_INFO, format, v...)
+	}
 }
 
 func StringToLogLevel(level string) LogLevel {
@@ -266,7 +275,9 @@ func LogTypeToString(t LogType) (string, string) {
 }
 
 func New() *Logger {
-	return NewLogger(os.Stderr, "")
+	logger := NewLogger(os.Stderr, "")
+	//logger.debug = true // verified for debug controlling
+	return logger
 }
 
 func NewLogger(w io.Writer, prefix string) *Logger {
