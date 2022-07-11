@@ -79,8 +79,8 @@ func newLog(storage Storage) *RaftLog {
 	}
 	return &RaftLog{
 		storage:         storage,
-		committed:       firstIndex - 1, // FIXME
-		applied:         firstIndex - 1, // FIXME
+		committed:       firstIndex - 1,
+		applied:         firstIndex - 1,
 		stabled:         lastIndex,
 		entries:         entries,
 		pendingSnapshot: nil,

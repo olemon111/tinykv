@@ -169,6 +169,7 @@ func newRaft(c *Config) *Raft {
 	// Your Code Here (2A).
 	// init raftLog
 	raftLog := newLog(c.Storage)
+	raftLog.applied = c.Applied // modify by config
 	// init peers
 	prs := make(map[uint64]*Progress)
 	for _, p := range c.peers {
