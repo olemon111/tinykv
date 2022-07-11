@@ -176,12 +176,8 @@ func newRaft(c *Config) *Raft {
 	for _, p := range c.peers {
 		prs[p] = &Progress{
 			Match: 0,
-			Next:  1,
+			Next:  raftLog.LastIndex() + 1,
 		}
-	}
-	prs[c.ID] = &Progress{
-		Match: 0,
-		Next:  1,
 	}
 
 	hardState, _, err := c.Storage.InitialState() // FIXME: ConfState not used
@@ -216,7 +212,7 @@ func newRaft(c *Config) *Raft {
 func (r *Raft) sendAppend(to uint64) bool {
 	// Your Code Here (2A).
 	entries := r.RaftLog.getFollowingEntries(r.Prs[to].Next)
-	prevLogIndex := r.Prs[to].Match
+	prevLogIndex := r.Prs[to].Next - 1 // index of log entry immediately preceding new ones
 	prevLogTerm, _ := r.RaftLog.Term(prevLogIndex)
 
 	msg := pb.Message{
@@ -336,17 +332,18 @@ func (r *Raft) becomeLeader() {
 	r.Vote = r.id
 	r.resetVotes()
 	// init Progress of peers
+	nextIndex := r.RaftLog.LastIndex() + 1
 	for _, p := range r.Prs {
-		p.Match = r.RaftLog.LastIndex()
-		p.Next = p.Match + 1
+		p.Match = 0
+		p.Next = nextIndex
 	}
+	r.Prs[r.id].Match = r.RaftLog.LastIndex()
 	// commit noop entry
-	index := r.RaftLog.LastIndex() + 1
 	entries := []*pb.Entry{
 		&pb.Entry{
 			EntryType: pb.EntryType_EntryNormal,
 			Term:      r.Term,
-			Index:     index,
+			Index:     nextIndex,
 		},
 	}
 	err := r.Step(pb.Message{
@@ -709,8 +706,8 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 		r.sendAppend(m.From)
 	} else { // accepted by follower
 		// update progress
-		r.Prs[m.From].Match = m.Index
-		r.Prs[m.From].Next = m.Index + 1
+		r.Prs[m.From].Match = max(r.Prs[m.From].Match, m.Index)
+		r.Prs[m.From].Next = max(r.Prs[m.From].Next, m.Index+1)
 		r.updateCommitted()
 	}
 	if r.debug {
@@ -731,6 +728,7 @@ func (r *Raft) updateCommitted() {
 	// update self for count
 	r.Prs[r.id].Match = r.RaftLog.LastIndex()
 	r.Prs[r.id].Next = r.Prs[r.id].Match + 1
+	// match count
 	for i := r.RaftLog.LastIndex(); i > r.RaftLog.committed; i-- {
 		if t, _ := r.RaftLog.Term(i); t != r.Term { // only current term
 			break
