@@ -205,9 +205,6 @@ func (rn *RawNode) Advance(rd Ready) {
 	rn.Raft.RaftLog.setApplied(rn.Raft.RaftLog.committed)
 	rn.Raft.RaftLog.setStabled(rn.Raft.RaftLog.LastIndex())
 	// update last Ready results
-	//curReady := rn.Ready()
-	//rn.lastSoftState = curReady.SoftState
-	//rn.lastHardState = curReady.HardState
 	rn.lastSoftState = &SoftState{
 		Lead:      rn.Raft.Lead,
 		RaftState: rn.Raft.State,

@@ -454,7 +454,9 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	// update committed
 	if m.Commit > r.RaftLog.committed {
 		log.Infof("%d follower update m.committed:%v, r.lastIndex:%v, last:%d", r.id, m.Commit, r.RaftLog.LastIndex(), lastMatch)
-		r.RaftLog.setCommitted(min(m.Commit, min(r.RaftLog.LastIndex(), lastMatch)))
+		if newCommitted := min(m.Commit, min(r.RaftLog.LastIndex(), lastMatch)); newCommitted > r.RaftLog.committed {
+			r.RaftLog.setCommitted(newCommitted)
+		}
 	}
 	// respond to leader
 	index := r.RaftLog.LastIndex()
