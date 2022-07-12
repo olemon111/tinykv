@@ -167,7 +167,7 @@ func newRaft(c *Config) *Raft {
 		panic(err.Error())
 	}
 	// Your Code Here (2A).
-	// init raftLog
+	// init raftLog with config
 	raftLog := newLog(c.Storage)
 	raftLog.applied = c.Applied // modify by config
 	// init peers
@@ -178,12 +178,12 @@ func newRaft(c *Config) *Raft {
 			Next:  raftLog.LastIndex() + 1,
 		}
 	}
-
+	// init with hardState
 	hardState, _, err := c.Storage.InitialState() // FIXME: ConfState not used
-
 	if err != nil {
 		return nil
 	}
+	raftLog.committed = hardState.Commit
 
 	return &Raft{
 		id:               c.ID,
@@ -335,7 +335,6 @@ func (r *Raft) becomeLeader() {
 		MsgType: pb.MessageType_MsgPropose,
 		To:      r.id,
 		From:    r.id,
-
 		Entries: entries,
 	})
 	if err != nil {
@@ -359,8 +358,8 @@ func (r *Raft) Step(m pb.Message) error {
 		case pb.MessageType_MsgPropose: // local message
 			return r.handlePropose(m)
 		}
+		return nil
 	}
-	// FIXME: update lastApplied
 	// check Term
 	if m.Term < r.Term {
 		if m.MsgType == pb.MessageType_MsgAppend {
@@ -550,7 +549,7 @@ func (r *Raft) sendMsg(m pb.Message) {
 }
 
 func (r *Raft) handleHup(m pb.Message) {
-	if r.State == StateLeader || m.From != r.id { // skip
+	if r.State == StateLeader && (m.From == 0 || m.From == r.id) {
 		return
 	}
 	log.Infof("%d handle hup, term:%v", r.id, r.Term)
@@ -634,14 +633,14 @@ func (r *Raft) handleHeartbeatResponse(m pb.Message) {
 }
 
 func (r *Raft) handleBeat(m pb.Message) {
-	if r.State == StateLeader {
+	if r.State == StateLeader && m.From == r.id {
 		r.broadcastHeartbeat()
 	}
 }
 
 func (r *Raft) handlePropose(m pb.Message) error {
 	if r.State == StateLeader {
-		log.Infof("%d handle propose", r.id)
+		log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
 		var entries []*pb.Entry
 		for _, en := range m.Entries {
 			entries = append(entries, &pb.Entry{
@@ -668,10 +667,13 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 		r.Prs[m.From].Match = min(r.Prs[m.From].Match, r.Prs[m.From].Next-1) // FIXME: not sure
 		r.sendAppend(m.From)
 	} else { // accepted by follower
+		term, _ := r.RaftLog.Term(m.Index)
 		// update progress
 		r.Prs[m.From].Match = max(r.Prs[m.From].Match, m.Index)
 		r.Prs[m.From].Next = max(r.Prs[m.From].Next, m.Index+1)
-		r.updateCommitted()
+		if term == r.Term {
+			r.updateCommitted()
+		}
 	}
 	log.Infof("%d handle append resp from %d, index:%v, reject:%v", r.id, m.From, m.Index, m.Reject)
 }

@@ -160,10 +160,6 @@ func (l *RaftLog) deleteFollowingEntries(index uint64) error {
 	return nil
 }
 
-func (l *RaftLog) setStabled(i uint64) {
-	l.stabled = i
-}
-
 // get entries after specific index (index included)
 func (l *RaftLog) getFollowingEntries(index uint64) []*pb.Entry {
 	var res []*pb.Entry
@@ -179,4 +175,8 @@ func (l *RaftLog) setCommitted(i uint64) {
 
 func (l *RaftLog) setApplied(i uint64) {
 	l.applied = i
+}
+
+func (l *RaftLog) setStabled(i uint64) {
+	l.stabled = i
 }
