@@ -2,6 +2,10 @@ package raftstore
 
 import (
 	"fmt"
+	"github.com/Connor1996/badger"
+	"github.com/pingcap-incubator/tinykv/kv/raftstore/meta"
+	"github.com/pingcap-incubator/tinykv/kv/util/engine_util"
+	pb "github.com/pingcap-incubator/tinykv/proto/pkg/eraftpb"
 	"time"
 
 	"github.com/Connor1996/badger/y"
@@ -38,11 +42,155 @@ func newPeerMsgHandler(peer *peer, ctx *GlobalContext) *peerMsgHandler {
 	}
 }
 
+func (d *peerMsgHandler) applyNormalEntry(entry *pb.Entry, kvWB *engine_util.WriteBatch) {
+	// unmarshal request
+	raftCmdRequest := &raft_cmdpb.RaftCmdRequest{}
+	err := raftCmdRequest.Unmarshal(entry.Data)
+	if err != nil {
+		log.Panicf("unmarshal raft command request error %v", err)
+		return
+	}
+	// handle requests
+	if len(raftCmdRequest.Requests) == 0 {
+		d.applyAdminRequest(raftCmdRequest.AdminRequest, entry)
+	} else {
+		d.applyNormalRequest(raftCmdRequest, entry, kvWB)
+	}
+}
+
+func (d *peerMsgHandler) applyAdminRequest(msg *raft_cmdpb.AdminRequest, entry *pb.Entry) { // TODO:
+
+}
+
+func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entry *pb.Entry, kvWB *engine_util.WriteBatch) {
+	resp := &raft_cmdpb.RaftCmdResponse{
+		Header: &raft_cmdpb.RaftResponseHeader{}, // FIXME: not sure if term needed
+	}
+	var txn *badger.Txn
+
+	for _, req := range msg.Requests {
+		switch req.GetCmdType() {
+		case raft_cmdpb.CmdType_Invalid:
+			log.Infof("invalid raft command")
+		case raft_cmdpb.CmdType_Get:
+			val, err := engine_util.GetCF(d.peerStorage.Engines.Kv, req.Get.Cf, req.Get.Key) // FIXME:
+			if err != nil {
+				return
+			}
+			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+				CmdType: raft_cmdpb.CmdType_Get,
+				Get: &raft_cmdpb.GetResponse{
+					Value: val,
+				},
+			})
+		case raft_cmdpb.CmdType_Put:
+			kvWB.SetCF(req.Put.Cf, req.Put.Key, req.Put.Value)
+			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+				CmdType: raft_cmdpb.CmdType_Put,
+				Put:     &raft_cmdpb.PutResponse{},
+			})
+		case raft_cmdpb.CmdType_Delete:
+			kvWB.DeleteCF(req.Delete.Cf, req.Delete.Key)
+			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+				CmdType: raft_cmdpb.CmdType_Delete,
+				Delete:  &raft_cmdpb.DeleteResponse{},
+			})
+		case raft_cmdpb.CmdType_Snap: // TODO:
+			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+				CmdType: raft_cmdpb.CmdType_Snap,
+				Snap: &raft_cmdpb.SnapResponse{
+					Region: d.Region(),
+				},
+			})
+			//resp.Responses = []*raft_cmdpb.Response{
+			//	{
+			//		CmdType: raft_cmdpb.CmdType_Snap,
+			//		Snap: &raft_cmdpb.SnapResponse{
+			//			Region: d.Region(),
+			//		},
+			//	},
+			//}
+			txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
+		}
+	}
+	// propose callback
+	for len(d.proposals) > 0 {
+		p := d.proposals[0]
+		if p.term > entry.Term || (p.term == entry.Term && p.index > entry.Index) { // no match
+			break
+		}
+		if p.term < entry.Term || (p.term == entry.Term && p.index < entry.Index) { // proposal stale
+			p.cb.Done(ErrRespStaleCommand(entry.Term))
+			d.proposals = d.proposals[1:]
+			continue
+		}
+		if p.index == entry.Index { // match
+			if txn != nil { // set for snapshot
+				p.cb.Txn = txn
+			}
+			p.cb.Done(resp)
+			d.proposals = d.proposals[1:] // done
+			break
+		}
+	}
+}
+
+func (d *peerMsgHandler) applyConfChangeEntry(entry *pb.Entry) {
+	// TODO:
+}
+
+func (d *peerMsgHandler) applyEntry(entry *pb.Entry, kvWB *engine_util.WriteBatch) {
+	switch entry.EntryType {
+	case pb.EntryType_EntryNormal:
+		d.applyNormalEntry(entry, kvWB)
+	case pb.EntryType_EntryConfChange:
+		d.applyConfChangeEntry(entry)
+	}
+}
+
 func (d *peerMsgHandler) HandleRaftReady() {
 	if d.stopped {
 		return
 	}
 	// Your Code Here (2B).
+	if !d.RaftGroup.HasReady() {
+		return
+	}
+	ready := d.RaftGroup.Ready()
+	// persist state
+	_, err := d.peerStorage.SaveReadyState(&ready)
+	//applySnapResult, err := d.peerStorage.SaveReadyState(&ready) // TODO:
+	if err != nil {
+		return
+	}
+	// send raft messages
+	for _, msg := range ready.Messages {
+		err := d.sendRaftMessage(msg, d.ctx.trans)
+		if err != nil {
+			return
+		}
+	}
+	// apply committed entries
+	kvWB := &engine_util.WriteBatch{}
+	for _, en := range ready.CommittedEntries {
+		d.applyEntry(&en, kvWB)
+		// update RaftApplyState
+		if en.Index > d.peerStorage.applyState.AppliedIndex { // FIXME: not sure
+			d.peerStorage.applyState.AppliedIndex = en.Index
+		}
+		if d.stopped { // FIXME: not understand
+			return
+		}
+	}
+	// save applyState to kvDB
+	err = kvWB.SetMeta(meta.ApplyStateKey(d.peerStorage.region.GetId()), d.peerStorage.applyState) // key: apply_state_key, value: raftApplyState
+	if err != nil {
+		log.Infof("set apply state failed: %v", err)
+		return
+	}
+	kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
+	// advance raft node
+	d.RaftGroup.Advance(ready)
 }
 
 func (d *peerMsgHandler) HandleMsg(msg message.Msg) {
@@ -114,6 +262,53 @@ func (d *peerMsgHandler) proposeRaftCommand(msg *raft_cmdpb.RaftCmdRequest, cb *
 		return
 	}
 	// Your Code Here (2B).
+	if msg.AdminRequest != nil {
+		d.proposeAdminCommand(msg, cb)
+	} else {
+		d.proposeNormalCommand(msg, cb)
+	}
+}
+
+func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
+	for len(msg.Requests) > 0 {
+		// check key in region
+		var key []byte
+		req := msg.Requests[0]
+
+		switch req.CmdType {
+		case raft_cmdpb.CmdType_Get:
+			key = req.GetGet().GetKey()
+		case raft_cmdpb.CmdType_Put:
+			key = req.GetPut().GetKey()
+		case raft_cmdpb.CmdType_Delete:
+			key = req.GetDelete().GetKey()
+		case raft_cmdpb.CmdType_Snap:
+		}
+		if req.CmdType != raft_cmdpb.CmdType_Snap {
+			err := util.CheckKeyInRegion(key, d.Region())
+			if err != nil {
+				cb.Done(ErrResp(err))
+			}
+		}
+	}
+	// propose
+	data, _ := msg.Marshal() // marshall request
+	err := d.RaftGroup.Propose(data)
+	if err != nil {
+		log.Infof("propose error %v", err)
+		cb.Done(ErrResp(err))
+		return
+	}
+	// append proposal to callback
+	d.proposals = append(d.proposals, &proposal{
+		index: d.nextProposalIndex(),
+		term:  d.Term(),
+		cb:    cb,
+	})
+}
+
+func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
+	// TODO:
 }
 
 func (d *peerMsgHandler) onTick() {

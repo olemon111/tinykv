@@ -170,18 +170,21 @@ func newRaft(c *Config) *Raft {
 	// init raftLog with config
 	raftLog := newLog(c.Storage)
 	raftLog.applied = c.Applied // modify by config
+	// init with hardState
+	hardState, confState, err := c.Storage.InitialState()
+	if err != nil {
+		return nil
+	}
 	// init peers
+	if c.peers == nil {
+		c.peers = confState.Nodes
+	}
 	prs := make(map[uint64]*Progress)
 	for _, p := range c.peers {
 		prs[p] = &Progress{
 			Match: 0,
 			Next:  raftLog.LastIndex() + 1,
 		}
-	}
-	// init with hardState
-	hardState, _, err := c.Storage.InitialState() // FIXME: ConfState not used
-	if err != nil {
-		return nil
 	}
 	raftLog.committed = hardState.Commit
 
