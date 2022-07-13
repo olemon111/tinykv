@@ -655,6 +655,9 @@ func (r *Raft) handleBeat(m pb.Message) {
 func (r *Raft) handlePropose(m pb.Message) error {
 	if r.State == StateLeader {
 		log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
+		if len(m.Entries) > 0 {
+			log.Infof("ent0.data:%v", m.Entries[0].Data)
+		}
 		var entries []*pb.Entry
 		for _, en := range m.Entries {
 			entries = append(entries, &pb.Entry{

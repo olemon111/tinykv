@@ -270,10 +270,10 @@ func (d *peerMsgHandler) proposeRaftCommand(msg *raft_cmdpb.RaftCmdRequest, cb *
 }
 
 func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
-	for len(msg.Requests) > 0 {
+	log.Infof("propose normal command %v, len:%v", msg, len(msg.Requests))
+	for _, req := range msg.Requests {
 		// check key in region
 		var key []byte
-		req := msg.Requests[0]
 
 		switch req.CmdType {
 		case raft_cmdpb.CmdType_Get:
@@ -288,12 +288,19 @@ func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb
 			err := util.CheckKeyInRegion(key, d.Region())
 			if err != nil {
 				cb.Done(ErrResp(err))
+				return
 			}
 		}
 	}
+
 	// propose
-	data, _ := msg.Marshal() // marshall request
-	err := d.RaftGroup.Propose(data)
+	data, err := msg.Marshal() // marshall request
+	if err != nil {
+		log.Infof("marshal raft cmd request error %v", err)
+		cb.Done(ErrResp(err))
+		return
+	}
+	err = d.RaftGroup.Propose(data)
 	if err != nil {
 		log.Infof("propose error %v", err)
 		cb.Done(ErrResp(err))
