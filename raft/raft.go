@@ -288,27 +288,29 @@ func (r *Raft) becomeFollower(term uint64, lead uint64) {
 	// Your Code Here (2A).
 	log.Infof("%d become follower of %d, term:%d", r.id, lead, term)
 	r.State = StateFollower
-	r.Lead = lead
 	r.Term = term
+	r.Lead = lead
 	r.Vote = None
 	r.resetVotes()
+	r.resetTimerElapsed()
 }
 
 // becomeCandidate transform this peer's state to candidate
 func (r *Raft) becomeCandidate() {
 	// Your Code Here (2A).
+	r.State = StateCandidate
 	r.Term++
 	log.Infof("%d become candidate term:%d", r.id, r.Term)
+	r.Lead = None
+	r.Vote = r.id // vote for self
+	r.resetVotes()
+	r.votes[r.id] = true
+	r.resetTimerElapsed()
+	r.resetElectionTimer()
 	if len(r.Prs) == 1 {
 		r.becomeLeader()
 		return
 	}
-	r.State = StateCandidate
-	r.electionElapsed = 0
-	r.resetElectionTimer()
-	r.Vote = r.id // vote for self
-	r.votes = make(map[uint64]bool)
-	r.votes[r.id] = true
 }
 
 // becomeLeader transform this peer's state to leader
@@ -317,8 +319,10 @@ func (r *Raft) becomeLeader() {
 	// NOTE: Leader should propose a noop entry on its term
 	log.Infof("%d become leader term:%d", r.id, r.Term)
 	r.State = StateLeader
-	r.Vote = r.id
+	r.Lead = r.id
+	r.Vote = None
 	r.resetVotes()
+	r.resetTimerElapsed()
 	// init Progress of peers
 	nextIndex := r.RaftLog.LastIndex() + 1
 	for _, p := range r.Prs {
@@ -626,6 +630,11 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 
 func (r *Raft) resetVotes() {
 	r.votes = make(map[uint64]bool)
+}
+
+func (r *Raft) resetTimerElapsed() {
+	r.electionElapsed = 0
+	r.heartbeatElapsed = 0
 }
 
 func (r *Raft) handleHeartbeatResponse(m pb.Message) {
