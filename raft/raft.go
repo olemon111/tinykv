@@ -350,7 +350,7 @@ func (r *Raft) becomeLeader() {
 // on `eraftpb.proto` for what msgs should be handled
 func (r *Raft) Step(m pb.Message) error {
 	// Your Code Here (2A).
-	log.Infof("\t\t%d step msg:%v, r.ents:%v", r.id, m, r.RaftLog.entries)
+	//log.Infof("\t\t%d step msg:%v, r.ents:%v", r.id, m, r.RaftLog.entries)
 	// check local message
 	if m.Term == 0 {
 		switch m.MsgType {
@@ -554,7 +554,7 @@ func (r *Raft) sendMsg(m pb.Message) {
 }
 
 func (r *Raft) handleHup(m pb.Message) {
-	if r.State == StateLeader && (m.From == 0 || m.From == r.id) {
+	if r.State == StateLeader || !(m.From == 0 || m.From == r.id) {
 		return
 	}
 	log.Infof("%d handle hup, term:%v", r.id, r.Term)

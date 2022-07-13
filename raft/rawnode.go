@@ -16,8 +16,6 @@ package raft
 
 import (
 	"errors"
-	"github.com/pingcap-incubator/tinykv/log"
-
 	pb "github.com/pingcap-incubator/tinykv/proto/pkg/eraftpb"
 )
 
@@ -172,7 +170,6 @@ func (rn *RawNode) Ready() Ready {
 		Vote:   rn.Raft.Vote,
 		Commit: rn.Raft.RaftLog.committed,
 	}
-	log.Infof("cur hard:%v, last hard:%v", curHardState, rn.lastHardState)
 	if curHardState.Term == rn.lastHardState.Term && curHardState.Vote == rn.lastHardState.Vote && curHardState.Commit == rn.lastHardState.Commit {
 		curHardState = pb.HardState{} // no change, return empty state
 	}
