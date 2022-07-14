@@ -220,8 +220,8 @@ func (r *Raft) sendAppend(to uint64) bool {
 		To:      to,
 		From:    r.id,
 		Term:    r.Term,
-		Index:   prevLogIndex, // refers to prevLogIndex in paper
 		LogTerm: prevLogTerm,  // refers to prevLogTerm in paper
+		Index:   prevLogIndex, // refers to prevLogIndex in paper
 		Entries: entries,
 		Commit:  r.RaftLog.committed,
 	}
@@ -461,22 +461,23 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	//if r.State == StateCandidate && m.Term == r.Term {
 	//	r.becomeFollower(m.Term, m.From)
 	//}
-	if m.Term != None && m.Term < r.Term {
+	if m.Term < r.Term {
 		log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 		r.sendAppendResponse(m.From, true, None)
 		return
 	}
-	log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 	// now accept
 	r.becomeFollower(m.Term, m.From)
 	// match prevLogIndex and prevLogTerm
 	//log.Infof("%d handle append entries from %d, ents:%v, r.ents:%v", r.id, m.From, m.Entries, r.RaftLog.entries)
 	prevLogTerm, err := r.RaftLog.Term(m.Index)
 	// skip prevLogIndex == 0 && prevLogTerm == 0, which means entries empty, should not reject
-	if m.Index != None && (err != nil || prevLogTerm != m.LogTerm) { // does not contain an entry with same index and term, send reject response
+	if m.Index >= r.RaftLog.FirstIndex() && (err != nil || prevLogTerm != m.LogTerm) { // does not contain an entry with same index and term, send reject response
+		log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d, m.index:%v, m.logTerm:%v, prevLogTerm:%v", r.id, m.From, m.Term, r.Term, m.Index, m.LogTerm, prevLogTerm)
 		r.sendAppendResponse(m.From, true, None)
 		return
 	}
+	//log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 	//may delete with prevLogIndex && prevLogTerm // FIXME: updated to test case
 	//_ = r.RaftLog.deleteFollowingEntries(m.Index + 1)
 	// check conflicts(same index but different terms)
@@ -535,17 +536,17 @@ func (r *Raft) sendHeartbeatResponse(to uint64, reject bool, index uint64) {
 // handleHeartbeat handle Heartbeat RPC request
 func (r *Raft) handleHeartbeat(m pb.Message) { // FIXME: not sure
 	// Your Code Here (2A).
-	log.Infof("%d handle heartbeat from %d", r.id, m.From)
+	//log.Infof("%d handle heartbeat from %d", r.id, m.From)
 	//if r.State == StateCandidate && m.Term == r.Term {
 	//	r.becomeFollower(m.Term, m.From)
 	//}
 	if m.Term < r.Term {
-		log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+		//log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 		r.sendHeartbeatResponse(m.From, true, None)
 		return
 	}
 	// accept
-	log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+	//log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 	r.becomeFollower(m.Term, m.From) // FIXME: not sure
 	index := r.RaftLog.LastIndex()
 	r.sendHeartbeatResponse(m.From, false, index)
@@ -567,7 +568,7 @@ func (r *Raft) removeNode(id uint64) {
 }
 
 func (r *Raft) broadcastHeartbeat() {
-	log.Infof("%d broadcast heartbeat", r.id)
+	//log.Infof("%d broadcast heartbeat", r.id)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendHeartbeat(p)
@@ -592,7 +593,7 @@ func (r *Raft) sendRequestVote(to uint64) {
 }
 
 func (r *Raft) broadcastRequestVote() {
-	log.Infof("%d broadcast req vote", r.id)
+	//log.Infof("%d broadcast req vote", r.id)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendRequestVote(p)
@@ -710,7 +711,7 @@ func (r *Raft) handleBeat(m pb.Message) {
 }
 
 func (r *Raft) handlePropose(m pb.Message) error {
-	log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
+	//log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
 	// append entries
 	for _, entry := range m.Entries {
 		entry.Term = r.Term
@@ -731,7 +732,7 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 	}
 	if m.Reject { // rejected by follower
 		// decrement nextIndex and retries to append entry
-		r.Prs[m.From].Next--
+		r.Prs[m.From].Next = max(r.Prs[m.From].Next-1, r.RaftLog.FirstIndex())
 		//r.Prs[m.From].Match = min(r.Prs[m.From].Match, r.Prs[m.From].Next-1) // FIXME: not sure
 		r.sendAppend(m.From)
 	} else { // accepted by follower
