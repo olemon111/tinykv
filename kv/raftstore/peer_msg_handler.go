@@ -113,32 +113,31 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
 	}
 	// propose callback
-	log.Infof("match proposals:%v", d.proposals)
+	d.matchProposal(resp, entry, txn)
+}
+
+func (d *peerMsgHandler) matchProposal(resp *raft_cmdpb.RaftCmdResponse, entry *pb.Entry, txn *badger.Txn) {
+	//log.Infof("match proposals:%v", d.proposals)
 	for _, p := range d.proposals {
 		log.Infof("p:%v, term:%v, index:%v, cb:%v", p, p.index, p.term, p.cb)
 	}
-	log.Infof("entry:%v, index:%v, term:%v", entry, entry.Index, entry.Term)
 	for len(d.proposals) > 0 {
 		p := d.proposals[0]
-		if p.term > entry.Term || (p.term == entry.Term && p.index > entry.Index) { // no match
-			log.Infof("no match proposal")
-			break
-		}
-		if p.term < entry.Term || (p.term == entry.Term && p.index < entry.Index) { // proposal stale
-			log.Infof("cb.done stale, resp:%v", resp)
-			p.cb.Done(ErrRespStaleCommand(entry.Term))
-			d.proposals = d.proposals[1:]
-			continue
-		}
-		if p.index == entry.Index { // match
-			if txn != nil { // set for snapshot
-				p.cb.Txn = txn
+		if p.index == entry.Index {
+			if p.term == entry.Term {
+				if txn != nil { // set for snapshot
+					p.cb.Txn = txn
+				}
+				log.Infof("cb.done, resp:%v", resp)
+				p.cb.Done(resp)
+				d.proposals = d.proposals[1:]
+				break
+			} else {
+				log.Infof("cb.done stale")
+				NotifyStaleReq(entry.Term, p.cb)
 			}
-			log.Infof("cb.done, resp:%v", resp)
-			p.cb.Done(resp)
-			d.proposals = d.proposals[1:] // done
-			break
 		}
+		d.proposals = d.proposals[1:]
 	}
 }
 
@@ -301,7 +300,7 @@ func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb
 	// propose
 	data, err := msg.Marshal() // marshall request
 	if err != nil {
-		log.Infof("marshal raft cmd request error %v", err)
+		log.Panicf("marshal raft cmd request error %v", err)
 		cb.Done(ErrResp(err))
 		return
 	}

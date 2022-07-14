@@ -445,6 +445,7 @@ func (r *Raft) stepFollower(m pb.Message) error {
 }
 
 func (r *Raft) sendAppendResponse(to uint64, reject bool, index uint64) {
+	//log.Infof("%d send append response to %d, reject:%v, term:%v, index:%d", r.id, to, reject, r.Term, index)
 	r.sendMsg(pb.Message{
 		MsgType: pb.MessageType_MsgAppendResponse,
 		To:      to,
@@ -462,7 +463,7 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	//	r.becomeFollower(m.Term, m.From)
 	//}
 	if m.Term < r.Term {
-		log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+		//log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 		r.sendAppendResponse(m.From, true, None)
 		return
 	}
@@ -473,11 +474,11 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	prevLogTerm, err := r.RaftLog.Term(m.Index)
 	// skip prevLogIndex == 0 && prevLogTerm == 0, which means entries empty, should not reject
 	if m.Index >= r.RaftLog.FirstIndex() && (err != nil || prevLogTerm != m.LogTerm) { // does not contain an entry with same index and term, send reject response
-		log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d, m.index:%v, m.logTerm:%v, prevLogTerm:%v", r.id, m.From, m.Term, r.Term, m.Index, m.LogTerm, prevLogTerm)
+		//log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d, m.index:%v, m.logTerm:%v, prevLogTerm:%v", r.id, m.From, m.Term, r.Term, m.Index, m.LogTerm, prevLogTerm)
 		r.sendAppendResponse(m.From, true, None)
 		return
 	}
-	//log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+	//log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d, m.ents:%v", r.id, m.From, m.Term, r.Term, m.Entries)
 	//may delete with prevLogIndex && prevLogTerm // FIXME: updated to test case
 	//_ = r.RaftLog.deleteFollowingEntries(m.Index + 1)
 	// check conflicts(same index but different terms)
@@ -490,11 +491,7 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 			break
 		}
 		if term != en.Term { // conflict, delete all that follow it
-			err := r.RaftLog.deleteFollowingEntries(en.Index)
-			if err != nil {
-				//log.Infof("delete entries err")
-				return
-			}
+			_ = r.RaftLog.deleteFollowingEntries(en.Index)
 			startIndex = i
 			break
 		}
@@ -618,7 +615,7 @@ func (r *Raft) handleHup(m pb.Message) {
 	if m.Term != 0 || !(m.From == 0 || m.From == r.id) {
 		return
 	}
-	log.Infof("%d handle hup, term:%v", r.id, r.Term)
+	//log.Infof("%d handle hup, term:%v", r.id, r.Term)
 	r.becomeCandidate()
 	if len(r.Prs) == 1 {
 		r.becomeLeader()
@@ -775,9 +772,11 @@ func (r *Raft) updateCommitted() {
 			}
 		}
 		if 2*cnt > len(r.Prs) { // beyond half committed
-			r.RaftLog.setCommitted(i)
-			//	log.Infof("%d leader update r.committed:%v, r.last:%v", r.id, r.RaftLog.committed, r.RaftLog.LastIndex())
-			r.broadcastAppend() // for followers to update committed
+			if i != r.RaftLog.committed {
+				//log.Infof("%d leader update r.committed:%v to %v, r.last:%v", r.id, r.RaftLog.committed, i, r.RaftLog.LastIndex())
+				r.RaftLog.setCommitted(i)
+				r.broadcastAppend() // for followers to update committed
+			}
 			break
 		}
 	}

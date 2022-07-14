@@ -174,7 +174,7 @@ func (rn *RawNode) Ready() Ready {
 		curHardState = pb.HardState{} // no change, return empty state
 	}
 
-	return Ready{
+	ready := Ready{
 		SoftState:        curSoftState,
 		HardState:        curHardState,
 		Entries:          rn.Raft.RaftLog.unstableEntries(), // stabled - last => stable
@@ -182,21 +182,35 @@ func (rn *RawNode) Ready() Ready {
 		CommittedEntries: rn.Raft.RaftLog.nextEnts(),        // applied - committed =>  apply
 		Messages:         rn.Raft.msgs,
 	}
+	rn.Raft.msgs = []pb.Message{} // clear messages
+	return ready
 }
 
 // HasReady called when RawNode user need to check if any Ready pending.
 func (rn *RawNode) HasReady() bool {
 	// Your Code Here (2A).
-	curReady := rn.Ready()
-	if curReady.SoftState != nil {
+	curSoftState := &SoftState{
+		Lead:      rn.Raft.Lead,
+		RaftState: rn.Raft.State,
+	}
+	if curSoftState.Lead != rn.lastSoftState.Lead || curSoftState.RaftState != rn.lastSoftState.RaftState {
 		return true
 	}
-	if !IsEmptyHardState(curReady.HardState) {
+	// check hard state change
+	curHardState := pb.HardState{
+		Term:   rn.Raft.Term,
+		Vote:   rn.Raft.Vote,
+		Commit: rn.Raft.RaftLog.committed,
+	}
+	if !isHardStateEqual(curHardState, rn.lastHardState) {
 		return true
 	}
-	if len(curReady.Entries) > 0 || len(curReady.CommittedEntries) > 0 || len(curReady.Messages) > 0 || !IsEmptySnap(&curReady.Snapshot) {
+	if len(rn.Raft.RaftLog.unstableEntries()) > 0 || len(rn.Raft.RaftLog.nextEnts()) > 0 || len(rn.Raft.msgs) > 0 {
 		return true
 	}
+	//if !IsEmptySnap(rn.Raft.RaftLog.pendingSnapshot) { // TODO:
+	//	return true
+	//}
 	return false
 }
 
