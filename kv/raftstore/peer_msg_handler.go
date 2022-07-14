@@ -67,59 +67,65 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		Header: &raft_cmdpb.RaftResponseHeader{}, // FIXME: not sure if term needed
 	}
 	var txn *badger.Txn
-
-	for _, req := range msg.Requests {
-		switch req.GetCmdType() {
-		case raft_cmdpb.CmdType_Invalid:
-			log.Infof("invalid raft command")
-		case raft_cmdpb.CmdType_Get:
-			val, err := engine_util.GetCF(d.peerStorage.Engines.Kv, req.Get.Cf, req.Get.Key) // FIXME:
-			if err != nil {
-				return
-			}
-			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
-				CmdType: raft_cmdpb.CmdType_Get,
-				Get: &raft_cmdpb.GetResponse{
-					Value: val,
-				},
-			})
-		case raft_cmdpb.CmdType_Put:
-			kvWB.SetCF(req.Put.Cf, req.Put.Key, req.Put.Value)
-			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
-				CmdType: raft_cmdpb.CmdType_Put,
-				Put:     &raft_cmdpb.PutResponse{},
-			})
-		case raft_cmdpb.CmdType_Delete:
-			kvWB.DeleteCF(req.Delete.Cf, req.Delete.Key)
-			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
-				CmdType: raft_cmdpb.CmdType_Delete,
-				Delete:  &raft_cmdpb.DeleteResponse{},
-			})
-		case raft_cmdpb.CmdType_Snap: // TODO:
-			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
-				CmdType: raft_cmdpb.CmdType_Snap,
-				Snap: &raft_cmdpb.SnapResponse{
-					Region: d.Region(),
-				},
-			})
-			//resp.Responses = []*raft_cmdpb.Response{
-			//	{
-			//		CmdType: raft_cmdpb.CmdType_Snap,
-			//		Snap: &raft_cmdpb.SnapResponse{
-			//			Region: d.Region(),
-			//		},
-			//	},
-			//}
-			txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
+	req := msg.Requests[0]
+	log.Infof("apply normal request: %v", req)
+	switch req.GetCmdType() {
+	case raft_cmdpb.CmdType_Invalid:
+		log.Infof("invalid raft command")
+	case raft_cmdpb.CmdType_Get:
+		val, err := engine_util.GetCF(d.peerStorage.Engines.Kv, req.Get.Cf, req.Get.Key) // FIXME:
+		if err != nil {
+			return
 		}
+		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+			CmdType: raft_cmdpb.CmdType_Get,
+			Get: &raft_cmdpb.GetResponse{
+				Value: val,
+			},
+		})
+	case raft_cmdpb.CmdType_Put:
+		kvWB.SetCF(req.Put.Cf, req.Put.Key, req.Put.Value)
+		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+			CmdType: raft_cmdpb.CmdType_Put,
+			Put:     &raft_cmdpb.PutResponse{},
+		})
+	case raft_cmdpb.CmdType_Delete:
+		kvWB.DeleteCF(req.Delete.Cf, req.Delete.Key)
+		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+			CmdType: raft_cmdpb.CmdType_Delete,
+			Delete:  &raft_cmdpb.DeleteResponse{},
+		})
+	case raft_cmdpb.CmdType_Snap: // TODO:
+		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
+			CmdType: raft_cmdpb.CmdType_Snap,
+			Snap: &raft_cmdpb.SnapResponse{
+				Region: d.Region(),
+			},
+		})
+		//resp.Responses = []*raft_cmdpb.Response{
+		//	{
+		//		CmdType: raft_cmdpb.CmdType_Snap,
+		//		Snap: &raft_cmdpb.SnapResponse{
+		//			Region: d.Region(),
+		//		},
+		//	},
+		//}
+		txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
 	}
 	// propose callback
+	log.Infof("match proposals:%v", d.proposals)
+	for _, p := range d.proposals {
+		log.Infof("p:%v, term:%v, index:%v, cb:%v", p, p.index, p.term, p.cb)
+	}
+	log.Infof("entry:%v, index:%v, term:%v", entry, entry.Index, entry.Term)
 	for len(d.proposals) > 0 {
 		p := d.proposals[0]
 		if p.term > entry.Term || (p.term == entry.Term && p.index > entry.Index) { // no match
+			log.Infof("no match proposal")
 			break
 		}
 		if p.term < entry.Term || (p.term == entry.Term && p.index < entry.Index) { // proposal stale
+			log.Infof("cb.done stale, resp:%v", resp)
 			p.cb.Done(ErrRespStaleCommand(entry.Term))
 			d.proposals = d.proposals[1:]
 			continue
@@ -128,6 +134,7 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 			if txn != nil { // set for snapshot
 				p.cb.Txn = txn
 			}
+			log.Infof("cb.done, resp:%v", resp)
 			p.cb.Done(resp)
 			d.proposals = d.proposals[1:] // done
 			break
@@ -271,38 +278,30 @@ func (d *peerMsgHandler) proposeRaftCommand(msg *raft_cmdpb.RaftCmdRequest, cb *
 
 func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
 	log.Infof("propose normal command %v, len:%v", msg, len(msg.Requests))
-	for _, req := range msg.Requests {
-		// check key in region
-		var key []byte
+	req := msg.Requests[0]
+	// check key in region
+	var key []byte
 
-		switch req.CmdType {
-		case raft_cmdpb.CmdType_Get:
-			key = req.GetGet().GetKey()
-		case raft_cmdpb.CmdType_Put:
-			key = req.GetPut().GetKey()
-		case raft_cmdpb.CmdType_Delete:
-			key = req.GetDelete().GetKey()
-		case raft_cmdpb.CmdType_Snap:
-		}
-		if req.CmdType != raft_cmdpb.CmdType_Snap {
-			err := util.CheckKeyInRegion(key, d.Region())
-			if err != nil {
-				cb.Done(ErrResp(err))
-				return
-			}
+	switch req.CmdType {
+	case raft_cmdpb.CmdType_Get:
+		key = req.GetGet().GetKey()
+	case raft_cmdpb.CmdType_Put:
+		key = req.GetPut().GetKey()
+	case raft_cmdpb.CmdType_Delete:
+		key = req.GetDelete().GetKey()
+	case raft_cmdpb.CmdType_Snap:
+	}
+	if req.CmdType != raft_cmdpb.CmdType_Snap { // FIXME: not sure if necessary
+		err := util.CheckKeyInRegion(key, d.Region())
+		if err != nil {
+			cb.Done(ErrResp(err))
+			return
 		}
 	}
-
 	// propose
 	data, err := msg.Marshal() // marshall request
 	if err != nil {
 		log.Infof("marshal raft cmd request error %v", err)
-		cb.Done(ErrResp(err))
-		return
-	}
-	err = d.RaftGroup.Propose(data)
-	if err != nil {
-		log.Infof("propose error %v", err)
 		cb.Done(ErrResp(err))
 		return
 	}
@@ -312,6 +311,13 @@ func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb
 		term:  d.Term(),
 		cb:    cb,
 	})
+	log.Infof("append new proposal, index:%v, term:%v, cb:%v", d.proposals[len(d.proposals)-1].index, d.proposals[len(d.proposals)-1].term, d.proposals[len(d.proposals)-1].cb)
+	err = d.RaftGroup.Propose(data)
+	if err != nil {
+		log.Infof("propose error %v", err)
+		cb.Done(ErrResp(err))
+		return
+	}
 }
 
 func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {

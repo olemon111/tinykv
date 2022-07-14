@@ -225,7 +225,7 @@ func (r *Raft) sendAppend(to uint64) bool {
 		Entries: entries,
 		Commit:  r.RaftLog.committed,
 	}
-	//	log.Infof("%d send append to %d, msg:%v", r.id, to, msg)
+	//log.Infof("%d send append to %d, msg:%v", r.id, to, msg)
 	r.sendMsg(msg)
 	return true
 }
@@ -245,19 +245,17 @@ func (r *Raft) sendHeartbeat(to uint64) {
 // tick advances the internal logical clock by a single tick.
 func (r *Raft) tick() {
 	// Your Code Here (2A).
-	r.electionElapsed++
-	r.heartbeatElapsed++
 	// actions
 	switch r.State {
 	case StateLeader:
+		r.heartbeatElapsed++
 		if r.heartbeatElapsed >= r.heartbeatTimeout {
-			log.Infof("%d broadcast heartbeat", r.id)
 			r.heartbeatElapsed = 0
 			r.broadcastHeartbeat()
 		}
 	case StateCandidate:
+		r.electionElapsed++
 		if r.electionElapsed >= r.electionTimeout { // reset
-			log.Infof("%d election timeout", r.id)
 			err := r.Step(pb.Message{
 				MsgType: pb.MessageType_MsgHup,
 				To:      r.id,
@@ -269,6 +267,7 @@ func (r *Raft) tick() {
 			}
 		}
 	case StateFollower:
+		r.electionElapsed++
 		if r.electionElapsed >= r.electionTimeout { // reset
 			err := r.Step(pb.Message{
 				MsgType: pb.MessageType_MsgHup,
@@ -286,7 +285,7 @@ func (r *Raft) tick() {
 // becomeFollower transform this peer's state to Follower
 func (r *Raft) becomeFollower(term uint64, lead uint64) {
 	// Your Code Here (2A).
-	log.Infof("%d become follower of %d, term:%d", r.id, lead, term)
+	//log.Infof("%d become follower of %d, term:%d", r.id, lead, term)
 	r.State = StateFollower
 	r.Term = term
 	r.Lead = lead
@@ -307,10 +306,6 @@ func (r *Raft) becomeCandidate() {
 	r.votes[r.id] = true
 	r.resetTimerElapsed()
 	r.resetElectionTimer()
-	if len(r.Prs) == 1 {
-		r.becomeLeader()
-		return
-	}
 }
 
 // becomeLeader transform this peer's state to leader
@@ -354,7 +349,7 @@ func (r *Raft) becomeLeader() {
 // on `eraftpb.proto` for what msgs should be handled
 func (r *Raft) Step(m pb.Message) error {
 	// Your Code Here (2A).
-	log.Infof("\t\t%d step msg:%v, r.ents:%v", r.id, m, r.RaftLog.entries)
+	//log.Infof("\t\t%d step msg:%v, r.ents:%v", r.id, m, r.RaftLog.entries)
 	if m.Term > r.Term {
 		r.becomeFollower(m.Term, None)
 	}
@@ -372,7 +367,7 @@ func (r *Raft) Step(m pb.Message) error {
 
 func (r *Raft) stepLeader(m pb.Message) error {
 	switch m.MsgType {
-	case pb.MessageType_MsgHup: // local message
+	case pb.MessageType_MsgHup:
 	case pb.MessageType_MsgBeat: // local message
 		r.handleBeat(m)
 	case pb.MessageType_MsgPropose: // local message
@@ -428,8 +423,8 @@ func (r *Raft) stepFollower(m pb.Message) error {
 	switch m.MsgType {
 	case pb.MessageType_MsgHup: // local message
 		r.handleHup(m)
-	case pb.MessageType_MsgBeat: // local message
-	case pb.MessageType_MsgPropose: // local message
+	case pb.MessageType_MsgBeat:
+	case pb.MessageType_MsgPropose:
 	case pb.MessageType_MsgAppend:
 		r.handleAppendEntries(m)
 	case pb.MessageType_MsgAppendResponse:
@@ -449,14 +444,13 @@ func (r *Raft) stepFollower(m pb.Message) error {
 	return nil
 }
 
-func (r *Raft) sendAppendResponse(to uint64, reject bool, logTerm uint64, index uint64) {
+func (r *Raft) sendAppendResponse(to uint64, reject bool, index uint64) {
 	r.sendMsg(pb.Message{
 		MsgType: pb.MessageType_MsgAppendResponse,
 		To:      to,
 		From:    r.id,
 		Term:    r.Term,
 		Reject:  reject,
-		LogTerm: logTerm,
 		Index:   index,
 	})
 }
@@ -464,24 +458,25 @@ func (r *Raft) sendAppendResponse(to uint64, reject bool, logTerm uint64, index 
 // handleAppendEntries handle AppendEntries RPC request
 func (r *Raft) handleAppendEntries(m pb.Message) {
 	// Your Code Here (2A).
-	if r.State == StateCandidate && m.Term == r.Term {
-		r.becomeFollower(m.Term, m.From)
-	}
+	//if r.State == StateCandidate && m.Term == r.Term {
+	//	r.becomeFollower(m.Term, m.From)
+	//}
 	if m.Term != None && m.Term < r.Term {
-		r.sendAppendResponse(m.From, true, None, None)
+		log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+		r.sendAppendResponse(m.From, true, None)
 		return
 	}
+	log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+	// now accept
+	r.becomeFollower(m.Term, m.From)
 	// match prevLogIndex and prevLogTerm
-	log.Infof("%d handle append entries from %d, ents:%v, r.ents:%v", r.id, m.From, m.Entries, r.RaftLog.entries)
+	//log.Infof("%d handle append entries from %d, ents:%v, r.ents:%v", r.id, m.From, m.Entries, r.RaftLog.entries)
 	prevLogTerm, err := r.RaftLog.Term(m.Index)
 	// skip prevLogIndex == 0 && prevLogTerm == 0, which means entries empty, should not reject
 	if m.Index != None && (err != nil || prevLogTerm != m.LogTerm) { // does not contain an entry with same index and term, send reject response
-		r.sendAppendResponse(m.From, true, None, None)
+		r.sendAppendResponse(m.From, true, None)
 		return
 	}
-	// now accept
-	r.becomeFollower(m.Term, m.From)
-	r.resetTimerElapsed()
 	//may delete with prevLogIndex && prevLogTerm // FIXME: updated to test case
 	//_ = r.RaftLog.deleteFollowingEntries(m.Index + 1)
 	// check conflicts(same index but different terms)
@@ -496,7 +491,7 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 		if term != en.Term { // conflict, delete all that follow it
 			err := r.RaftLog.deleteFollowingEntries(en.Index)
 			if err != nil {
-				log.Infof("delete entries err")
+				//log.Infof("delete entries err")
 				return
 			}
 			startIndex = i
@@ -515,15 +510,14 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	}
 	// update committed
 	if m.Commit > r.RaftLog.committed {
-		log.Infof("%d follower update m.committed:%v, r.lastIndex:%v, last:%d", r.id, m.Commit, r.RaftLog.LastIndex(), lastMatch)
+		//log.Infof("%d follower update m.committed:%v, r.lastIndex:%v, last:%d", r.id, m.Commit, r.RaftLog.LastIndex(), lastMatch)
 		if newCommitted := min(m.Commit, min(r.RaftLog.LastIndex(), lastMatch)); newCommitted > r.RaftLog.committed {
 			r.RaftLog.setCommitted(newCommitted)
 		}
 	}
 	// respond to leader
 	index := r.RaftLog.LastIndex()
-	logTerm, _ := r.RaftLog.Term(index)
-	r.sendAppendResponse(m.From, false, logTerm, index) // index used to update leader's match
+	r.sendAppendResponse(m.From, false, index) // index used to update leader's match
 }
 
 func (r *Raft) sendHeartbeatResponse(to uint64, reject bool, index uint64) {
@@ -533,25 +527,26 @@ func (r *Raft) sendHeartbeatResponse(to uint64, reject bool, index uint64) {
 		From:    r.id,
 		Term:    r.Term,
 		Index:   index,
-		//LogTerm:  // FIXME: not sure
-		Commit: r.RaftLog.committed,
-		Reject: reject,
+		Commit:  r.RaftLog.committed,
+		Reject:  reject,
 	})
 }
 
 // handleHeartbeat handle Heartbeat RPC request
 func (r *Raft) handleHeartbeat(m pb.Message) { // FIXME: not sure
 	// Your Code Here (2A).
-	if r.State == StateCandidate && m.Term == r.Term {
-		r.becomeFollower(m.Term, m.From)
-	}
 	log.Infof("%d handle heartbeat from %d", r.id, m.From)
-	if m.Term != None && m.Term < r.Term {
+	//if r.State == StateCandidate && m.Term == r.Term {
+	//	r.becomeFollower(m.Term, m.From)
+	//}
+	if m.Term < r.Term {
+		log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 		r.sendHeartbeatResponse(m.From, true, None)
 		return
 	}
 	// accept
-	r.resetElectionTimer()
+	log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+	r.becomeFollower(m.Term, m.From) // FIXME: not sure
 	index := r.RaftLog.LastIndex()
 	r.sendHeartbeatResponse(m.From, false, index)
 }
@@ -572,6 +567,7 @@ func (r *Raft) removeNode(id uint64) {
 }
 
 func (r *Raft) broadcastHeartbeat() {
+	log.Infof("%d broadcast heartbeat", r.id)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendHeartbeat(p)
@@ -591,7 +587,7 @@ func (r *Raft) sendRequestVote(to uint64) {
 		LogTerm: logTerm, // lastLogTerm
 		Index:   index,   // lastLogIndex
 	}
-	log.Infof("%d send req vote to %d, msg:%v, r.ents:%v", r.id, to, msg, r.RaftLog.entries)
+	//log.Infof("%d send req vote to %d, msg:%v, r.ents:%v", r.id, to, msg, r.RaftLog.entries)
 	r.sendMsg(msg)
 }
 
@@ -623,6 +619,10 @@ func (r *Raft) handleHup(m pb.Message) {
 	}
 	log.Infof("%d handle hup, term:%v", r.id, r.Term)
 	r.becomeCandidate()
+	if len(r.Prs) == 1 {
+		r.becomeLeader()
+		return
+	}
 	r.broadcastRequestVote()
 }
 
@@ -637,8 +637,9 @@ func (r *Raft) sendRequestVoteResponse(to uint64, reject bool) {
 }
 
 func (r *Raft) handleRequestVote(m pb.Message) {
-	if m.Term != None && m.Term < r.Term {
+	if m.Term < r.Term {
 		r.sendRequestVoteResponse(m.From, true)
+		return
 	}
 	reject := true
 	if r.Vote == None || r.Vote == m.From { // FIXME: not sure must be follower
@@ -649,7 +650,7 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 			reject = false
 		}
 	}
-	log.Infof("%d handle req vote from %d, reject:%v, ents:%v, m.ents:%v, r.vote:%d", r.id, m.From, reject, r.RaftLog.entries, m.Entries, r.Vote)
+	//log.Infof("%d handle req vote from %d, reject:%v, ents:%v, m.ents:%v, r.vote:%d", r.id, m.From, reject, r.RaftLog.entries, m.Entries, r.Vote)
 	if !reject {
 		r.resetElectionTimer()
 	}
@@ -660,21 +661,13 @@ func (r *Raft) appendEntry(en pb.Entry) bool { // FIXME:
 	return r.RaftLog.appendEntry(en)
 }
 
-func (r *Raft) appendEntries(ens []*pb.Entry) bool {
-	for _, en := range ens {
-		r.appendEntry(*en)
-	}
-	r.broadcastAppend()
-	return true
-}
-
 func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 	if m.Term != None && m.Term < r.Term {
 		return
 	}
 	// count votes
 	r.votes[m.From] = !m.Reject
-	log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
+	//log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
 	acceptCnt := 0
 	rejectCnt := 0
 	for _, v := range r.votes {
@@ -705,7 +698,7 @@ func (r *Raft) resetTimerElapsed() {
 
 func (r *Raft) handleHeartbeatResponse(m pb.Message) {
 	// update follower's log
-	if m.Index < r.RaftLog.LastIndex() {
+	if m.Index < r.RaftLog.LastIndex() || m.Commit < r.RaftLog.committed {
 		r.sendAppend(m.From)
 	}
 }
@@ -717,29 +710,19 @@ func (r *Raft) handleBeat(m pb.Message) {
 }
 
 func (r *Raft) handlePropose(m pb.Message) error {
-	if m.Term != 0 {
-		return nil
+	log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
+	// append entries
+	for _, entry := range m.Entries {
+		entry.Term = r.Term
+		entry.Index = r.RaftLog.LastIndex() + 1
+		r.RaftLog.appendEntry(*entry)
 	}
-	if r.State == StateLeader {
-		log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
-		if len(m.Entries) > 0 {
-			log.Infof("ent0.data:%v", m.Entries[0].Data)
-		}
-		var entries []*pb.Entry
-		for _, en := range m.Entries {
-			entries = append(entries, &pb.Entry{
-				EntryType: en.EntryType,
-				Term:      r.Term,
-				Index:     r.RaftLog.LastIndex() + 1,
-				Data:      en.Data,
-			})
-		}
-		log.Infof("propose append entries:%v", entries)
-		r.appendEntries(entries)
-		r.updateCommitted()
-		return nil
-	}
-	return ErrProposalDropped
+	// update self progress
+	r.Prs[r.id].Match = r.RaftLog.LastIndex()
+	r.Prs[r.id].Next = r.RaftLog.LastIndex() + 1
+	r.broadcastAppend()
+	r.updateCommitted()
+	return nil
 }
 
 func (r *Raft) handleAppendResponse(m pb.Message) {
@@ -763,7 +746,7 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 			r.updateCommitted()
 		}
 	}
-	log.Infof("%d handle append resp from %d, index:%v, reject:%v", r.id, m.From, m.Index, m.Reject)
+	//log.Infof("%d handle append resp from %d, index:%v, reject:%v", r.id, m.From, m.Index, m.Reject)
 }
 
 func (r *Raft) resetElectionTimer() {

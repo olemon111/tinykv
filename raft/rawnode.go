@@ -170,7 +170,7 @@ func (rn *RawNode) Ready() Ready {
 		Vote:   rn.Raft.Vote,
 		Commit: rn.Raft.RaftLog.committed,
 	}
-	if curHardState.Term == rn.lastHardState.Term && curHardState.Vote == rn.lastHardState.Vote && curHardState.Commit == rn.lastHardState.Commit {
+	if isHardStateEqual(curHardState, rn.lastHardState) {
 		curHardState = pb.HardState{} // no change, return empty state
 	}
 
@@ -188,10 +188,16 @@ func (rn *RawNode) Ready() Ready {
 func (rn *RawNode) HasReady() bool {
 	// Your Code Here (2A).
 	curReady := rn.Ready()
-	if curReady.SoftState == nil { // no update in soft state
-		return !IsEmptyHardState(curReady.HardState)
+	if curReady.SoftState != nil {
+		return true
 	}
-	return true
+	if !IsEmptyHardState(curReady.HardState) {
+		return true
+	}
+	if len(curReady.Entries) > 0 || len(curReady.CommittedEntries) > 0 || len(curReady.Messages) > 0 || !IsEmptySnap(&curReady.Snapshot) {
+		return true
+	}
+	return false
 }
 
 // Advance notifies the RawNode that the application has applied and saved progress in the

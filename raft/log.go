@@ -135,10 +135,6 @@ func (l *RaftLog) Term(i uint64) (uint64, error) {
 	return 0, errors.New("entry not found")
 }
 
-//func (l *RaftLog) appendEntries(ents []pb.Entry) {
-//	l.entries = append(l.entries, ents...)
-//}
-
 func (l *RaftLog) appendEntry(ent pb.Entry) bool {
 	l.entries = append(l.entries, ent)
 	return true
@@ -147,15 +143,15 @@ func (l *RaftLog) appendEntry(ent pb.Entry) bool {
 // delete entries after specific index (index included)
 func (l *RaftLog) deleteFollowingEntries(index uint64) error {
 	//log.Infof("delete ents:%v, index:%d, first:%d", l.entries, index, l.first)
-	if index-l.first >= uint64(len(l.entries)) {
+	if index < l.first || index-l.first >= uint64(len(l.entries)) {
 		err := errors.New("delete entries error")
 		return err
 	}
-	l.entries = l.entries[:index-l.first] // TODO: not sure
+	l.entries = l.entries[:index-l.first]
 	// update
 	l.setStabled(min(l.stabled, l.LastIndex()))
 	l.setCommitted(min(l.committed, l.LastIndex()))
-	l.setApplied(min(l.committed, l.LastIndex()))
+	l.setApplied(min(l.applied, l.LastIndex()))
 	//log.Infof("after delete ents:%v, stabled:%v", l.entries, l.stabled)
 	return nil
 }
