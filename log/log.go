@@ -276,7 +276,7 @@ func LogTypeToString(t LogType) (string, string) {
 
 func New() *Logger {
 	logger := NewLogger(os.Stderr, "")
-	logger.debug = true // verified for debug controlling
+	//logger.debug = true // verified for debug controlling
 	return logger
 }
 
