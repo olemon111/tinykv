@@ -219,18 +219,20 @@ func (rn *RawNode) HasReady() bool {
 func (rn *RawNode) Advance(rd Ready) {
 	// Your Code Here (2A).
 	// update applied and stabled
-	rn.Raft.RaftLog.setApplied(rn.Raft.RaftLog.committed)
-	rn.Raft.RaftLog.setStabled(rn.Raft.RaftLog.LastIndex())
+	if len(rd.CommittedEntries) > 0 {
+		rn.Raft.RaftLog.setApplied(rd.CommittedEntries[len(rd.CommittedEntries)-1].Index) // applied - committed =>  apply
+	}
+	if len(rd.Entries) > 0 {
+		rn.Raft.RaftLog.setStabled(rd.Entries[len(rd.Entries)-1].Index) // stabled - last => stable
+	}
 	// update last Ready results
-	rn.lastSoftState = &SoftState{
-		Lead:      rn.Raft.Lead,
-		RaftState: rn.Raft.State,
+	if rd.SoftState != nil {
+		rn.lastSoftState = rd.SoftState
 	}
-	rn.lastHardState = pb.HardState{
-		Term:   rn.Raft.Term,
-		Vote:   rn.Raft.Vote,
-		Commit: rn.Raft.RaftLog.committed,
+	if !IsEmptyHardState(rd.HardState) {
+		rn.lastHardState = rd.HardState
 	}
+	// TODO: maybe compact
 }
 
 // GetProgress return the Progress of this node and its peers, if this

@@ -99,14 +99,20 @@ func (l *RaftLog) maybeCompact() {
 func (l *RaftLog) unstableEntries() []pb.Entry {
 	// Your Code Here (2A).
 	//log.Infof("unstable ents, ents:%v, stabled:%v, first:%v", l.entries, l.stabled, l.first)
-	return l.entries[l.stabled-l.first+1:]
+	if l.stabled-l.first+1 < uint64(len(l.entries)) {
+		return l.entries[l.stabled-l.first+1:]
+	}
+	return nil
 }
 
 // nextEnts returns all the committed but not applied entries
 func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 	// Your Code Here (2A).
 	//log.Infof("ents:%v, first:%d, applied:%d, committed:%d", l.entries, l.first, l.applied, l.committed)
-	return l.entries[l.applied-l.first+1 : l.committed-l.first+1]
+	if l.applied-l.first+1 < uint64(len(l.entries)) && l.committed-l.first+1 <= uint64(len(l.entries)) {
+		return l.entries[l.applied-l.first+1 : l.committed-l.first+1]
+	}
+	return nil
 }
 
 // LastIndex return the last index of the log entries
