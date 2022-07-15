@@ -169,11 +169,13 @@ func newRaft(c *Config) *Raft {
 	// Your Code Here (2A).
 	// init raftLog with config
 	raftLog := newLog(c.Storage)
-	raftLog.applied = c.Applied // modify by config
 	// init with hardState
 	hardState, confState, err := c.Storage.InitialState()
 	if err != nil {
 		return nil
+	}
+	if c.Applied > 0 {
+		raftLog.applied = c.Applied // modify by config
 	}
 	// init peers
 	if c.peers == nil {
@@ -186,8 +188,6 @@ func newRaft(c *Config) *Raft {
 			Next:  raftLog.LastIndex() + 1,
 		}
 	}
-	raftLog.committed = hardState.Commit
-
 	return &Raft{
 		id:               c.ID,
 		Term:             hardState.Term,
@@ -708,7 +708,7 @@ func (r *Raft) handleBeat(m pb.Message) {
 }
 
 func (r *Raft) handlePropose(m pb.Message) error {
-	//log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
+	log.Infof("%d handle propose, ents:%v", r.id, m.Entries)
 	// append entries
 	for _, entry := range m.Entries {
 		entry.Term = r.Term
@@ -773,7 +773,7 @@ func (r *Raft) updateCommitted() {
 		}
 		if 2*cnt > len(r.Prs) { // beyond half committed
 			if i != r.RaftLog.committed {
-				//log.Infof("%d leader update r.committed:%v to %v, r.last:%v", r.id, r.RaftLog.committed, i, r.RaftLog.LastIndex())
+				log.Infof("%d leader update r.committed:%v to %v, r.last:%v", r.id, r.RaftLog.committed, i, r.RaftLog.LastIndex())
 				r.RaftLog.setCommitted(i)
 				r.broadcastAppend() // for followers to update committed
 			}

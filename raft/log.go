@@ -71,15 +71,16 @@ func newLog(storage Storage) *RaftLog {
 	if err != nil {
 		log.Panicf("storage.lastIndex error: %v", err)
 	}
+	hardState, _, _ := storage.InitialState()
 	//log.Infof("first:%v, last:%v", firstIndex, lastIndex)
 	var entries []pb.Entry
 	if firstIndex <= lastIndex {
 		entries, _ = storage.Entries(firstIndex, lastIndex+1)
-		//log.Infof("first:%d, last:%d, ents:%v", firstIndex, lastIndex, entries)
+		log.Infof("newlog first:%d, last:%d, ents:%v", firstIndex, lastIndex, entries)
 	}
 	return &RaftLog{
 		storage:         storage,
-		committed:       firstIndex - 1,
+		committed:       hardState.GetCommit(),
 		applied:         firstIndex - 1,
 		stabled:         lastIndex,
 		entries:         entries,
@@ -98,18 +99,19 @@ func (l *RaftLog) maybeCompact() {
 // unstableEntries return all the unstable entries
 func (l *RaftLog) unstableEntries() []pb.Entry {
 	// Your Code Here (2A).
+	//println("unstable ents, ents:", l.entries, ", stabled:", l.stabled, ", first:", l.first)
 	//log.Infof("unstable ents, ents:%v, stabled:%v, first:%v", l.entries, l.stabled, l.first)
 	if l.stabled-l.first+1 < uint64(len(l.entries)) {
 		return l.entries[l.stabled-l.first+1:]
 	}
-	return nil
+	return []pb.Entry{}
 }
 
 // nextEnts returns all the committed but not applied entries
 func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 	// Your Code Here (2A).
 	//log.Infof("ents:%v, first:%d, applied:%d, committed:%d", l.entries, l.first, l.applied, l.committed)
-	if l.applied-l.first+1 < uint64(len(l.entries)) && l.committed-l.first+1 <= uint64(len(l.entries)) {
+	if l.applied-l.first+1 < uint64(len(l.entries)) {
 		return l.entries[l.applied-l.first+1 : l.committed-l.first+1]
 	}
 	return nil

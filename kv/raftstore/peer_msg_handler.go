@@ -170,15 +170,12 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		return
 	}
 	// send raft messages
-	for _, msg := range ready.Messages {
-		err := d.sendRaftMessage(msg, d.ctx.trans)
-		if err != nil {
-			return
-		}
-	}
+	d.Send(d.ctx.trans, ready.Messages)
 	// apply committed entries
 	kvWB := &engine_util.WriteBatch{}
+	//log.Infof("committed ents:%v", ready.CommittedEntries)
 	for _, en := range ready.CommittedEntries {
+		log.Infof("apply entry:%v", en)
 		d.applyEntry(&en, kvWB)
 		// update RaftApplyState
 		if en.Index > d.peerStorage.applyState.AppliedIndex { // FIXME: not sure
@@ -189,11 +186,12 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		}
 	}
 	// save applyState to kvDB
-	err = kvWB.SetMeta(meta.ApplyStateKey(d.peerStorage.region.GetId()), d.peerStorage.applyState) // key: apply_state_key, value: raftApplyState
+	err = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState) // key: apply_state_key, value: raftApplyState
 	if err != nil {
 		log.Infof("set apply state failed: %v", err)
 		return
 	}
+	// FIXME: stopped
 	kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
 	// advance raft node
 	d.RaftGroup.Advance(ready)
@@ -293,6 +291,7 @@ func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb
 	if req.CmdType != raft_cmdpb.CmdType_Snap { // FIXME: not sure if necessary
 		err := util.CheckKeyInRegion(key, d.Region())
 		if err != nil {
+			log.Infof("cb.done err:%v", err)
 			cb.Done(ErrResp(err))
 			return
 		}

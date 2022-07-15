@@ -316,13 +316,16 @@ func (ps *PeerStorage) Append(entries []eraftpb.Entry, raftWB *engine_util.Write
 	}
 	for _, en := range entries {
 		// append to raft log
-		err := raftWB.SetMeta(meta.RaftLogKey(ps.region.Id, en.GetIndex()), &en) // key: raft_log_key, value: entry
+		err := raftWB.SetMeta(meta.RaftLogKey(ps.region.GetId(), en.GetIndex()), &en) // key: raft_log_key, value: entry
 		if err != nil {
+			log.Infof("set raft log failed, err: %v", err)
 			return err
 		}
 		// update ps.raftState
-		ps.raftState.LastIndex = en.GetIndex()
-		ps.raftState.LastTerm = en.Term
+		if en.GetIndex() > ps.raftState.GetLastIndex() {
+			ps.raftState.LastIndex = en.GetIndex()
+			ps.raftState.LastTerm = en.GetTerm()
+		}
 	}
 	return nil
 }
@@ -354,16 +357,12 @@ func (ps *PeerStorage) SaveReadyState(ready *raft.Ready) (*ApplySnapResult, erro
 		return nil, err
 	}
 	// update raftLocalState
-	if raft.IsEmptyHardState(ready.HardState) {
-		return nil, nil
+	if !raft.IsEmptyHardState(ready.HardState) {
+		ps.raftState.HardState = &ready.HardState
 	}
-	ps.raftState.HardState = &ready.HardState
 	// save hardState to raftDB
-	err = raftWB.SetMeta(meta.RaftStateKey(ps.region.GetId()), ps.raftState) // key: raft_state_Key, value: raftLocalState
-	if err != nil {
-		return nil, err
-	}
-	raftWB.MustWriteToDB(ps.Engines.Raft) // write at once
+	_ = raftWB.SetMeta(meta.RaftStateKey(ps.region.GetId()), ps.raftState) // key: raft_state_Key, value: raftLocalState
+	raftWB.MustWriteToDB(ps.Engines.Raft)                                  // write at once
 	// apply snapshot
 	// TODO:
 	var applySnapResult *ApplySnapResult
