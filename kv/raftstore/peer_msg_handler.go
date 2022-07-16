@@ -181,7 +181,7 @@ func (d *peerMsgHandler) HandleRaftReady() {
 	_, err := d.peerStorage.SaveReadyState(&ready)
 	//applySnapResult, err := d.peerStorage.SaveReadyState(&ready) // TODO:
 	if err != nil {
-		return
+		log.Infof("save ready state error: %v", err)
 	}
 	// send raft messages
 	d.Send(d.ctx.trans, ready.Messages)
@@ -287,8 +287,8 @@ func (d *peerMsgHandler) proposeRaftCommand(msg *raft_cmdpb.RaftCmdRequest, cb *
 }
 
 func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
-	log.Infof("propose normal command %v, len:%v", msg, len(msg.Requests))
 	req := msg.Requests[0]
+	log.Infof("propose normal command %v, req:%v", msg, req)
 	// check key in region
 	var key []byte
 

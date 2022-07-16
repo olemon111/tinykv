@@ -1,0 +1,2766 @@
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.030s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:04:40.021038 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:04:40.584531 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:04:50.621128 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:04:51.440721 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:05:02.789462 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:05:03.313778 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (37.04s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.140s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:05:18.690338 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:05:19.225366 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:05:54.669914 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:05:55.221787 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:06:32.322932 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:06:32.880796 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (116.45s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	116.551s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (46.72s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.774s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:08:03.914802 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:08:04.415860 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:08:17.894743 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:08:18.395783 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:08:34.951734 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:08:35.453261 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (50.51s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.614s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:08:55.549456 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:08:56.077544 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:09:06.403791 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:09:06.904903 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:09:21.591733 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:09:22.134913 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (39.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.944s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (8.38s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	8.400s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:09:43.828491 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:09:44.353143 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:09:54.107411 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:09:54.649520 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:10:05.408188 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:10:05.992844 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.36s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.455s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:10:20.107811 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:10:20.647573 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:10:52.597630 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:10:53.154113 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:11:30.701991 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:11:31.226866 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (115.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	115.599s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (43.51s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.560s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:13:01.886954 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:13:02.387628 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:13:17.633909 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:13:18.134298 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:13:35.214629 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:13:35.714985 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (52.34s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.414s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+panic: find no region for 30203030303030303030
+
+goroutine 216 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc00007b740, {0xc00019a400, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc00019a400, 0xa, 0x10}, {0xc0000a2200, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad56b4, {0xad88f4, 0x7}, {0xc00019a400, 0xa, 0x10}, {0xc00019a3f8, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0xc0043687d0, 0x6f6baa, 0xc00435b160, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.055s
+FAIL
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (3.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.971s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:14:03.229413 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:14:03.754450 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:14:13.992920 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:14:14.545133 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:14:25.192609 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:14:25.749464 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (36.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.096s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:14:40.029785 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:14:40.589301 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:15:14.439484 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:15:14.980502 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:15:53.275123 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:15:53.830967 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (114.25s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	114.357s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (45.71s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.733s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:17:22.615741 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:17:23.117274 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:17:38.494187 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:17:38.994958 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:17:56.317580 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:17:56.817862 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (54.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	54.140s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:18:19.738085 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:18:20.289341 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:18:45.487927 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:18:46.032815 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:18:58.461988 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:18:58.996538 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (57.36s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	57.613s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.510s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:19:20.386819 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:19:20.924132 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:19:30.601849 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:19:31.124951 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:19:41.805604 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:19:42.352941 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.28s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.373s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:19:56.221029 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:19:56.785383 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:20:29.173451 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:20:29.737408 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:21:06.728208 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:21:07.297715 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (110.18s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	110.288s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (43.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.035s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:22:33.056834 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:22:33.557909 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:22:47.604688 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:22:48.106122 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:23:03.754561 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:23:04.255049 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (50.17s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.296s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:23:28.019109 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:23:28.553361 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:23:39.425394 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:23:39.926440 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:23:56.560240 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:23:57.122964 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (46.01s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.198s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.08s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.113s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:24:14.582424 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:24:15.117849 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:24:25.776950 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:24:26.301913 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:24:36.538790 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:24:37.097483 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.31s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.391s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:24:50.708102 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:24:51.252380 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:25:25.262658 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:25:25.831561 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:26:02.439838 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:26:03.007948 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (114.43s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	114.509s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (44.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.285s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:27:32.133351 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:27:32.634795 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:27:48.692365 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:27:49.207579 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:28:06.390889 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:28:06.891405 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (55.41s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	55.535s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+panic: find no region for 30203030303030303030
+
+goroutine 315 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc000184e40, {0xc08ea8a450, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc08ea8a450, 0xa, 0x10}, {0xc00016a158, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad56b4, {0xad88f4, 0x7}, {0xc08ea8a450, 0xa, 0x10}, {0xc08ea8a460, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0x0, 0x0, 0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.036s
+FAIL
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.34s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.360s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:28:36.911411 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:28:37.441221 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:28:47.636507 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:28:48.183630 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:28:58.694651 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:28:59.222891 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.78s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.875s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:29:13.538989 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:29:14.130129 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:29:47.964290 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:29:48.540237 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:30:25.407080 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:30:26.038622 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (113.89s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	113.979s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (46.90s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.928s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:31:57.126682 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:31:57.627951 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:32:13.415315 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:32:13.915666 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:32:30.429874 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:32:30.945382 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (51.97s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.069s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:32:50.204521 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:32:50.768370 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:33:06.067204 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:33:06.588566 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:33:20.945168 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:33:21.479771 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (45.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.399s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (16.42s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	16.454s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:33:51.986371 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:33:52.513539 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:34:03.490299 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:34:04.065141 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:34:15.658597 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:34:16.287772 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (37.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.095s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:34:30.879928 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:34:31.440453 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:35:04.725591 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:35:05.281923 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:35:41.535151 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:35:42.081507 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (111.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	112.104s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (47.65s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.700s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:37:12.777839 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:37:13.283217 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:37:27.893691 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:37:28.395037 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:37:44.399608 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:37:44.900355 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (50.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.068s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:38:05.498330 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:38:06.037293 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:38:20.195119 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:38:20.695917 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:38:31.910672 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:38:32.410943 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (46.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.384s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.43s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.449s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:38:56.004510 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:38:56.566216 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:39:06.717130 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:39:07.252098 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:39:17.936315 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:39:18.454734 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.050s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:39:32.778791 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:39:33.343478 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:40:08.170087 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:40:08.723628 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:40:46.279082 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:40:46.832328 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (118.34s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	118.450s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (44.01s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.034s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:42:17.875231 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:42:18.376233 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:42:33.866531 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:42:34.367287 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:42:50.183140 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:42:50.692274 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (52.43s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.556s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:43:11.130047 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:43:11.681824 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:43:22.523050 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:43:23.056731 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:43:46.050359 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:43:46.600943 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (55.42s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	55.664s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (7.13s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.144s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:44:14.062954 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:44:14.617345 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:44:24.918284 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:44:25.446659 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:44:35.496831 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:44:36.047054 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.33s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.463s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:44:50.508797 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:44:51.055242 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:45:23.064228 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:45:23.634992 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:46:01.569113 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:46:02.142569 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (110.66s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	110.779s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+2022/07/16 14:46:51.855659 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:51.856813 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:51.856814 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:51.857498 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:51.858909 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.354922 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.355851 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.357056 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.358122 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.358137 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.855225 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.856317 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.857453 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.857489 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:52.858129 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.355784 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.355860 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.356936 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.357760 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.359171 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.855394 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.856628 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.856682 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.857829 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:53.859041 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.354913 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.356080 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.357265 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.358449 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.358490 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.855656 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.856846 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.856909 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.858202 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:54.858267 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.354921 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.356190 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.357302 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.358387 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.358394 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.855040 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.856178 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.857475 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.857508 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:55.858105 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.354858 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.356071 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.357218 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.358303 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.358358 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.855432 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.856571 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.856601 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.857719 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:56.858840 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.354672 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.356809 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.356835 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.357931 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.358272 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.854871 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.855978 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.857146 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.858299 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:57.858380 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.354700 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.356729 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.356758 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.357865 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.359087 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.855087 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.856192 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.857305 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.858415 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:58.858412 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.355004 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.356212 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.357301 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.358104 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.358124 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.855498 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.856653 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.856707 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.857977 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:46:59.859052 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.355314 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.356481 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.357556 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.357590 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.358399 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.855442 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.856522 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.856629 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.857502 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:00.858838 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.354730 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.355932 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.357047 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.358185 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.358216 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.854700 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.855808 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.856913 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.858018 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:01.859109 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.355161 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.356247 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.357352 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.357380 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.358471 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.854845 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.855958 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.856733 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.858126 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:02.858155 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.355583 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.356648 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.356752 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.357884 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.358968 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.854997 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.856148 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.857284 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.857797 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:03.858150 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.355467 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.356585 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.356615 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.357714 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.358823 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.854672 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.855791 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.856869 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.858011 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:04.859156 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.354911 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.356023 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.357084 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.358188 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.358252 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.854631 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.855889 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.857020 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.858121 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:05.858137 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.354934 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.355871 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.357142 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.358239 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.358255 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.855463 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.856621 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.856647 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.857771 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:06.858879 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.354836 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.356394 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.357540 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.357629 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.358722 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.854879 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.855935 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.857009 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.857362 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:07.859121 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.355147 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.356242 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.356601 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.357402 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.358507 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.855611 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.856741 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.856798 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.857768 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:08.859199 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.355339 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.356509 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.356625 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.357666 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.358808 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.855656 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.855894 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.857225 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.858358 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:09.858458 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.354816 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.355863 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.356989 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.358056 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.359122 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.855255 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.856434 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.857612 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.857658 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:10.858556 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.354859 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.355991 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.357116 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.358270 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.358296 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.854946 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.856247 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.857378 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.857431 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:11.858550 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.355290 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.356454 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.356720 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.357538 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.358735 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.855115 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.856209 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.857360 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.857415 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:12.858522 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.355117 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.356267 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.357407 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.357456 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.358595 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.855515 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.855937 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.856624 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.857754 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:13.858880 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.354725 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.355875 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.357007 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.358170 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.358207 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.854742 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.855939 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.857220 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.857641 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:14.858427 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.355251 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.355854 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.357369 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.357414 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.358484 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.855336 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.856394 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.857459 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.857482 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:15.858565 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.355113 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.356679 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.356750 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.357842 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.358980 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.854634 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.856495 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.857570 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.857578 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:16.858641 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.354753 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.355800 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.356856 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.357918 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.358500 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.855028 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.856082 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.857120 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.858180 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:17.858192 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.354900 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.356113 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.357274 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.357450 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.358462 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.855208 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.856259 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.857327 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.858386 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:18.858389 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.355636 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.356711 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.356715 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.357790 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.358886 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.854811 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.855997 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.857177 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.858344 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:19.858496 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:47:20 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore13031902/kv/00000001.sst: open /tmp/test-raftstore13031902/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:47:20 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore2839178998/kv/00000001.sst: open /tmp/test-raftstore2839178998/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:47:20 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore916263975/kv/00000001.sst: open /tmp/test-raftstore916263975/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:47:20 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore3045623657/kv/00000001.sst: open /tmp/test-raftstore3045623657/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:47:20 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore3388432485/kv/00000001.sst: open /tmp/test-raftstore3388432485/kv/00000001.sst: no such file or directory[0m
+--- PASS: TestSnapshotUnreliable2C (45.18s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.214s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:47:28.959644 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:47:29.492494 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:47:44.083361 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:47:44.583619 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:48:00.399360 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:48:00.903078 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:48:02.404858 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.406207 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.406814 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.407156 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.407492 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.904934 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.906153 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.906880 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.907976 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:02.908090 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.404920 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.407279 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.407318 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.407567 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.407686 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.904832 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.906996 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.907017 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.908133 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:03.908188 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.404887 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.407253 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.407253 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.407331 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.408541 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.905634 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.906806 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.906899 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.907974 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:04.908039 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.405917 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.407076 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.407176 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.407248 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.408313 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.904867 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.906395 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.907562 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.907587 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:05.907627 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.405348 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.406160 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.407630 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.407680 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.407693 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.905769 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.906999 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.907093 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.908333 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:06.908404 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.405858 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.407038 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.407136 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.407250 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.408223 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.905366 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.906547 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.907725 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.907812 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:07.907818 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.405431 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.406200 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.407598 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.407669 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.407748 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.905232 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.906418 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.907619 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.907689 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:08.907724 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.404922 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.406195 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.407396 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.407419 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.407504 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.905304 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.906465 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.907708 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.907788 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:09.907792 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.405013 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.406612 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.407813 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.407882 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.407910 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.905896 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.907077 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.907184 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.907213 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:10.908456 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:11.405389 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:11.406589 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:11.406877 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:11.407861 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:11.407957 log.go:116: [0;31m[error] [no such file or directory]
+[0m
+2022/07/16 14:48:11 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore171133108/kv/00000001.sst: open /tmp/test-raftstore171133108/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:48:11 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore1031792157/kv/00000001.sst: open /tmp/test-raftstore1031792157/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:48:11 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore897195685/kv/00000001.sst: open /tmp/test-raftstore897195685/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:48:11 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore824968495/kv/00000001.sst: open /tmp/test-raftstore824968495/kv/00000001.sst: no such file or directory[0m
+2022/07/16 14:48:11 db.go:930: [0;31m[error] ERROR while opening file/tmp/test-raftstore274218634/kv/00000001.sst: open /tmp/test-raftstore274218634/kv/00000001.sst: no such file or directory[0m
+--- PASS: TestSnapshotUnreliableRecover2C (50.61s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.703s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:48:21.403264 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:48:21.937054 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:48:32.830848 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:48:33.362965 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:48:45.621286 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:48:46.153154 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (40.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.742s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- FAIL: TestOneSnapshot2C (10.15s)
+panic: can't get value 76313030 for key 6b313030 [recovered]
+	panic: can't get value 76313030 for key 6b313030
+
+goroutine 37 [running]:
+testing.tRunner.func1.2({0xa0b640, 0xc0e66e87d0})
+	/usr/local/go/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1212 +0x218
+panic({0xa0b640, 0xc0e66e87d0})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCf(0xc0000d5a40, {0xad6153, 0x4}, {0xc000111e2c, 0x4, 0x4}, {0xc000111e34, 0x4, 0x4})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:103 +0x285
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCfEqual(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:107
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.TestOneSnapshot2C(0xc0001c1040)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:479 +0x685
+testing.tRunner(0xc0001c1040, 0xb0b3e8)
+	/usr/local/go/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/go/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	10.185s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:49:12.077195 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:49:12.618721 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:49:23.270093 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:49:23.794919 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:49:34.244990 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:49:34.784505 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.58s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.672s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:49:48.503322 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:49:49.033291 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:50:23.770179 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:50:24.309811 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:50:59.865620 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:51:00.479113 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (114.71s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	114.844s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (45.34s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.365s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:52:31.160214 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:52:31.660701 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:52:46.778651 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:52:47.303108 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:53:03.817120 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:53:04.337330 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (53.15s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	53.240s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:53:25.802337 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:53:26.345663 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:53:37.348915 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:53:37.894318 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:53:52.181380 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:53:52.765836 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (44.82s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.090s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.006s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (10.22s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	10.249s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:54:21.167687 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:54:21.707435 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:54:31.748347 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:54:32.335584 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:54:42.572656 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:54:43.119068 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (34.91s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.021s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 14:54:57.146278 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:54:57.691882 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:55:39.717856 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:55:40.269303 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:56:14.631203 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:56:15.178476 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (118.62s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	118.725s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (42.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.044s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 14:57:40.989700 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:57:41.490609 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:57:55.599318 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:57:56.109986 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:58:13.273651 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:58:13.774529 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (51.13s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.242s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 14:58:34.122310 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:58:34.728536 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:58:49.208721 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:58:49.709884 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:59:06.819506 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:59:07.357294 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (50.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.053s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- FAIL: TestOneSnapshot2C (3.19s)
+panic: find no region for 6b31 [recovered]
+	panic: find no region for 6b31
+
+goroutine 50 [running]:
+testing.tRunner.func1.2({0xa0b640, 0xc0001f61a0})
+	/usr/local/go/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1212 +0x218
+panic({0xa0b640, 0xc0001f61a0})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc00007b6e0, {0xc0000c4a20, 0x2, 0x2})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x10, {0xc0000c4a20, 0x2, 0x2}, {0xc0000a2278, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xc00007b6e0, {0xad6153, 0x4}, {0xc0000c4a20, 0x2, 0x2}, {0xc0000c4a22, 0x2, 0x2})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.TestOneSnapshot2C(0xc00026e000)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:444 +0x10d
+testing.tRunner(0xc00026e000, 0xb0b3e8)
+	/usr/local/go/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/go/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.209s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 14:59:27.879473 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:59:28.415457 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:59:39.019137 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:59:39.599502 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 14:59:50.278281 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 14:59:50.802265 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (36.04s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.149s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:00:04.727110 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:00:05.273809 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:00:36.200016 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:00:36.773145 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:01:15.755186 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:01:16.338921 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (113.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	113.624s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (45.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.955s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:02:46.608466 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:02:47.109032 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:03:02.208242 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:03:02.709146 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:03:18.056108 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:03:18.556509 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (50.71s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.830s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 15:03:38.642096 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:03:39.306376 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:03:55.561893 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:03:56.119191 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:04:10.695073 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:04:11.264915 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (50.03s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.203s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.18s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.211s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:04:32.977754 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:04:33.517749 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:04:43.961802 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:04:44.495915 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:04:54.805639 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:04:55.349157 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.41s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.539s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:05:09.217719 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:05:09.779574 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:05:43.690124 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:05:44.265266 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:06:18.457868 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:06:19.027201 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (111.61s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	111.729s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (45.31s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.343s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:07:48.724618 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:07:49.225272 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:08:05.504661 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:08:06.005634 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:08:21.471397 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:08:21.987267 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (51.34s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.451s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 15:08:41.155113 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:08:41.702003 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:08:58.509254 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:08:59.029392 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:09:10.199169 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:09:10.701341 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (44.64s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.837s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (8.94s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	8.977s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:09:36.225615 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:09:36.738079 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:09:46.614940 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:09:47.165219 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:09:57.264548 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:09:57.821494 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (36.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.919s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:10:13.517062 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:10:14.129940 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:10:44.968776 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:10:45.559038 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:11:32.938667 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:11:33.483412 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (120.54s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	120.793s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (46.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.047s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:13:02.390150 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:13:02.891043 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:13:19.032810 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:13:19.534163 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:13:35.972836 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:13:36.473270 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (53.39s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	53.523s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+panic: find no region for 30203030303030303030
+
+goroutine 265 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc000180f60, {0xc0042bb490, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc0042bb490, 0xa, 0x10}, {0xc0042c4270, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad56b4, {0xad88f4, 0x7}, {0xc0042bb490, 0xa, 0x10}, {0xc0042bb488, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0x8b80ee, 0xc0042fa700, 0xc17bb204e0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.929s
+FAIL
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- FAIL: TestOneSnapshot2C (10.23s)
+panic: can't get value 76313030 for key 6b313030 [recovered]
+	panic: can't get value 76313030 for key 6b313030
+
+goroutine 43 [running]:
+testing.tRunner.func1.2({0xa0b640, 0xc0e68bd890})
+	/usr/local/go/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1212 +0x218
+panic({0xa0b640, 0xc0e68bd890})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCf(0xc0043aa000, {0xad6153, 0x4}, {0xc000127e2c, 0x4, 0x4}, {0xc000127e34, 0x4, 0x4})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:103 +0x285
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCfEqual(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:107
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.TestOneSnapshot2C(0xc00008b520)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:479 +0x685
+testing.tRunner(0xc00008b520, 0xb0b3e8)
+	/usr/local/go/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/go/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	10.273s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:14:11.308929 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:14:11.844915 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:14:21.801606 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:14:22.351584 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:14:33.139248 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:14:33.656526 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.63s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.749s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:14:47.792032 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:14:48.343693 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:15:22.929933 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:15:23.485225 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:16:01.124969 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:16:01.757279 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (118.92s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	119.059s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (44.59s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.637s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:17:33.901056 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:17:34.401642 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:17:49.236911 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:17:49.737425 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:18:06.330502 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:18:06.831568 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (51.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.895s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 15:18:26.553587 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:18:27.103047 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:18:54.825329 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:18:55.354636 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:19:08.354816 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:19:08.926980 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (57.98s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	58.253s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.25s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.271s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:19:29.757912 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:19:30.301909 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:19:40.828857 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:19:41.354089 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:19:51.838796 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:19:52.379952 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.952s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:20:06.461257 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:20:07.031159 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:20:40.984740 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:20:41.613897 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:21:18.593234 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:21:19.139942 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (112.06s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	112.174s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (46.90s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.918s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:22:48.211749 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:22:48.712607 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:23:03.065793 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:23:03.566677 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:23:21.236878 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:23:21.752092 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (53.28s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	53.417s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 15:23:43.080838 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:23:43.656261 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:24:06.752296 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:24:07.448799 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:24:22.201372 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:24:22.765355 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (58.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	58.358s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (4.51s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.543s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:24:45.841955 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:24:46.388304 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:24:56.559006 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:24:57.124923 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:25:08.254377 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:25:08.796153 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (37.62s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.761s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:25:23.956224 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:25:24.563006 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:25:56.768949 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:25:57.333543 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:26:35.487338 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:26:36.035696 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (112.18s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	112.338s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (46.30s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.351s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:28:05.198463 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:28:05.699020 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:28:20.692355 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:28:21.193011 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:28:37.322544 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:28:37.823562 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (53.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	53.206s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 15:28:59.170201 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:28:59.703985 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:29:11.676891 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:29:12.183971 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:29:27.478080 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:29:28.016005 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (43.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.127s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- PASS: TestOneSnapshot2C (7.16s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.181s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:29:50.698151 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:29:51.233876 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:30:01.518317 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:30:02.048121 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:30:12.568662 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:30:13.091124 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (36.16s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.289s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:30:27.747750 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:30:28.308252 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:31:00.806938 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:31:01.362059 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:31:48.342271 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:31:48.905392 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (120.69s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	120.803s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (44.75s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.799s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:33:15.741805 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:33:16.242183 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:33:31.728977 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:33:32.229320 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:33:49.103609 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:33:49.608743 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (54.36s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	54.493s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 15:34:11.595659 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:34:12.137223 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:34:24.733413 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:34:25.233986 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:34:38.393899 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:34:38.926539 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (45.90s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.051s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.002s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- FAIL: TestOneSnapshot2C (10.23s)
+panic: can't get value 76313030 for key 6b313030 [recovered]
+	panic: can't get value 76313030 for key 6b313030
+
+goroutine 27 [running]:
+testing.tRunner.func1.2({0xa0b640, 0xc0e6fbe5b0})
+	/usr/local/go/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1212 +0x218
+panic({0xa0b640, 0xc0e6fbe5b0})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCf(0xc00021b680, {0xad6153, 0x4}, {0xc0000b5e2c, 0x4, 0x4}, {0xc0000b5e34, 0x4, 0x4})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:103 +0x285
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCfEqual(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:107
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.TestOneSnapshot2C(0xc00012eea0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:479 +0x685
+testing.tRunner(0xc00012eea0, 0xb0b3e8)
+	/usr/local/go/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/go/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	10.266s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:35:07.689958 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:35:08.218699 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:35:18.380982 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:35:18.943025 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:35:29.179330 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:35:29.691703 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (35.19s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.282s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:35:43.742197 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:35:44.329814 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:36:20.363126 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:36:20.907865 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:36:57.027648 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:36:57.566648 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (113.62s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	113.771s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (48.64s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.678s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:38:28.749174 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:38:29.250133 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:38:45.325014 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:38:45.825328 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:39:03.140363 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:39:03.659732 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (55.63s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	55.773s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecoverConcurrentPartition2C|| true
+=== RUN   TestSnapshotUnreliableRecoverConcurrentPartition2C
+2022/07/16 15:39:27.785217 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:39:28.341966 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:39:43.350725 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:39:43.882662 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:39:55.119704 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:39:55.723529 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecoverConcurrentPartition2C (44.33s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.519s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./raft -run 2C || true
+=== RUN   TestRestoreSnapshot2C
+--- PASS: TestRestoreSnapshot2C (0.00s)
+=== RUN   TestRestoreIgnoreSnapshot2C
+--- PASS: TestRestoreIgnoreSnapshot2C (0.00s)
+=== RUN   TestProvideSnap2C
+--- PASS: TestProvideSnap2C (0.00s)
+=== RUN   TestRestoreFromSnapMsg2C
+--- PASS: TestRestoreFromSnapMsg2C (0.00s)
+=== RUN   TestSlowNodeRestore2C
+--- PASS: TestSlowNodeRestore2C (0.00s)
+=== RUN   TestRawNodeRestartFromSnapshot2C
+--- PASS: TestRawNodeRestartFromSnapshot2C (0.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/raft	0.003s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSnapshot2C|| true
+=== RUN   TestOneSnapshot2C
+--- FAIL: TestOneSnapshot2C (10.16s)
+panic: can't get value 76313030 for key 6b313030 [recovered]
+	panic: can't get value 76313030 for key 6b313030
+
+goroutine 27 [running]:
+testing.tRunner.func1.2({0xa0b640, 0xc0e761fac0})
+	/usr/local/go/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1212 +0x218
+panic({0xa0b640, 0xc0e761fac0})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCf(0xc0001d0030, {0xad6153, 0x4}, {0xc0000b5e2c, 0x4, 0x4}, {0xc0000b5e34, 0x4, 0x4})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:103 +0x285
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.MustGetCfEqual(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/utils.go:107
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.TestOneSnapshot2C(0xc000120ea0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:479 +0x685
+testing.tRunner(0xc000120ea0, 0xb0b3e8)
+	/usr/local/go/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/go/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	10.180s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecover2C|| true
+=== RUN   TestSnapshotRecover2C
+2022/07/16 15:40:20.568721 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:40:21.124562 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:40:30.535862 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:40:31.091714 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:40:41.686708 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:40:42.219821 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecover2C (34.68s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.784s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotRecoverManyClients2C|| true
+=== RUN   TestSnapshotRecoverManyClients2C
+2022/07/16 15:40:56.083554 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:40:56.650740 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:41:32.899743 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:41:33.494148 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:42:09.892105 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:42:10.422303 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotRecoverManyClients2C (113.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	113.213s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliable2C|| true
+=== RUN   TestSnapshotUnreliable2C
+--- PASS: TestSnapshotUnreliable2C (46.48s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.502s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSnapshotUnreliableRecover2C|| true
+=== RUN   TestSnapshotUnreliableRecover2C
+2022/07/16 15:43:38.418585 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:43:38.919115 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:43:53.153834 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:43:53.654967 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/16 15:44:10.516182 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/16 15:44:11.054167 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSnapshotUnreliableRecover2C (53.06s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	53.159s

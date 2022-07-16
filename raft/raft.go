@@ -281,6 +281,8 @@ func (r *Raft) tick() {
 	case StateCandidate:
 		r.electionElapsed++
 		if r.electionElapsed >= r.electionTimeout { // reset
+			r.resetElectionTimer()
+			log.Infof("%d timeout", r.id)
 			err := r.Step(pb.Message{
 				MsgType: pb.MessageType_MsgHup,
 				To:      r.id,
@@ -310,13 +312,12 @@ func (r *Raft) tick() {
 // becomeFollower transform this peer's state to Follower
 func (r *Raft) becomeFollower(term uint64, lead uint64) {
 	// Your Code Here (2A).
-	//log.Infof("%d become follower of %d, term:%d", r.id, lead, term)
+	//log.Infof("\t\t%d become follower of %d, term:%d", r.id, lead, term)
 	r.State = StateFollower
 	r.Term = term
 	r.Lead = lead
 	r.Vote = None
 	r.resetVotes()
-	r.resetTimerElapsed()
 }
 
 // becomeCandidate transform this peer's state to candidate
@@ -329,7 +330,6 @@ func (r *Raft) becomeCandidate() {
 	r.Vote = r.id // vote for self
 	r.resetVotes()
 	r.votes[r.id] = true
-	r.resetTimerElapsed()
 	r.resetElectionTimer()
 }
 
@@ -337,12 +337,12 @@ func (r *Raft) becomeCandidate() {
 func (r *Raft) becomeLeader() {
 	// Your Code Here (2A).
 	// NOTE: Leader should propose a noop entry on its term
-	log.Infof("%d become leader term:%d", r.id, r.Term)
+	log.Infof("%d become leader term:%d, votes:%v", r.id, r.Term, r.votes)
 	r.State = StateLeader
 	r.Lead = r.id
 	r.Vote = None
 	r.resetVotes()
-	r.resetTimerElapsed()
+	r.heartbeatElapsed = 0
 	// init Progress of peers
 	nextIndex := r.RaftLog.LastIndex() + 1
 	for _, p := range r.Prs {
@@ -492,6 +492,7 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 		return
 	}
 	// now accept
+	r.resetElectionTimer()
 	r.becomeFollower(m.Term, m.From)
 	// match prevLogIndex and prevLogTerm
 	//log.Infof("%d handle append entries from %d, ents:%v, r.ents:%v", r.id, m.From, m.Entries, r.RaftLog.entries)
@@ -567,6 +568,7 @@ func (r *Raft) handleHeartbeat(m pb.Message) { // FIXME: not sure
 		return
 	}
 	// accept
+	r.resetElectionTimer()
 	//log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 	r.becomeFollower(m.Term, m.From) // FIXME: not sure
 	index := r.RaftLog.LastIndex()
@@ -649,7 +651,7 @@ func (r *Raft) broadcastRequestVote() {
 }
 
 func (r *Raft) broadcastAppend() {
-	log.Infof("%d broadcast append", r.id)
+	log.Infof("%d broadcast append, term:%v", r.id, r.Term)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendAppend(p)
@@ -675,6 +677,7 @@ func (r *Raft) handleHup(m pb.Message) {
 }
 
 func (r *Raft) sendRequestVoteResponse(to uint64, reject bool) {
+	//log.Infof("%d send req vote resp to %d, reject:%v", r.id, to, reject)
 	r.sendMsg(pb.Message{
 		MsgType: pb.MessageType_MsgRequestVoteResponse,
 		To:      to,
@@ -693,19 +696,20 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 	if r.Vote == None || r.Vote == m.From { // FIXME: not sure must be follower
 		lastIndex := r.RaftLog.LastIndex()
 		lastLogTerm, _ := r.RaftLog.Term(lastIndex)
+		//log.Infof("lastIndex:%v, lastLogTerm:%v, m.index:%v, m.logTerm:%v", lastIndex, lastLogTerm, m.Index, m.LogTerm)
 		if lastLogTerm < m.LogTerm || (lastLogTerm == m.LogTerm && lastIndex <= m.Index) { // at least up-to-date, vote
 			r.Vote = m.From
 			reject = false
 		}
 	}
-	//log.Infof("%d handle req vote from %d, reject:%v, ents:%v, m.ents:%v, r.vote:%d", r.id, m.From, reject, r.RaftLog.entries, m.Entries, r.Vote)
+	//log.Infof("%d handle req vote from %d, reject:%v, r.vote:%v, r.votes:%v, m.index:%v, m.logterm:%v, r.ents:%v", r.id, m.From, reject, r.Vote, r.votes, m.Index, m.LogTerm, r.RaftLog.entries)
 	if !reject {
 		r.resetElectionTimer()
 	}
 	r.sendRequestVoteResponse(m.From, reject)
 }
 
-func (r *Raft) appendEntry(en pb.Entry) bool { // FIXME:
+func (r *Raft) appendEntry(en pb.Entry) bool {
 	return r.RaftLog.appendEntry(en)
 }
 
@@ -737,11 +741,6 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 
 func (r *Raft) resetVotes() {
 	r.votes = make(map[uint64]bool)
-}
-
-func (r *Raft) resetTimerElapsed() {
-	r.electionElapsed = 0
-	r.heartbeatElapsed = 0
 }
 
 func (r *Raft) handleHeartbeatResponse(m pb.Message) {
