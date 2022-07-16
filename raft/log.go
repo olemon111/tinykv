@@ -79,13 +79,12 @@ func newLog(storage Storage) *RaftLog {
 		log.Infof("newlog first:%d, last:%d, ents:%v", firstIndex, lastIndex, entries)
 	}
 	return &RaftLog{
-		storage:         storage,
-		committed:       hardState.GetCommit(),
-		applied:         firstIndex - 1,
-		stabled:         lastIndex,
-		entries:         entries,
-		pendingSnapshot: nil,
-		first:           firstIndex,
+		storage:   storage,
+		committed: hardState.GetCommit(),
+		applied:   firstIndex - 1,
+		stabled:   lastIndex,
+		entries:   entries,
+		first:     firstIndex,
 	}
 }
 
@@ -94,6 +93,12 @@ func newLog(storage Storage) *RaftLog {
 // grow unlimitedly in memory
 func (l *RaftLog) maybeCompact() {
 	// Your Code Here (2C).
+	// update first index
+	newFirst, _ := l.storage.FirstIndex()
+	if newFirst > l.first && len(l.entries) > 0 {
+		l.entries = l.entries[newFirst-l.first:]
+		l.first = newFirst
+	}
 }
 
 // unstableEntries return all the unstable entries
@@ -138,14 +143,24 @@ func (l *RaftLog) FirstIndex() uint64 {
 // Term return the term of the entry in the given index
 func (l *RaftLog) Term(i uint64) (uint64, error) {
 	// Your Code Here (2A).
-	// FIXME: not sure
 	//log.Infof("i:%d, first:%d, len:%d", i, l.first, len(l.entries))
-	if len(l.entries) == 0 {
-		return 0, nil
+	// search in pending snapshot
+	if !IsEmptySnap(l.pendingSnapshot) {
+		if i == l.pendingSnapshot.GetMetadata().GetIndex() {
+			return l.pendingSnapshot.GetMetadata().GetTerm(), nil
+		}
 	}
+	// search in storage
+	if i < l.first {
+		return l.storage.Term(i)
+	}
+	// search in memory
 	if len(l.entries) > 0 && i >= l.first && i-l.first < uint64(len(l.entries)) { // in range
 		term := l.entries[i-l.first].Term
 		return term, nil
+	}
+	if len(l.entries) == 0 {
+		return 0, nil
 	}
 	return 0, errors.New("entry not found")
 }
@@ -190,4 +205,20 @@ func (l *RaftLog) setApplied(i uint64) {
 
 func (l *RaftLog) setStabled(i uint64) {
 	l.stabled = i
+}
+
+func (l *RaftLog) setFirst(i uint64) {
+	l.first = i
+}
+
+func (l *RaftLog) resetState(i uint64) {
+	l.setFirst(i + 1)
+	l.setApplied(i)
+	l.setCommitted(i)
+	l.setStabled(i)
+	l.entries = nil
+}
+
+func (l *RaftLog) setPendingSnapshot(snapshot *pb.Snapshot) {
+	l.pendingSnapshot = snapshot
 }

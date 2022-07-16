@@ -51,20 +51,34 @@ func (d *peerMsgHandler) applyNormalEntry(entry *pb.Entry, kvWB *engine_util.Wri
 		return
 	}
 	// handle requests
-	if len(raftCmdRequest.Requests) == 0 {
-		d.applyAdminRequest(raftCmdRequest.AdminRequest, entry)
-	} else {
+	if raftCmdRequest.AdminRequest != nil {
+		d.applyAdminRequest(raftCmdRequest.AdminRequest, entry, kvWB)
+	} else if len(raftCmdRequest.Requests) > 0 {
 		d.applyNormalRequest(raftCmdRequest, entry, kvWB)
 	}
 }
 
-func (d *peerMsgHandler) applyAdminRequest(msg *raft_cmdpb.AdminRequest, entry *pb.Entry) { // TODO:
+func (d *peerMsgHandler) applyAdminRequest(req *raft_cmdpb.AdminRequest, entry *pb.Entry, kvWB *engine_util.WriteBatch) {
+	switch req.GetCmdType() {
+	case raft_cmdpb.AdminCmdType_InvalidAdmin:
+	case raft_cmdpb.AdminCmdType_ChangePeer:
+	case raft_cmdpb.AdminCmdType_CompactLog:
+		if req.GetCompactLog().GetCompactIndex() > d.peerStorage.applyState.GetTruncatedState().GetIndex() {
+			// update raftApplyState
+			d.peerStorage.applyState.TruncatedState.Term = req.CompactLog.GetCompactTerm()
+			d.peerStorage.applyState.TruncatedState.Index = req.CompactLog.GetCompactIndex()
+			// schedule raftLogGCTask to do log deletion work asynchronously
+			d.ScheduleCompactLog(req.CompactLog.CompactIndex)
+		}
+	case raft_cmdpb.AdminCmdType_TransferLeader:
+	case raft_cmdpb.AdminCmdType_Split:
+	}
 
 }
 
 func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entry *pb.Entry, kvWB *engine_util.WriteBatch) {
 	resp := &raft_cmdpb.RaftCmdResponse{
-		Header: &raft_cmdpb.RaftResponseHeader{}, // FIXME: not sure if term needed
+		Header: &raft_cmdpb.RaftResponseHeader{},
 	}
 	var txn *badger.Txn
 	req := msg.Requests[0]
@@ -178,7 +192,7 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		log.Infof("apply entry:%v", en)
 		d.applyEntry(&en, kvWB)
 		// update RaftApplyState
-		if en.Index > d.peerStorage.applyState.AppliedIndex { // FIXME: not sure
+		if en.Index > d.peerStorage.applyState.AppliedIndex {
 			d.peerStorage.applyState.AppliedIndex = en.Index
 		}
 		if d.stopped { // FIXME: not understand
@@ -191,7 +205,6 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		log.Infof("set apply state failed: %v", err)
 		return
 	}
-	// FIXME: stopped
 	kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
 	// advance raft node
 	d.RaftGroup.Advance(ready)
@@ -319,7 +332,28 @@ func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb
 }
 
 func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
-	// TODO:
+	req := msg.AdminRequest
+	switch req.CmdType {
+	case raft_cmdpb.AdminCmdType_InvalidAdmin:
+	case raft_cmdpb.AdminCmdType_ChangePeer:
+	case raft_cmdpb.AdminCmdType_CompactLog:
+		// propose
+		data, err := msg.Marshal() // marshall request
+		if err != nil {
+			log.Panicf("marshal raft cmd request error %v", err)
+			cb.Done(ErrResp(err))
+			return
+		}
+		err = d.RaftGroup.Propose(data)
+		if err != nil {
+			log.Infof("propose error %v", err)
+			cb.Done(ErrResp(err))
+			return
+		}
+	case raft_cmdpb.AdminCmdType_TransferLeader:
+	case raft_cmdpb.AdminCmdType_Split:
+		// TODO:
+	}
 }
 
 func (d *peerMsgHandler) onTick() {
