@@ -1763,3 +1763,3043 @@ GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^
 [0m
 2022/07/17 00:13:17.420159 test_test.go:264: [0;33m[warning] restart servers
 [0m
+--- PASS: TestPersistConcurrent2B (50.87s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.000s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 00:13:38.439510 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:13:38.940868 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:13:53.874671 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:13:54.375875 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:14:09.805065 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:14:10.310159 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (48.86s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.941s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 00:14:28.125450 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:14:28.660286 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:14:42.468278 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:14:43.109110 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:14:57.626789 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:14:58.128573 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (44.67s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.764s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 00:15:13.346783 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:15:13.877017 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:15:26.817157 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:15:27.344187 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:15:41.662961 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:15:42.207922 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (45.37s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.562s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.32s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.373s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.21s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.253s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (40.89s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.932s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (7.21s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.234s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (26.48s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	26.561s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (36.52s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.632s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 00:19:03.650247 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:19:04.184644 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:19:12.797443 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:19:13.326147 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:19:22.521680 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:19:23.077515 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (31.71s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.830s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 00:19:36.195611 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:19:36.737630 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:19:51.659357 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:19:52.195485 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:20:08.361838 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:20:08.947550 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (51.68s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.822s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 00:20:29.849960 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:20:30.368506 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:20:45.444598 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:20:45.944938 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:21:01.043733 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:21:01.544945 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (50.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.597s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 00:21:21.403599 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:21:21.916885 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:21:34.060459 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:21:34.614006 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:21:46.504596 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:21:47.025768 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (41.61s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.779s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 00:22:03.577746 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:22:04.117644 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:22:13.580351 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:22:14.114337 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:22:27.026301 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:22:27.548145 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (42.35s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.509s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.91s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.961s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.61s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.662s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (41.38s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.428s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (13.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	13.086s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.159s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (37.43s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.517s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 00:25:55.890109 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:25:56.429452 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:26:04.390801 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:26:04.920976 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:26:13.985140 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:26:14.502761 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (31.12s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.230s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 00:26:27.462970 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:26:27.997732 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:26:42.250361 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:26:42.830733 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:26:59.266437 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:26:59.806299 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (51.90s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.025s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 00:27:21.473986 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:27:21.975003 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:27:34.742898 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:27:35.246494 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:27:50.817150 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:27:51.324466 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (47.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.969s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 00:28:11.090814 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:28:11.639098 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:28:22.679992 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:28:23.181110 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:28:34.972878 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:28:35.474159 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (41.30s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.498s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 00:28:52.250438 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:28:52.751094 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:29:03.968554 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:29:04.530699 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:29:15.426236 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:29:15.927626 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (37.52s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.654s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.257s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.57s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.612s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (40.33s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.369s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (5.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	5.747s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.812s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (33.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.808s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 00:32:27.052924 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:32:27.576706 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:32:37.212442 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:32:37.774001 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:32:47.499566 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:32:48.018021 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (34.06s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.159s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 00:33:02.093460 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:33:02.638593 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:33:15.921463 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:33:16.466931 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:33:31.678657 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:33:32.228524 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (47.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.812s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 00:33:52.357894 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:33:52.858701 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:34:05.870866 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:34:06.394274 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:34:23.005515 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:34:23.506688 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (50.11s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.220s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 00:34:42.697490 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:34:43.253315 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:34:56.521673 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:34:57.029554 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:35:08.869436 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:35:09.370618 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (41.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.639s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 00:35:25.863486 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:35:26.401202 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:35:39.616646 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:35:40.144884 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:35:50.506334 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:35:51.077920 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (42.29s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.487s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (24.46s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.504s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.68s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.722s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+panic: find no region for 30203030303030303030
+
+goroutine 261 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc000204de0, {0xc147ca6190, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc147ca6190, 0xa, 0x10}, {0xc147cac030, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad5674, {0xad88b4, 0x7}, {0xc147ca6190, 0xa, 0x10}, {0xc147ca6188, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0xc0000b6018)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0xc0001f7fd0, 0x6f6baa, 0xc0001df180, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.966s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (5.78s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	5.798s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (26.11s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	26.140s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (35.98s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.083s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 00:38:32.237531 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:38:32.794898 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:38:42.234456 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:38:42.763055 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:38:52.027740 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:38:52.550944 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.150s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 00:39:05.156370 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:39:05.697727 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:39:19.792024 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:39:20.325787 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:39:36.990990 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:39:37.514663 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.806s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 00:39:57.582992 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:39:58.099957 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:40:11.209942 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:40:11.724253 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:40:26.946038 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:40:27.447413 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (47.31s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.415s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 00:40:46.002520 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:40:46.503745 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:40:58.623538 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:40:59.152511 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:41:14.277712 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:41:14.810233 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (43.46s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.607s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 00:41:29.826721 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:41:30.327168 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:41:40.612224 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:41:41.153250 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:41:53.910226 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:41:54.411265 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (38.65s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.842s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.88s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.926s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.63s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.672s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (40.73s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.784s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (7.60s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.630s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.51s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.592s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (38.58s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.682s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 00:45:13.923907 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:45:14.484747 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:45:22.846751 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:45:23.376356 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:45:32.848907 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:45:33.379544 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.314s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 00:45:46.976058 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:45:47.554286 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:46:01.377819 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:46:01.939316 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:46:17.425431 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:46:18.025155 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.25s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.337s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 00:46:39.015018 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:46:39.573151 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:46:53.487253 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:46:53.988346 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:47:09.884517 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:47:10.386048 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (50.33s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.467s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 00:47:30.587957 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:47:31.158887 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:47:43.669860 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:47:44.170840 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:47:54.604535 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:47:55.105591 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (37.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.320s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 00:48:10.578458 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:48:11.135178 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:48:23.949901 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:48:24.461481 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:48:33.863156 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:48:34.364195 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (40.09s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.277s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.54s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.583s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.91s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.956s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (42.34s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.386s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (6.09s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	6.139s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.626s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (30.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.033s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 00:56:44.344113 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:56:44.880497 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:56:53.910905 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:56:54.423454 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:57:04.002070 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:57:04.530895 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.92s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.096s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 00:57:18.189240 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:57:18.740999 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:57:33.250747 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:57:33.794435 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:57:50.798082 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:57:51.345587 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (52.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.161s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 00:58:12.224936 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:58:12.726309 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:58:26.269299 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:58:26.769654 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:58:41.881466 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:58:42.406069 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (47.94s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.102s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 00:59:01.946681 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:59:02.512604 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:59:16.582634 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:59:17.135968 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:59:29.432776 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:59:29.995048 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (43.16s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.352s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 00:59:44.735933 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:59:45.236461 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 00:59:57.424459 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 00:59:57.925374 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:00:09.124210 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:00:09.734449 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (39.64s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.825s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (24.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.006s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.62s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.650s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (46.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.593s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (8.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	8.056s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (27.38s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	27.478s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (34.88s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.997s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:03:35.428239 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:03:35.955674 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:03:45.078409 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:03:45.641907 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:03:55.434035 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:03:55.964134 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (33.06s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.218s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:04:09.359677 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:04:09.917891 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:04:23.985324 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:04:24.571796 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:04:40.527047 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:04:41.068340 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (49.82s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.983s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:05:01.237148 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:05:01.737768 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:05:15.326261 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:05:15.826829 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:05:32.075663 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:05:32.576184 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (48.82s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.954s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:05:51.645551 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:05:52.187426 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:06:02.394444 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:06:02.987539 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:06:17.691251 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:06:18.192676 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (41.19s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.405s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:06:32.736524 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:06:33.237946 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:06:43.766569 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:06:44.363610 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:06:56.757697 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:06:57.332073 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (39.12s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.340s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.42s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.445s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (45.23s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.288s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (40.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.080s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (6.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	6.720s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (25.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	26.040s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (37.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.660s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:10:17.126712 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:10:17.680389 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:10:27.762895 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:10:28.282247 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:10:36.920844 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:10:37.445721 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (33.28s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.414s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:10:51.223432 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:10:51.752712 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:11:06.498035 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:11:07.054770 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:11:22.441160 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:11:22.999494 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (51.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.400s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:11:44.301810 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:11:44.802859 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:11:57.167092 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:11:57.668284 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:12:11.390045 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:12:11.892447 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (45.57s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.723s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:12:30.888695 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:12:31.390145 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:12:42.657802 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:12:43.305472 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:12:53.423610 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:12:53.938243 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (36.86s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.067s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:13:09.495750 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:13:10.020566 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:13:21.407123 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:13:21.964620 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:13:33.368574 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:13:33.885976 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (38.34s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.563s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.18s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.206s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.33s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.364s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (41.29s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.319s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (5.87s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	5.915s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.59s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.647s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (32.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.602s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:16:44.880415 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:16:45.437452 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:16:54.636473 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:16:55.172475 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:17:05.176894 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:17:05.716096 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.60s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.747s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:17:18.272187 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:17:18.844363 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:17:36.923215 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:17:37.462912 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:17:53.466599 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:17:54.012391 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (54.12s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	54.279s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:18:14.413015 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:18:14.914189 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:18:29.732937 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:18:30.262297 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:18:45.887095 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:18:46.398305 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (50.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.122s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:19:06.147041 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:19:06.695860 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:19:16.103227 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:19:16.617786 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:19:29.155393 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:19:29.690402 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (38.72s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.889s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:19:46.329607 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:19:46.873576 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:20:00.608997 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:20:01.109380 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:20:15.170001 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:20:15.719817 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (43.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.082s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.28s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.307s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.75s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.797s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (41.31s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.351s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (5.79s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	5.829s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (26.32s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	26.465s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (35.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.622s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:23:31.703991 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:23:32.244618 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:23:40.943402 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:23:41.469285 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:23:51.405669 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:23:51.925385 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.52s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.671s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:24:05.021890 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:24:05.580778 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:24:20.783787 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:24:21.323039 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:24:36.765076 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:24:37.320658 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.73s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.900s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:24:58.501042 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:24:59.002571 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:25:14.758227 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:25:15.258540 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:25:29.301285 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:25:29.802197 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (50.71s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.877s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:25:49.538830 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:25:50.039282 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:26:00.839027 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:26:01.339825 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:26:13.330061 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:26:13.957513 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (38.75s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.953s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:26:30.250293 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:26:30.804795 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:26:44.822319 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:26:45.322747 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:26:56.434901 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:26:56.944036 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (39.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.179s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.081s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (45.17s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.201s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (42.40s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.451s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (7.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.763s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (23.88s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	23.966s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (35.27s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.372s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:30:12.616034 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:30:13.164797 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:30:22.730407 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:30:23.243136 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:30:32.029841 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:30:32.543722 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (31.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.079s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:30:45.457766 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:30:45.998127 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:31:00.662725 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:31:01.188663 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:31:17.500977 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:31:18.046997 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.71s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.858s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:31:37.854314 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:31:38.354858 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:31:53.703586 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:31:54.205014 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:32:09.184300 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:32:09.684775 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (50.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.279s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:32:29.720638 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:32:30.221826 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:32:42.333794 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:32:42.887617 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:32:56.232554 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:32:56.733660 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (41.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.587s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:33:12.394444 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:33:12.973039 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:33:24.258224 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:33:24.758593 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:33:38.392637 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:33:38.894120 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (40.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.346s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.717s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (42.77s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.803s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (40.53s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.576s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (9.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.882s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.56s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.655s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (34.06s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.153s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:36:53.152605 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:36:53.700156 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:37:02.955329 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:37:03.502124 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:37:12.531625 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:37:13.079515 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.40s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.496s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:37:26.277981 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:37:26.824820 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:37:41.150754 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:37:41.703684 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:37:56.914426 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:37:57.449687 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.44s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.578s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:38:18.455911 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:38:18.978596 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:38:33.951692 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:38:34.451965 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:38:49.807526 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:38:50.319965 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (49.51s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.664s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:39:09.447374 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:39:09.972456 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:39:21.844037 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:39:22.396521 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:39:33.250690 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:39:33.751439 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (37.89s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.085s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:39:47.883786 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:39:48.393658 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:40:03.434075 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:40:03.978514 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:40:15.029986 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:40:15.567666 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (43.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.263s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (24.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.992s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.63s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.662s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (42.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.010s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (6.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	6.833s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (25.13s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.254s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (34.06s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.168s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:43:32.657816 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:43:33.216286 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:43:42.424180 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:43:42.949889 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:43:52.555887 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:43:53.084318 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.68s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.832s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:44:06.195383 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:44:06.774479 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:44:21.873922 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:44:22.425986 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:44:37.798219 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:44:38.331841 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (52.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.225s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:45:00.248226 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:45:00.749375 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:45:15.161595 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:45:15.662818 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:45:31.329073 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:45:31.850265 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (49.36s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.512s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:45:51.281581 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:45:51.963819 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:46:01.744583 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:46:02.329460 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:46:14.070413 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:46:14.571033 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (39.67s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.867s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:46:31.137404 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:46:31.637773 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:46:46.098433 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:46:46.655267 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:46:56.867565 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:46:57.418023 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (41.22s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.424s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (24.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.997s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.241s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (41.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.519s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (6.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	6.861s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (27.63s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	27.705s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (34.65s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.794s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:50:15.969782 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:50:16.531040 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:50:26.050808 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:50:26.563828 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:50:35.911695 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:50:36.441962 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.98s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.143s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:50:49.847667 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:50:50.372316 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:51:05.397746 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:51:05.911068 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:51:22.164963 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:51:22.706960 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.73s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.885s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:51:42.513842 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:51:43.015062 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:51:56.681819 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:51:57.182761 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:52:12.179969 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:52:12.680365 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (47.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.077s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:52:31.181414 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:52:31.748287 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:52:43.029602 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:52:43.540675 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:52:56.057762 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:52:56.560828 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (38.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.433s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+panic: find no region for 30203030303030303030
+
+goroutine 107 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc00007afc0, {0xc000024470, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc000024470, 0xa, 0x10}, {0xc0000104f0, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad5674, {0xad88b4, 0x7}, {0xc000024470, 0xa, 0x10}, {0xc000024468, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0x0, 0x0, 0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.052s
+FAIL
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.516s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.746s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (40.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.999s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (9.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.248s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+panic: find no region for 30203030303030303030
+
+goroutine 165 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc00007b7a0, {0xc000024710, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc000024710, 0xa, 0x10}, {0xc0000a22c8, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad5674, {0xad88b4, 0x7}, {0xc000024710, 0xa, 0x10}, {0xc000024720, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0x0, 0x0, 0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.360s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (34.48s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.605s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 01:55:57.493086 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:55:58.053271 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:56:07.966599 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:56:08.524183 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:56:17.182163 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:56:17.773966 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.959s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 01:56:31.116154 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:56:31.677268 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:56:45.429854 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:56:45.994434 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:57:02.216360 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:57:02.761926 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (51.36s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.513s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 01:57:24.482517 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:57:25.000771 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:57:40.252012 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:57:40.752595 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:57:57.083599 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:57:57.590375 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (49.38s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.520s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 01:58:14.775653 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:58:15.373340 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:58:28.580968 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:58:29.082247 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:58:40.225728 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:58:40.765185 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (38.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.191s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 01:58:54.656187 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:58:55.156955 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:59:07.952941 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:59:08.511214 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 01:59:22.097961 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 01:59:22.616813 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (42.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.356s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.598s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (45.44s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.469s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (42.41s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.441s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (5.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	6.010s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.52s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.576s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (34.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.640s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:02:39.294542 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:02:39.840013 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:02:50.359257 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:02:50.878646 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:02:59.819516 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:03:00.354442 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (34.17s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.297s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:03:14.332483 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:03:14.857335 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:03:26.551398 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:03:27.087078 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:03:41.511733 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:03:42.035079 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (46.17s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.305s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:04:02.464400 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:04:02.965477 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:04:16.896597 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:04:17.401754 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:04:33.402630 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:04:33.903703 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (48.97s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.120s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:04:52.327535 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:04:52.828756 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:05:01.431191 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:05:01.950195 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:05:13.262818 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:05:13.788227 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (35.86s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.054s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:05:28.692261 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:05:29.193836 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:05:38.694377 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:05:39.222876 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:05:50.988802 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:05:51.490083 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (40.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.194s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.04s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.079s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.77s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.830s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (40.32s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.368s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (7.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.076s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (25.44s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.536s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (37.61s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.706s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:09:13.350059 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:09:13.957685 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:09:22.807872 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:09:23.343254 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:09:33.084977 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:09:33.643284 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (33.38s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.530s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:09:47.544616 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:09:48.102731 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:10:02.310073 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:10:02.889009 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:10:19.059975 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:10:19.582429 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.42s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.566s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:10:40.250170 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:10:40.853760 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:10:55.406658 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:10:55.907993 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:11:11.281704 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:11:11.782638 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (51.29s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.406s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:11:32.904200 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:11:33.473623 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:11:46.645379 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:11:47.145924 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:12:00.752646 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:12:01.299427 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (41.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.077s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:12:16.605989 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:12:17.164514 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:12:31.355733 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:12:31.856147 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:12:42.904454 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:12:43.405704 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (41.83s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.000s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.35s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.380s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.62s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.667s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (41.77s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.802s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (6.10s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	6.122s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (25.26s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.316s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (35.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.603s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:15:58.265205 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:15:58.783099 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:16:08.475074 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:16:09.003492 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:16:18.252743 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:16:18.804473 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.87s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.997s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:16:31.993586 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:16:32.551590 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:16:47.559393 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:16:48.090897 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:17:04.542158 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:17:05.100203 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (52.26s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.399s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:17:26.242711 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:17:26.810246 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:17:41.845462 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:17:42.352048 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:17:58.595174 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:17:59.096541 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (52.21s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	52.316s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:18:19.456539 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:18:19.957559 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:18:30.602527 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:18:31.103031 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:18:42.212985 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:18:42.713729 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (39.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.298s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:18:58.804864 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:18:59.305733 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:19:10.239413 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:19:10.740261 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:19:20.653521 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:19:21.163839 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (36.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.179s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (24.59s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.611s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (41.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.006s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (43.36s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.390s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (7.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.972s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.82s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.901s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (36.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.322s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:22:38.134445 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:22:38.680157 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:22:47.732000 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:22:48.256693 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:22:57.318412 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:22:57.865758 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.22s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.343s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:23:11.124684 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:23:11.661703 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:23:26.258669 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:23:26.791682 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:23:41.735982 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:23:42.293575 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (49.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.844s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:24:02.815212 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:24:03.316469 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:24:16.769999 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:24:17.270406 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:24:30.211489 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:24:30.712615 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (44.83s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.962s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:24:48.465637 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:24:48.979814 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:25:00.539108 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:25:01.051736 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:25:12.544710 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:25:13.098101 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (38.50s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.656s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:25:27.903585 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:25:28.404307 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:25:41.164273 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:25:41.688679 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:25:54.055405 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:25:54.579065 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (44.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.228s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.100s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.010s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (43.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.098s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (9.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.783s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.014s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (37.56s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.637s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:29:20.125592 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:29:20.645040 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:29:29.743125 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:29:30.278342 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:29:39.508274 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:29:40.042963 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.634s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:29:53.457890 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:29:54.026281 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:30:08.587796 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:30:09.139761 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:30:23.793053 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:30:24.356874 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.319s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:30:45.331879 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:30:45.833403 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:31:00.790035 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:31:01.306422 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:31:16.810200 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:31:17.310741 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (49.50s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.630s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+panic: find no region for 30203030303030303030
+
+goroutine 291 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc000204f60, {0xc0043e80f0, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc0043e80f0, 0xa, 0x10}, {0xc0043ea020, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad5674, {0xad88b4, 0x7}, {0xc0043e80f0, 0xa, 0x10}, {0xc0043e8100, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0xc0000100c8)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0xc0043ab7d0, 0x6f6c6a, 0xc00016a980, 0xc00012eb88)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.035s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:31:40.917618 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:31:41.418743 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:31:51.984802 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:31:52.521464 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:32:01.955012 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:32:02.462267 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (34.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.292s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.35s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.398s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (44.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.865s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (39.73s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.778s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (7.85s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.872s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (25.78s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.892s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (36.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.581s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:35:19.339192 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:35:19.864298 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:35:29.011432 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:35:29.552150 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:35:39.149789 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:35:39.684084 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (33.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.190s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:35:53.251253 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:35:53.807311 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:36:07.625579 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:36:08.165312 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:36:23.062312 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:36:23.593290 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (47.18s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.309s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:36:42.392192 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:36:42.897467 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:36:56.017533 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:36:56.519616 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:37:13.264101 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:37:13.764667 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (48.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.920s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:37:32.183606 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:37:32.684964 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:37:42.720005 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:37:43.220832 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:37:51.967401 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:37:52.468263 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (39.45s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.585s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:38:12.364211 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:38:12.865406 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:38:22.946905 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:38:23.447451 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:38:36.115896 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:38:36.673428 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (38.59s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.732s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (25.33s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.359s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.60s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.652s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (43.59s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.611s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (5.82s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	5.844s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (26.46s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	26.560s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+panic: find no region for 30203030303030303030
+
+goroutine 291 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc00009d620, {0xc000024810, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc000024810, 0xa, 0x10}, {0xc00009a2d8, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad5674, {0xad88b4, 0x7}, {0xc000024810, 0xa, 0x10}, {0xc000024820, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0xc00000e918)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0xc0002b8fd0, 0x6f6c0a, 0xc000071500, 0xc00000e918)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.053s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:41:23.866011 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:41:24.417727 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:41:33.545169 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:41:34.086197 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:41:43.357477 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:41:43.870519 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.21s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.345s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:41:56.865216 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:41:57.407421 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:42:10.765759 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:42:11.317560 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:42:27.344632 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:42:27.902111 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.62s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.742s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:42:49.326385 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:42:49.839333 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:43:02.194091 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:43:02.695192 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:43:18.188663 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:43:18.690261 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (48.22s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.338s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:43:38.333625 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:43:38.857877 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:43:49.709316 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:43:50.304977 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:44:04.274472 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:44:04.777676 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (43.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.336s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:44:23.105262 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:44:23.650504 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:44:34.979238 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:44:35.640825 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:44:48.259275 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:44:48.806628 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (45.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.188s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (23.31s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	23.351s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (39.39s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.444s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (36.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.900s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (5.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	5.507s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (25.17s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.300s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (29.42s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	29.614s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:47:50.940435 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:47:51.460639 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:48:00.331326 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:48:00.836619 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:48:10.309131 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:48:10.819981 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (31.13s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.252s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:48:22.895086 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:48:23.406387 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:48:36.800599 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:48:37.310888 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:48:51.983753 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:48:52.492764 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (46.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.140s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:49:10.904493 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:49:11.405256 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:49:23.883713 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:49:24.385017 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:49:38.630136 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:49:39.130461 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (44.29s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.430s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:49:56.198228 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:49:56.699693 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:50:07.009383 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:50:07.510417 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:50:18.372544 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:50:18.884437 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (36.59s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.755s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:50:33.248978 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:50:33.750610 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:50:46.062775 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:50:46.565122 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:50:55.605786 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:50:56.106283 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (33.03s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.144s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (24.23s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.288s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (47.41s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.474s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (43.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.068s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (6.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	6.860s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (25.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.257s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (36.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.604s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+2022/07/17 02:54:14.189601 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:54:14.712961 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:54:24.098347 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:54:24.610654 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:54:33.700820 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:54:34.251649 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistOneClient2B (32.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.110s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 02:54:47.953035 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:54:48.485585 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:55:03.574318 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:55:04.131613 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:55:19.721273 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:55:20.292196 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (51.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	51.895s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 02:55:41.889580 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:55:42.390895 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:55:55.642275 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:55:56.143193 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:56:09.910241 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:56:10.427685 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (46.60s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.735s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 02:56:29.249934 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:56:29.824750 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:56:42.187334 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:56:42.687590 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:56:54.689099 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:56:55.257465 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (39.63s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.826s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 02:57:09.696037 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:57:10.204513 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:57:19.753646 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:57:20.396155 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 02:57:31.725250 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 02:57:32.234775 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (36.66s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.843s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasic2B|| true
+=== RUN   TestBasic2B
+--- PASS: TestBasic2B (26.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	26.067s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConcurrent2B|| true
+=== RUN   TestConcurrent2B
+--- PASS: TestConcurrent2B (43.19s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.211s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestUnreliable2B|| true
+=== RUN   TestUnreliable2B
+--- PASS: TestUnreliable2B (45.30s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.344s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOnePartition2B|| true
+=== RUN   TestOnePartition2B
+--- PASS: TestOnePartition2B (7.16s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.188s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsOneClient2B|| true
+=== RUN   TestManyPartitionsOneClient2B
+--- PASS: TestManyPartitionsOneClient2B (24.57s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.620s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestManyPartitionsManyClients2B|| true
+=== RUN   TestManyPartitionsManyClients2B
+--- PASS: TestManyPartitionsManyClients2B (27.64s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	27.752s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistOneClient2B|| true
+=== RUN   TestPersistOneClient2B
+panic: find no region for 30203030303030303030
+
+goroutine 268 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).GetRegion(0xc00023ad20, {0xc000024aa0, 0xa, 0x10})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:277 +0x13c
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x7, {0xc000024aa0, 0xa, 0x10}, {0xc00023c3f8, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:187 +0xde
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPutCF(0xad5674, {0xad88b4, 0x7}, {0xc000024aa0, 0xa, 0x10}, {0xc000024ab0, 0x7, 0x8})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:303 +0x19a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).MustPut(...)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:298
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0x6e7520)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:211 +0x31f
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0xc0000ee7d0, 0x6e720a, 0xc00434e000, 0xc0000980c0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.042s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrent2B|| true
+=== RUN   TestPersistConcurrent2B
+2022/07/17 03:00:48.803356 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:00:49.371339 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:01:04.352422 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:01:04.912907 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:01:19.822463 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:01:20.375637 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrent2B (50.56s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	50.681s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistConcurrentUnreliable2B|| true
+=== RUN   TestPersistConcurrentUnreliable2B
+2022/07/17 03:01:41.153451 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:01:41.653931 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:01:55.992122 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:01:56.493187 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:02:12.272520 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:02:12.773795 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistConcurrentUnreliable2B (48.51s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	48.641s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartition2B|| true
+=== RUN   TestPersistPartition2B
+2022/07/17 03:02:30.843484 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:02:31.431721 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:02:42.142277 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:02:42.669491 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:02:51.791154 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:02:52.292498 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartition2B (38.78s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.940s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestPersistPartitionUnreliable2B|| true
+=== RUN   TestPersistPartitionUnreliable2B
+2022/07/17 03:03:10.380780 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:03:10.988849 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:03:22.517749 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:03:23.018894 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/07/17 03:03:34.812977 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/07/17 03:03:35.313315 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestPersistPartitionUnreliable2B (37.98s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.144s
+rm -rf /tmp/*test-raftstore*

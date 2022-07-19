@@ -76,7 +76,7 @@ func newLog(storage Storage) *RaftLog {
 	var entries []pb.Entry
 	if firstIndex <= lastIndex {
 		entries, _ = storage.Entries(firstIndex, lastIndex+1)
-		log.Infof("newlog first:%d, last:%d, ents:%v", firstIndex, lastIndex, entries)
+		log.Infof("newlog first:%d, last:%d, ents:%v, committed:%v", firstIndex, lastIndex, entries, hardState.GetCommit())
 	}
 	return &RaftLog{
 		storage:   storage,
@@ -115,7 +115,10 @@ func (l *RaftLog) unstableEntries() []pb.Entry {
 // nextEnts returns all the committed but not applied entries
 func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 	// Your Code Here (2A).
-	//log.Infof("ents:%v, first:%d, applied:%d, committed:%d", l.entries, l.first, l.applied, l.committed)
+	//log.Infof("next ents of l:%v, first:%d, applied:%d, committed:%d, last:%v", l, l.first, l.applied, l.committed, l.LastIndex())
+	if len(l.entries) == 0 {
+		return nil
+	}
 	if l.applied-l.first+1 < uint64(len(l.entries)) {
 		return l.entries[l.applied-l.first+1 : l.committed-l.first+1]
 	}
@@ -145,6 +148,7 @@ func (l *RaftLog) Term(i uint64) (uint64, error) {
 	// Your Code Here (2A).
 	//log.Infof("i:%d, first:%d, len:%d", i, l.first, len(l.entries))
 	// search in pending snapshot
+	// FIXME:
 	if !IsEmptySnap(l.pendingSnapshot) {
 		if i == l.pendingSnapshot.GetMetadata().GetIndex() {
 			return l.pendingSnapshot.GetMetadata().GetTerm(), nil
@@ -212,6 +216,7 @@ func (l *RaftLog) setFirst(i uint64) {
 }
 
 func (l *RaftLog) resetState(i uint64) {
+	log.Infof("reset state, i:%d", i)
 	l.setFirst(i + 1)
 	l.setApplied(i)
 	l.setCommitted(i)
