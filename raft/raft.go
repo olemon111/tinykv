@@ -211,7 +211,18 @@ func newRaft(c *Config) *Raft {
 // current commit index to the given peer. Returns true if a message was sent.
 func (r *Raft) sendAppend(to uint64) bool {
 	// Your Code Here (2A).
-	if r.Prs[to].Next < r.RaftLog.FirstIndex() { // fall behind
+	//if r.Prs[to].Next < r.RaftLog.FirstIndex() { // fall behind
+	//	err := r.sendSnapshot(to)
+	//	if err != nil {
+	//		return false
+	//	}
+	//	return true
+	//}
+
+	prevLogIndex := r.Prs[to].Next - 1 // index of log entry immediately preceding new ones
+	prevLogTerm, err := r.RaftLog.Term(prevLogIndex)
+	log.Infof("%d sendappend to %d, previndex:%d, prevterm:%d, err:%v, ents:%v", r.id, to, prevLogIndex, prevLogTerm, err, r.RaftLog.entries)
+	if err != nil {
 		err := r.sendSnapshot(to)
 		if err != nil {
 			return false
@@ -219,9 +230,6 @@ func (r *Raft) sendAppend(to uint64) bool {
 		return true
 	}
 	entries := r.RaftLog.getFollowingEntries(r.Prs[to].Next)
-	prevLogIndex := r.Prs[to].Next - 1 // index of log entry immediately preceding new ones
-	prevLogTerm, _ := r.RaftLog.Term(prevLogIndex)
-
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgAppend,
 		To:      to,
@@ -242,17 +250,18 @@ func (r *Raft) sendSnapshot(to uint64) error {
 	if err != nil {
 		return err // ErrSnapshotTemporarilyUnavailable, request again later
 	}
-	msg := pb.Message{ // FIXME: not sure whether logTerm and logIndex is needed
-		MsgType:  pb.MessageType_MsgSnapshot,
-		To:       to,
-		From:     r.id,
-		Term:     r.Term,
-		Commit:   r.RaftLog.committed,
+
+	msg := pb.Message{
+		MsgType: pb.MessageType_MsgSnapshot,
+		To:      to,
+		From:    r.id,
+		Term:    r.Term,
+		//Commit:   r.RaftLog.committed,
 		Snapshot: &snapshot,
 	}
-	//log.Infof("%d send snapshot to %d, msg:%v", r.id, to, msg)
+	log.Infof("%d send snapshot to %d, msg:%v, meta.index:%d", r.id, to, msg, snapshot.Metadata.GetIndex())
 	r.sendMsg(msg)
-	// FIXME: maybe update match?
+	// FIXME: maybe update match when receive response?
 	r.Prs[to].Next = snapshot.Metadata.GetIndex() + 1
 	return nil
 }
@@ -581,6 +590,7 @@ func (r *Raft) handleHeartbeat(m pb.Message) { // FIXME: not sure
 // handleSnapshot handle Snapshot RPC request
 func (r *Raft) handleSnapshot(m pb.Message) {
 	// Your Code Here (2C).
+	log.Infof("%d handle snapshot, m:%v", r.id, m)
 	metaData := m.Snapshot.Metadata
 	// discard any existing snapshot with a smaller index
 	if m.Term < r.Term || metaData.Index < r.RaftLog.committed {
@@ -593,8 +603,8 @@ func (r *Raft) handleSnapshot(m pb.Message) {
 	r.RaftLog.resetState(metaData.Index)
 	r.RaftLog.setPendingSnapshot(m.Snapshot) // save for ready
 	// reset peers progress
+	r.Prs = make(map[uint64]*Progress)
 	if metaData.ConfState.Nodes != nil {
-		r.Prs = make(map[uint64]*Progress)
 		for _, p := range metaData.ConfState.Nodes {
 			r.Prs[p] = &Progress{}
 		}
@@ -645,7 +655,7 @@ func (r *Raft) sendRequestVote(to uint64) {
 }
 
 func (r *Raft) broadcastRequestVote() {
-	log.Infof("%d broadcast req vote", r.id)
+	//log.Infof("%d broadcast req vote", r.id)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendRequestVote(p)
@@ -654,7 +664,7 @@ func (r *Raft) broadcastRequestVote() {
 }
 
 func (r *Raft) broadcastAppend() {
-	log.Infof("%d broadcast append, term:%v", r.id, r.Term)
+	//log.Infof("%d broadcast append, term:%v", r.id, r.Term)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendAppend(p)
@@ -670,7 +680,7 @@ func (r *Raft) handleHup(m pb.Message) {
 	if m.Term != 0 || !(m.From == 0 || m.From == r.id) {
 		return
 	}
-	log.Infof("%d handle hup, term:%v", r.id, r.Term)
+	//log.Infof("%d handle hup, term:%v", r.id, r.Term)
 	if !IsEmptySnap(r.RaftLog.pendingSnapshot) { // there's a leader sending snapshot
 		log.Infof("pending snapshot, ignore hup")
 		return
@@ -684,7 +694,7 @@ func (r *Raft) handleHup(m pb.Message) {
 }
 
 func (r *Raft) sendRequestVoteResponse(to uint64, reject bool) {
-	log.Infof("%d send req vote resp to %d, reject:%v", r.id, to, reject)
+	//log.Infof("%d send req vote resp to %d, reject:%v", r.id, to, reject)
 	r.sendMsg(pb.Message{
 		MsgType: pb.MessageType_MsgRequestVoteResponse,
 		To:      to,
@@ -736,7 +746,7 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 			rejectCnt++
 		}
 	}
-	log.Infof("%d, cnt:%v, rejectcnt:%v, len:%v", r.id, acceptCnt, rejectCnt, len(r.Prs))
+	//log.Infof("%d, cnt:%v, rejectcnt:%v, len:%v", r.id, acceptCnt, rejectCnt, len(r.Prs))
 	if 2*acceptCnt > len(r.Prs) { // receive votes from the majority, convert to leader
 		r.becomeLeader()
 	}
@@ -785,16 +795,17 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 	}
 	if m.Reject { // rejected by follower
 		// decrement nextIndex and retries to append entry
-		r.Prs[m.From].Next = max(r.Prs[m.From].Next-1, r.RaftLog.FirstIndex())
-		//r.Prs[m.From].Match = min(r.Prs[m.From].Match, r.Prs[m.From].Next-1) // FIXME: not sure
-		r.sendAppend(m.From)
+		if r.Prs[m.From].Next > 1 {
+			r.Prs[m.From].Next--
+			r.sendAppend(m.From)
+
+		}
 	} else { // accepted by follower
 		term, _ := r.RaftLog.Term(m.Index)
 		// update progress
 		if m.Index > r.Prs[m.From].Match {
 			r.Prs[m.From].Match = m.Index
 			r.Prs[m.From].Next = m.Index + 1
-			//r.Prs[m.From].Next = max(r.Prs[m.From].Next, m.Index+1) // FIXME: not sure
 		}
 		if term == r.Term {
 			r.updateCommitted()

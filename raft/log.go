@@ -146,27 +146,18 @@ func (l *RaftLog) FirstIndex() uint64 {
 // Term return the term of the entry in the given index
 func (l *RaftLog) Term(i uint64) (uint64, error) {
 	// Your Code Here (2A).
-	//log.Infof("i:%d, first:%d, len:%d", i, l.first, len(l.entries))
-	// search in pending snapshot
-	// FIXME:
-	if !IsEmptySnap(l.pendingSnapshot) {
-		if i == l.pendingSnapshot.GetMetadata().GetIndex() {
-			return l.pendingSnapshot.GetMetadata().GetTerm(), nil
-		}
-	}
-	// search in storage
-	if i < l.first {
-		return l.storage.Term(i)
-	}
+	//log.Infof("i:%d, first:%d, len:%d, pendingsnap.meta:%v", i, l.first, len(l.entries), l.pendingSnapshot.Metadata)
 	// search in memory
 	if len(l.entries) > 0 && i >= l.first && i-l.first < uint64(len(l.entries)) { // in range
 		term := l.entries[i-l.first].Term
 		return term, nil
 	}
-	if len(l.entries) == 0 {
-		return 0, nil
+	// search in pendingSnapShot
+	if !IsEmptySnap(l.pendingSnapshot) && i == l.pendingSnapshot.Metadata.Index {
+		return l.pendingSnapshot.Metadata.Term, nil
 	}
-	return 0, errors.New("entry not found")
+	// search in storage
+	return l.storage.Term(i)
 }
 
 func (l *RaftLog) appendEntry(ent pb.Entry) bool {

@@ -95,7 +95,6 @@ func NewTransferLeaderCmd(peer *metapb.Peer) *raft_cmdpb.AdminRequest {
 func MustGetCf(engine *engine_util.Engines, cf string, key []byte, value []byte) {
 	for i := 0; i < 300; i++ {
 		val, err := engine_util.GetCF(engine.Kv, cf, key)
-		log.Infof("getcf key:%s, val:%s, value:%s, err:%v", hex.EncodeToString(key), hex.EncodeToString(val), hex.EncodeToString(value), err)
 		if err == nil && (value == nil || bytes.Compare(val, value) == 0) {
 			return
 		}

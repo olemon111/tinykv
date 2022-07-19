@@ -64,13 +64,14 @@ func (d *peerMsgHandler) applyAdminRequest(req *raft_cmdpb.AdminRequest, kvWB *e
 	case raft_cmdpb.AdminCmdType_InvalidAdmin:
 	case raft_cmdpb.AdminCmdType_ChangePeer:
 	case raft_cmdpb.AdminCmdType_CompactLog:
-		log.Infof("apply admin compact log, req:%v", req)
+		log.Infof("%s apply admin compact log, req:%v", d.Tag, req)
 		if req.CompactLog.CompactIndex > d.peerStorage.applyState.TruncatedState.Index {
-			log.Infof("update raftapplystate:%v", d.peerStorage.applyState)
+			log.Infof("before update raftapplystate:%v", d.peerStorage.applyState)
 			// update raftApplyState
 			d.peerStorage.applyState.TruncatedState.Term = req.CompactLog.GetCompactTerm()
 			d.peerStorage.applyState.TruncatedState.Index = req.CompactLog.GetCompactIndex()
 			_ = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState) // FIXME: unnecessary?
+			log.Infof("after update raftapplystate:%v", d.peerStorage.applyState)
 			// schedule raftLogGCTask to do log deletion work asynchronously
 			d.ScheduleCompactLog(d.peerStorage.applyState.TruncatedState.Index)
 		}
@@ -92,7 +93,7 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		log.Infof("invalid raft command")
 	case raft_cmdpb.CmdType_Get:
 		val, err := engine_util.GetCF(d.peerStorage.Engines.Kv, req.Get.Cf, req.Get.Key)
-		//log.Infof("req get key:%s, value:%s, err:%v", req.Get.Key, val, err)
+		log.Infof("req get key:%s, value:%s, err:%v", req.Get.Key, val, err)
 		if err != nil {
 			log.Panicf("get cf error:%v", err)
 			return
@@ -104,14 +105,14 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 			},
 		})
 	case raft_cmdpb.CmdType_Put:
-		//log.Infof("req put key:%s, value:%s", req.Put.Key, req.Put.Value)
+		log.Infof("req put key:%s, value:%s", req.Put.Key, req.Put.Value)
 		kvWB.SetCF(req.Put.Cf, req.Put.Key, req.Put.Value)
 		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 			CmdType: raft_cmdpb.CmdType_Put,
 			Put:     &raft_cmdpb.PutResponse{},
 		})
 	case raft_cmdpb.CmdType_Delete:
-		//log.Infof("req delete key:%s", req.Delete.Key)
+		log.Infof("req delete key:%s", req.Delete.Key)
 		kvWB.DeleteCF(req.Delete.Cf, req.Delete.Key)
 		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 			CmdType: raft_cmdpb.CmdType_Delete,
@@ -343,14 +344,12 @@ func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb 
 		data, err := msg.Marshal() // marshall request
 		if err != nil {
 			log.Panicf("marshal raft cmd request error %v", err)
-			cb.Done(ErrResp(err))
 			return
 		}
 		log.Infof("propose compact log %v", req)
 		err = d.RaftGroup.Propose(data)
 		if err != nil {
 			log.Infof("propose error %v", err)
-			cb.Done(ErrResp(err))
 			return
 		}
 	case raft_cmdpb.AdminCmdType_TransferLeader:
@@ -657,6 +656,7 @@ func (d *peerMsgHandler) onRaftGCLogTick() {
 	var compactIdx uint64
 	if appliedIdx > firstIdx && appliedIdx-firstIdx >= d.ctx.cfg.RaftLogGcCountLimit {
 		compactIdx = appliedIdx
+		log.Infof("%v raftgclogtick, appliedIdx %v firstIdx %v", d.Tag, appliedIdx, firstIdx)
 	} else {
 		return
 	}

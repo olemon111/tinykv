@@ -173,19 +173,20 @@ func (rn *RawNode) Ready() Ready {
 	if isHardStateEqual(curHardState, rn.lastHardState) {
 		curHardState = pb.HardState{} // no change, return empty state
 	}
-
+	var snapshot pb.Snapshot
+	if !IsEmptySnap(rn.Raft.RaftLog.pendingSnapshot) {
+		snapshot = *rn.Raft.RaftLog.pendingSnapshot
+	}
 	ready := Ready{
 		SoftState:        curSoftState,
 		HardState:        curHardState,
 		Entries:          rn.Raft.RaftLog.unstableEntries(), // stabled - last => stable
 		CommittedEntries: rn.Raft.RaftLog.nextEnts(),        // applied - committed =>  apply
 		Messages:         rn.Raft.msgs,
+		Snapshot:         snapshot,
 	}
-	if !IsEmptySnap(rn.Raft.RaftLog.pendingSnapshot) {
-		ready.Snapshot = *rn.Raft.RaftLog.pendingSnapshot
-	}
-	rn.Raft.msgs = []pb.Message{}                      // clear messages
-	rn.Raft.RaftLog.setPendingSnapshot(&pb.Snapshot{}) // clear snapshot
+	rn.Raft.msgs = []pb.Message{}           // clear messages
+	rn.Raft.RaftLog.setPendingSnapshot(nil) // clear snapshot
 	return ready
 }
 
