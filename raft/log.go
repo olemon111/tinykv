@@ -76,7 +76,7 @@ func newLog(storage Storage) *RaftLog {
 	var entries []pb.Entry
 	if firstIndex <= lastIndex {
 		entries, _ = storage.Entries(firstIndex, lastIndex+1)
-		//log.Infof("newlog first:%d, last:%d, ents:%v, committed:%v", firstIndex, lastIndex, entries, hardState.GetCommit())
+		log.Infof("newlog first:%d, last:%d, ents:%v, committed:%v", firstIndex, lastIndex, entries, hardState.GetCommit())
 	}
 	return &RaftLog{
 		storage:   storage,
@@ -115,12 +115,12 @@ func (l *RaftLog) unstableEntries() []pb.Entry {
 // nextEnts returns all the committed but not applied entries
 func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 	// Your Code Here (2A).
-	//log.Infof("next ents of l:%v, first:%d, applied:%d, committed:%d, last:%v", l, l.first, l.applied, l.committed, l.LastIndex())
+	//log.Infof("next ents, first:%d, applied:%d, committed:%d, last:%v", l.first, l.applied, l.committed, l.LastIndex())
 	if len(l.entries) == 0 {
 		return nil
 	}
 	if l.applied-l.first+1 < uint64(len(l.entries)) {
-		return l.entries[l.applied-l.first+1 : l.committed-l.first+1]
+		return l.entries[l.applied-l.first+1 : min(l.committed-l.first+1, uint64(len(l.entries)))]
 	}
 	return nil
 }

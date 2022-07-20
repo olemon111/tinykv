@@ -176,8 +176,9 @@ func newRaft(c *Config) *Raft {
 	if err != nil {
 		return nil
 	}
-	if c.Applied > 0 { // restart
-		raftLog.applied = c.Applied // modify by config
+	// restart
+	if c.Applied > 0 {
+		raftLog.setApplied(c.Applied) // modify by config
 	}
 	// init peers
 	if c.peers == nil {
@@ -278,7 +279,6 @@ func (r *Raft) sendHeartbeat(to uint64) {
 func (r *Raft) tick() {
 	// Your Code Here (2A).
 	// actions
-	log.Infof("tick")
 	switch r.State {
 	case StateLeader:
 		r.heartbeatTick()
@@ -300,7 +300,6 @@ func (r *Raft) heartbeatTick() {
 			From:    r.id,
 		})
 		if err != nil {
-			log.Panic("step msg error")
 			return
 		}
 	}
@@ -316,7 +315,6 @@ func (r *Raft) electionTick() {
 			From:    r.id,
 		})
 		if err != nil {
-			log.Panic("step msg error")
 			return
 		}
 	}
@@ -325,7 +323,7 @@ func (r *Raft) electionTick() {
 // becomeFollower transform this peer's state to Follower
 func (r *Raft) becomeFollower(term uint64, lead uint64) {
 	// Your Code Here (2A).
-	log.Infof("\t\t%d become follower of %d, term:%d", r.id, lead, term)
+	//log.Infof("\t\t%d become follower of %d, term:%d", r.id, lead, term)
 	r.State = StateFollower
 	r.Term = term
 	r.Lead = lead
@@ -339,7 +337,7 @@ func (r *Raft) becomeCandidate() {
 	// Your Code Here (2A).
 	r.State = StateCandidate
 	r.Term++
-	log.Infof("%d become candidate term:%d", r.id, r.Term)
+	//log.Infof("%d become candidate term:%d", r.id, r.Term)
 	r.Lead = None
 	r.Vote = r.id // vote for self
 	r.resetVotes()
@@ -487,7 +485,7 @@ func (r *Raft) stepFollower(m pb.Message) error {
 }
 
 func (r *Raft) sendAppendResponse(to uint64, reject bool, index uint64) {
-	log.Infof("%d send appendresponse to %d, reject:%v, term:%v, index:%d", r.id, to, reject, r.Term, index)
+	//log.Infof("%d send appendresponse to %d, reject:%v, term:%v, index:%d", r.id, to, reject, r.Term, index)
 	r.sendMsg(pb.Message{
 		MsgType: pb.MessageType_MsgAppendResponse,
 		To:      to,
@@ -501,9 +499,6 @@ func (r *Raft) sendAppendResponse(to uint64, reject bool, index uint64) {
 // handleAppendEntries handle AppendEntries RPC request
 func (r *Raft) handleAppendEntries(m pb.Message) {
 	// Your Code Here (2A).
-	//if r.State == StateCandidate && m.Term == r.Term {
-	//	r.becomeFollower(m.Term, m.From)
-	//}
 	if m.Term < r.Term {
 		//log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 		r.sendAppendResponse(m.From, true, None)
@@ -576,10 +571,6 @@ func (r *Raft) sendHeartbeatResponse(to uint64, reject bool, index uint64) {
 // handleHeartbeat handle Heartbeat RPC request
 func (r *Raft) handleHeartbeat(m pb.Message) { // FIXME: not sure
 	// Your Code Here (2A).
-	//log.Infof("%d handle heartbeat from %d", r.id, m.From)
-	//if r.State == StateCandidate && m.Term == r.Term {
-	//	r.becomeFollower(m.Term, m.From)
-	//}
 	if m.Term < r.Term {
 		//log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 		r.sendHeartbeatResponse(m.From, true, None)
@@ -661,7 +652,7 @@ func (r *Raft) sendRequestVote(to uint64) {
 }
 
 func (r *Raft) broadcastRequestVote() {
-	log.Infof("%d broadcast req vote", r.id)
+	//log.Infof("%d broadcast req vote", r.id)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendRequestVote(p)
@@ -670,7 +661,7 @@ func (r *Raft) broadcastRequestVote() {
 }
 
 func (r *Raft) broadcastAppend() {
-	log.Infof("%d broadcast append, term:%v", r.id, r.Term)
+	//log.Infof("%d broadcast append, term:%v", r.id, r.Term)
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendAppend(p)
@@ -683,7 +674,7 @@ func (r *Raft) sendMsg(m pb.Message) {
 }
 
 func (r *Raft) handleHup(m pb.Message) {
-	log.Infof("%d handle hup, term:%v", r.id, r.Term)
+	//log.Infof("%d handle hup, term:%v", r.id, r.Term)
 	if m.Term != 0 || !(m.From == 0 || m.From == r.id) {
 		log.Infof("reject hup")
 		return
@@ -701,7 +692,7 @@ func (r *Raft) handleHup(m pb.Message) {
 }
 
 func (r *Raft) sendRequestVoteResponse(to uint64, reject bool) {
-	log.Infof("%d send req vote resp to %d, reject:%v", r.id, to, reject)
+	//log.Infof("%d send req vote resp to %d, reject:%v", r.id, to, reject)
 	r.sendMsg(pb.Message{
 		MsgType: pb.MessageType_MsgRequestVoteResponse,
 		To:      to,
@@ -743,7 +734,7 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 	}
 	// count votes
 	r.votes[m.From] = !m.Reject
-	log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
+	//log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
 	acceptCnt := 0
 	rejectCnt := 0
 	for _, v := range r.votes {
@@ -753,7 +744,7 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 			rejectCnt++
 		}
 	}
-	log.Infof("%d, cnt:%v, rejectcnt:%v, len:%v", r.id, acceptCnt, rejectCnt, len(r.Prs))
+	//log.Infof("%d, cnt:%v, rejectcnt:%v, len:%v", r.id, acceptCnt, rejectCnt, len(r.Prs))
 	if 2*acceptCnt > len(r.Prs) { // receive votes from the majority, convert to leader
 		r.becomeLeader()
 	}
@@ -824,7 +815,6 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 func (r *Raft) resetElectionTimer() {
 	r.electionElapsed = 0
 	r.electionTimeout = r.baseElectionTimeout + rand.Intn(r.baseElectionTimeout)
-	log.Infof("%d reset electiontimer, timeout:%d", r.id, r.electionTimeout)
 }
 
 func (r *Raft) updateCommitted() {
