@@ -316,7 +316,7 @@ func (ps *PeerStorage) Append(entries []eraftpb.Entry, raftWB *engine_util.Write
 	}
 	for _, en := range entries {
 		// append to raft log
-		err := raftWB.SetMeta(meta.RaftLogKey(ps.region.GetId(), en.GetIndex()), &en) // key: raft_log_key, value: entry
+		err := raftWB.SetMeta(meta.RaftLogKey(ps.region.Id, en.Index), &en) // key: raft_log_key, value: entry
 		if err != nil {
 			log.Panicf("set raft log failed, err: %v", err)
 			return err
@@ -401,7 +401,7 @@ func (ps *PeerStorage) ApplySnapshot(snapshot *eraftpb.Snapshot, kvWB *engine_ut
 func (ps *PeerStorage) SaveReadyState(ready *raft.Ready) (*ApplySnapResult, error) {
 	// Hint: you may call `Append()` and `ApplySnapshot()` in this function
 	// Your Code Here (2B/2C).
-	//log.Infof("%v save ready state, ready:%s", ps.Tag, ready)
+	log.Infof("%v save ready state, ready:%v", ps.Tag, ready)
 	raftWB := &engine_util.WriteBatch{}
 	kvWB := &engine_util.WriteBatch{}
 	// apply snapshot first
