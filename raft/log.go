@@ -76,8 +76,9 @@ func newLog(storage Storage) *RaftLog {
 	var entries []pb.Entry
 	if firstIndex <= lastIndex {
 		entries, _ = storage.Entries(firstIndex, lastIndex+1)
-		log.Infof("newlog first:%d, last:%d, ents:%v, committed:%v", firstIndex, lastIndex, entries, hardState.GetCommit())
+		//log.Infof("newlog first:%d, last:%d, ents:%v, committed:%v", firstIndex, lastIndex, entries, hardState.GetCommit())
 	}
+	log.Infof("newlog first:%d, last:%d, applied:%v, committed:%v", firstIndex, lastIndex, firstIndex-1, hardState.GetCommit())
 	return &RaftLog{
 		storage:   storage,
 		committed: hardState.GetCommit(),

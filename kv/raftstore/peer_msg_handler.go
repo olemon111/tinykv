@@ -66,14 +66,19 @@ func (d *peerMsgHandler) applyAdminRequest(req *raft_cmdpb.AdminRequest, kvWB *e
 	case raft_cmdpb.AdminCmdType_InvalidAdmin:
 	case raft_cmdpb.AdminCmdType_ChangePeer:
 	case raft_cmdpb.AdminCmdType_CompactLog:
-		log.Infof("%s apply admin compact log, req:%v", d.Tag, req)
 		if req.CompactLog.CompactIndex >= d.peerStorage.applyState.TruncatedState.Index {
-			//log.Infof("before update raftapplystate:%v", d.peerStorage.applyState)
+			prev := &rspb.RaftApplyState{
+				AppliedIndex: d.peerStorage.applyState.AppliedIndex,
+				TruncatedState: &rspb.RaftTruncatedState{
+					Index: d.peerStorage.applyState.TruncatedState.Index,
+					Term:  d.peerStorage.applyState.TruncatedState.Term,
+				},
+			}
 			// update raftApplyState
 			d.peerStorage.applyState.TruncatedState.Term = req.CompactLog.GetCompactTerm()
 			d.peerStorage.applyState.TruncatedState.Index = req.CompactLog.GetCompactIndex()
 			_ = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
-			//log.Infof("after update raftapplystate:%v", d.peerStorage.applyState)
+			log.Infof("%s apply admin compact log, req:%v, applystate: %v to %v", d.Tag, req, prev, d.peerStorage.applyState)
 			kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
 			kvWB = &engine_util.WriteBatch{}
 			// schedule raftLogGCTask to do log deletion work asynchronously
@@ -108,33 +113,40 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 				Value: val,
 			},
 		})
-		// update raftApplyState
-		if entry.Index > d.peerStorage.applyState.AppliedIndex {
-			d.peerStorage.applyState.AppliedIndex = entry.Index
-			err = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
-			if err != nil {
-				log.Panicf("set apply state error:%v", err)
-				return nil
-			}
-			kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
-			kvWB = &engine_util.WriteBatch{}
-		}
+		//update raftApplyState
+		//if entry.Index > d.peerStorage.applyState.AppliedIndex {
+		//prev := &rspb.RaftApplyState{
+		//	AppliedIndex: d.peerStorage.applyState.AppliedIndex,
+		//	TruncatedState: &rspb.RaftTruncatedState{
+		//		Index: d.peerStorage.applyState.TruncatedState.Index,
+		//		Term:  d.peerStorage.applyState.TruncatedState.Term,
+		//	},
+		//}
+		//d.peerStorage.applyState.AppliedIndex = entry.Index
+		//err = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
+		//if err != nil {
+		//	log.Panicf("set apply state error:%v", err)
+		//	return nil
+		//}
+		//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
+		//kvWB = &engine_util.WriteBatch{}
+		//}
 	case raft_cmdpb.CmdType_Put:
-		//log.Infof("req put key:%s, value:%s", req.Put.Key, req.Put.Value)
+		log.Infof("req put key:%s, value:%s", req.Put.Key, req.Put.Value)
 		kvWB.SetCF(req.Put.Cf, req.Put.Key, req.Put.Value)
 		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 			CmdType: raft_cmdpb.CmdType_Put,
 			Put:     &raft_cmdpb.PutResponse{},
 		})
 	case raft_cmdpb.CmdType_Delete:
-		//log.Infof("req delete key:%s", req.Delete.Key)
+		log.Infof("req delete key:%s", req.Delete.Key)
 		kvWB.DeleteCF(req.Delete.Cf, req.Delete.Key)
 		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 			CmdType: raft_cmdpb.CmdType_Delete,
 			Delete:  &raft_cmdpb.DeleteResponse{},
 		})
 	case raft_cmdpb.CmdType_Snap:
-		log.Infof("req snap")
+		//log.Infof("req snap")
 		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 			CmdType: raft_cmdpb.CmdType_Snap,
 			Snap: &raft_cmdpb.SnapResponse{
@@ -143,16 +155,18 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		})
 		txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
 		// update raftApplyState
-		if entry.Index > d.peerStorage.applyState.AppliedIndex {
-			d.peerStorage.applyState.AppliedIndex = entry.Index
-			err := kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
-			if err != nil {
-				log.Panicf("set meta error")
-				return nil
-			}
-			kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
-			kvWB = &engine_util.WriteBatch{}
-		}
+		//if entry.Index > d.peerStorage.applyState.AppliedIndex {
+		//prev := d.peerStorage.applyState
+		//d.peerStorage.applyState.AppliedIndex = entry.Index
+		//log.Infof("req snap, applystate:%v to %v", prev, d.peerStorage.applyState)
+		//err := kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
+		//if err != nil {
+		//	log.Panicf("set meta error")
+		//	return nil
+		//}
+		//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
+		//kvWB = &engine_util.WriteBatch{}
+		//}
 	}
 	// propose callback
 	d.matchProposal(resp, entry, txn)
@@ -171,12 +185,12 @@ func (d *peerMsgHandler) matchProposal(resp *raft_cmdpb.RaftCmdResponse, entry *
 				if txn != nil { // set for snapshot
 					p.cb.Txn = txn
 				}
-				//log.Infof("cb.done, resp:%v", resp)
+				log.Infof("cb.done, resp:%v, term:%v, index:%v", resp, p.term, p.index)
 				p.cb.Done(resp)
 				d.proposals = d.proposals[1:]
 				break
 			} else {
-				//log.Infof("cb.done stale")
+				log.Infof("cb.done stale")
 				NotifyStaleReq(entry.Term, p.cb)
 			}
 		}
@@ -227,8 +241,16 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		//log.Infof("apply entry:%v", en)
 		kvWB = d.applyEntry(&en, kvWB)
 	}
+	prev := &rspb.RaftApplyState{
+		AppliedIndex: d.peerStorage.applyState.AppliedIndex,
+		TruncatedState: &rspb.RaftTruncatedState{
+			Index: d.peerStorage.applyState.TruncatedState.Index,
+			Term:  d.peerStorage.applyState.TruncatedState.Term,
+		},
+	}
 	if len(ready.CommittedEntries) > 0 && ready.CommittedEntries[len(ready.CommittedEntries)-1].Index > d.peerStorage.applyState.AppliedIndex {
 		d.peerStorage.applyState.AppliedIndex = ready.CommittedEntries[len(ready.CommittedEntries)-1].Index
+		log.Infof("%s apply entries, applystate: %v to %v", d.Tag, prev, d.peerStorage.applyState)
 	}
 	// save applyState to kvDB
 	err = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState) // key: apply_state_key, value: raftApplyState

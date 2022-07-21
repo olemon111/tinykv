@@ -364,10 +364,17 @@ func (ps *PeerStorage) ApplySnapshot(snapshot *eraftpb.Snapshot, kvWB *engine_ut
 		Commit: snapshot.Metadata.GetIndex(),
 	}
 	// update raftApplyState
-	log.Infof("overwrite apply state with snapshot, last index: %d, last term: %d, snapindex:%d", ps.raftState.LastIndex, ps.raftState.LastTerm, snapshot.Metadata.Index)
+	prev := &rspb.RaftApplyState{
+		AppliedIndex: ps.applyState.AppliedIndex,
+		TruncatedState: &rspb.RaftTruncatedState{
+			Index: ps.applyState.TruncatedState.Index,
+			Term:  ps.applyState.TruncatedState.Term,
+		},
+	}
 	ps.applyState.AppliedIndex = snapshot.Metadata.GetIndex()
 	ps.applyState.TruncatedState.Index = snapshot.Metadata.GetIndex()
 	ps.applyState.TruncatedState.Term = snapshot.Metadata.GetTerm()
+	log.Infof("apply snapshot, applystate: %v to %v", prev, ps.applyState)
 	// save raftLocalState to raftWB
 	err := raftWB.SetMeta(meta.RaftStateKey(newRegion.GetId()), ps.raftState)
 	if err != nil {
