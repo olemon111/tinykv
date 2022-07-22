@@ -609,7 +609,7 @@ func (r *Raft) sendHeartbeatResponse(to uint64, reject bool, index uint64) {
 }
 
 // handleHeartbeat handle Heartbeat RPC request
-func (r *Raft) handleHeartbeat(m pb.Message) { // FIXME: not sure
+func (r *Raft) handleHeartbeat(m pb.Message) {
 	// Your Code Here (2A).
 	if m.Term < r.Term {
 		//log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
@@ -665,15 +665,28 @@ func (r *Raft) addNode(id uint64) {
 	log.Infof("%d add node %d", r.id, id)
 	r.PendingConfIndex = None
 	r.Prs[id] = &Progress{
-		Match: 0,
-		Next:  r.RaftLog.FirstIndex(),
+		Match:        0,
+		Next:         r.RaftLog.FirstIndex(),
+		RecentActive: true,
 	}
+	// send heartbeat instantly to create peer
+	msg := pb.Message{
+		MsgType: pb.MessageType_MsgHeartbeat,
+		To:      id,
+		From:    r.id,
+		Term:    r.Term,
+	}
+	r.sendMsg(msg)
 	r.updateCommitted()
 }
 
 // removeNode remove a node from raft group
 func (r *Raft) removeNode(id uint64) {
 	// Your Code Here (3A).
+	if id == r.id {
+		r.Prs = make(map[uint64]*Progress)
+		return
+	}
 	if _, ok := r.Prs[id]; !ok {
 		return
 	}
@@ -773,7 +786,7 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 		return
 	}
 	reject := true
-	if r.Vote == None || r.Vote == m.From { // FIXME: not sure must be follower
+	if r.Vote == None || r.Vote == m.From {
 		lastIndex := r.RaftLog.LastIndex()
 		lastLogTerm, _ := r.RaftLog.Term(lastIndex)
 		//log.Infof("lastIndex:%v, lastLogTerm:%v, m.index:%v, m.logTerm:%v", lastIndex, lastLogTerm, m.Index, m.LogTerm)
