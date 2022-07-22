@@ -358,11 +358,11 @@ func (ps *PeerStorage) ApplySnapshot(snapshot *eraftpb.Snapshot, kvWB *engine_ut
 	// update raftLocalState
 	ps.raftState.LastIndex = snapshot.Metadata.GetIndex()
 	ps.raftState.LastTerm = snapshot.Metadata.GetTerm()
-	ps.raftState.HardState = &eraftpb.HardState{ // FIXME: maybe unnecessary
-		Term:   snapshot.Metadata.GetTerm(),
-		Vote:   raft.None,
-		Commit: snapshot.Metadata.GetIndex(),
-	}
+	//ps.raftState.HardState = &eraftpb.HardState{ // FIXME: maybe unnecessary
+	//	Term:   snapshot.Metadata.GetTerm(),
+	//	Vote:   raft.None,
+	//	Commit: snapshot.Metadata.GetIndex(),
+	//}
 	// update raftApplyState
 	prev := &rspb.RaftApplyState{
 		AppliedIndex: ps.applyState.AppliedIndex,

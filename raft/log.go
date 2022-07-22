@@ -147,7 +147,7 @@ func (l *RaftLog) FirstIndex() uint64 {
 // Term return the term of the entry in the given index
 func (l *RaftLog) Term(i uint64) (uint64, error) {
 	// Your Code Here (2A).
-	//log.Infof("i:%d, first:%d, len:%d, pendingsnap.meta:%v", i, l.first, len(l.entries), l.pendingSnapshot.Metadata)
+	//log.Infof("i:%d, first:%d, len:%d", i, l.first, len(l.entries))
 	// search in memory
 	if len(l.entries) > 0 && i >= l.first && i-l.first < uint64(len(l.entries)) { // in range
 		term := l.entries[i-l.first].Term
