@@ -119,9 +119,6 @@ func (d *peerMsgHandler) applyConfChangeEntry(entry *pb.Entry, kvWB *engine_util
 			d.removePeerCache(cc.NodeId)
 		}
 	}
-	//// propose by raft
-	//d.RaftGroup.ApplyConfChange(cc)
-	//d.HeartbeatScheduler(d.ctx.schedulerTaskSender) // FIXME: not understand
 	// response
 	resp := &raft_cmdpb.RaftCmdResponse{
 		Header: &raft_cmdpb.RaftResponseHeader{},
@@ -218,7 +215,7 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		log.Infof("req get key:%s, value:%s, err:%v", req.Get.Key, val, err)
 		if err != nil {
 			log.Infof("get cf error:%v", err)
-			return kvWB
+			val = nil
 		}
 		resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 			CmdType: raft_cmdpb.CmdType_Get,
@@ -227,23 +224,24 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 			},
 		})
 		//update raftApplyState
-		//if entry.Index > d.peerStorage.applyState.AppliedIndex {
-		//prev := &rspb.RaftApplyState{
-		//	AppliedIndex: d.peerStorage.applyState.AppliedIndex,
-		//	TruncatedState: &rspb.RaftTruncatedState{
-		//		Index: d.peerStorage.applyState.TruncatedState.Index,
-		//		Term:  d.peerStorage.applyState.TruncatedState.Term,
-		//	},
-		//}
-		//d.peerStorage.applyState.AppliedIndex = entry.Index
-		//err = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
-		//if err != nil {
-		//	log.Panicf("set apply state error:%v", err)
-		//	return nil
-		//}
-		//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
-		//kvWB = &engine_util.WriteBatch{}
-		//}
+		if entry.Index > d.peerStorage.applyState.AppliedIndex {
+			prev := &rspb.RaftApplyState{
+				AppliedIndex: d.peerStorage.applyState.AppliedIndex,
+				TruncatedState: &rspb.RaftTruncatedState{
+					Index: d.peerStorage.applyState.TruncatedState.Index,
+					Term:  d.peerStorage.applyState.TruncatedState.Term,
+				},
+			}
+			d.peerStorage.applyState.AppliedIndex = entry.Index
+			err = kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
+			log.Infof("req get, applystate:%v to %v", prev, d.peerStorage.applyState)
+			if err != nil {
+				log.Panicf("set apply state error:%v", err)
+				return nil
+			}
+			kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
+			kvWB = &engine_util.WriteBatch{}
+		}
 	case raft_cmdpb.CmdType_Put:
 		log.Infof("req put key:%s, value:%s", req.Put.Key, req.Put.Value)
 		kvWB.SetCF(req.Put.Cf, req.Put.Key, req.Put.Value)
@@ -268,18 +266,24 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		})
 		txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
 		// update raftApplyState
-		//if entry.Index > d.peerStorage.applyState.AppliedIndex {
-		//prev := d.peerStorage.applyState
-		//d.peerStorage.applyState.AppliedIndex = entry.Index
-		//log.Infof("req snap, applystate:%v to %v", prev, d.peerStorage.applyState)
-		//err := kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
-		//if err != nil {
-		//	log.Panicf("set meta error")
-		//	return nil
-		//}
-		//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
-		//kvWB = &engine_util.WriteBatch{}
-		//}
+		if entry.Index > d.peerStorage.applyState.AppliedIndex {
+			prev := &rspb.RaftApplyState{
+				AppliedIndex: d.peerStorage.applyState.AppliedIndex,
+				TruncatedState: &rspb.RaftTruncatedState{
+					Index: d.peerStorage.applyState.TruncatedState.Index,
+					Term:  d.peerStorage.applyState.TruncatedState.Term,
+				},
+			}
+			d.peerStorage.applyState.AppliedIndex = entry.Index
+			log.Infof("req snap, applystate:%v to %v", prev, d.peerStorage.applyState)
+			err := kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
+			if err != nil {
+				log.Panicf("set meta error")
+				return nil
+			}
+			kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
+			kvWB = &engine_util.WriteBatch{}
+		}
 	}
 	// propose callback
 	d.matchProposal(resp, entry, txn)
@@ -287,10 +291,10 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 }
 
 func (d *peerMsgHandler) matchProposal(resp *raft_cmdpb.RaftCmdResponse, entry *pb.Entry, txn *badger.Txn) {
-	//log.Infof("match proposals:%v", d.proposals)
-	//for _, p := range d.proposals {
-	//	log.Infof("p:%v, term:%v, index:%v, cb:%v", p, p.index, p.term, p.cb)
-	//}
+	log.Infof("match proposals:%v, entry.index:%d, entry.term:%d", d.proposals, entry.Index, entry.Term)
+	for _, p := range d.proposals {
+		log.Infof("p:%v, term:%v, index:%v, cb:%v", p, p.index, p.term, p.cb)
+	}
 	for len(d.proposals) > 0 {
 		p := d.proposals[0]
 		if p.index == entry.Index {
@@ -303,7 +307,7 @@ func (d *peerMsgHandler) matchProposal(resp *raft_cmdpb.RaftCmdResponse, entry *
 				d.proposals = d.proposals[1:]
 				break
 			} else {
-				log.Infof("cb.done stale")
+				log.Infof("cb.done stale, term:%v, index:%v", p.term, p.index)
 				NotifyStaleReq(entry.Term, p.cb)
 			}
 		}

@@ -249,7 +249,7 @@ func (r *Raft) sendAppend(to uint64) bool {
 
 func (r *Raft) sendSnapshot(to uint64) error {
 	if !r.Prs[to].RecentActive {
-		log.Infof("peer is inactive, ignore snapshot")
+		log.Infof("%d ignore snapshot for peer %d is inactive", r.id, to)
 		return errors.New("peer is inactive, ignore snapshot")
 	}
 	snapshot, err := r.RaftLog.storage.Snapshot()
@@ -267,7 +267,6 @@ func (r *Raft) sendSnapshot(to uint64) error {
 	}
 	log.Infof("%d send snapshot to %d, msg:%v, meta.index:%d", r.id, to, msg, snapshot.Metadata.GetIndex())
 	r.sendMsg(msg)
-	log.Infof("after send msg")
 	// FIXME: maybe update match?
 	r.Prs[to].Next = snapshot.Metadata.GetIndex() + 1
 	return nil
@@ -336,10 +335,19 @@ func (r *Raft) electionTick() {
 func (r *Raft) activeTick() {
 	r.electionElapsed++
 	if r.electionElapsed >= r.baseElectionTimeout { // leadership transfer should happen in baseElectionTimeout
+		r.electionElapsed = 0
 		r.leadTransferee = None
-		// reset to inactive
+		// check leader quorum
+		cnt := 0
 		for p := range r.Prs {
-			r.Prs[p].RecentActive = false
+			if r.Prs[p].RecentActive {
+				cnt++
+			}
+			r.Prs[p].RecentActive = false // reset to inactive
+		}
+		if cnt < len(r.Prs)/2 { // old leader maybe in partition, so step down and stop to receive client requests
+			r.becomeFollower(r.Term, None)
+			return
 		}
 	}
 }
