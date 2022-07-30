@@ -199,9 +199,7 @@ func (l *Logger) Panic(v ...interface{}) { // verified for debug
 }
 
 func (l *Logger) Panicf(format string, v ...interface{}) { // verified for debug
-	if l.debug {
-		l._log.Panicf(format, v...)
-	}
+	l._log.Panicf(format, v...)
 }
 
 func (l *Logger) Error(v ...interface{}) {
@@ -275,6 +273,7 @@ func LogTypeToString(t LogType) (string, string) {
 }
 
 func New() *Logger {
+	//os.Setenv("LOG_LEVEL", "debug")
 	logger := NewLogger(os.Stderr, "")
 	//logger.debug = true // for debug control
 	return logger

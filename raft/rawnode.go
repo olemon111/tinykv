@@ -129,6 +129,7 @@ func (rn *RawNode) ProposeConfChange(cc pb.ConfChange) error {
 	}
 	data, err := cc.Marshal()
 	if err != nil {
+		log.Panicf("marshal conf change err:%v", err)
 		return err
 	}
 	ent := pb.Entry{EntryType: pb.EntryType_EntryConfChange, Data: data}

@@ -223,7 +223,9 @@ func (r *Raft) sendAppend(to uint64) bool {
 	// Your Code Here (2A).
 	prevLogIndex := r.Prs[to].Next - 1 // index of log entry immediately preceding new ones
 	prevLogTerm, err := r.RaftLog.Term(prevLogIndex)
-	//log.Infof("%d sendappend to %d", r.id, to)
+	//if rdebug {
+	//	log.Infof("%d sendappend to %d", r.id, to)
+	//}
 	if err != nil { // fall behind
 		err := r.sendSnapshot(to)
 		if err != nil {
@@ -275,12 +277,15 @@ func (r *Raft) sendSnapshot(to uint64) error {
 // sendHeartbeat sends a heartbeat RPC to the given peer.
 func (r *Raft) sendHeartbeat(to uint64) {
 	// Your Code Here (2A).
+	if rdebug {
+		//log.Infof("%d send heartbeat to %v", r.id, to)
+	}
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgHeartbeat,
 		To:      to,
 		From:    r.id,
 		Term:    r.Term,
-		Commit:  r.RaftLog.committed,
+		//Commit:  r.RaftLog.committed,
 	}
 	r.sendMsg(msg)
 }
@@ -338,6 +343,7 @@ func (r *Raft) activeTick() {
 		r.electionElapsed = 0
 		r.leadTransferee = None
 		// check leader quorum
+		r.Prs[r.id].RecentActive = true // self active
 		cnt := 0
 		for p := range r.Prs {
 			if r.Prs[p].RecentActive {
@@ -346,6 +352,7 @@ func (r *Raft) activeTick() {
 			r.Prs[p].RecentActive = false // reset to inactive
 		}
 		if cnt < len(r.Prs)/2 { // old leader maybe in partition, so step down and stop to receive client requests
+			log.Infof("%d step down maybe in partition, term:%v", r.id, r.Term)
 			r.becomeFollower(r.Term, None)
 			return
 		}
@@ -434,8 +441,11 @@ func (r *Raft) becomeLeader() {
 // on `eraftpb.proto` for what msgs should be handled
 func (r *Raft) Step(m pb.Message) error {
 	// Your Code Here (2A).
-	//log.Infof("\t\t%d step msg:%v", r.id, m)
-	if _, ok := r.Prs[r.id]; !ok && m.MsgType == pb.MessageType_MsgTimeoutNow {
+	if rdebug {
+		//log.Infof("\t\t%d step type:%v, from:%v, to:%v, term:%v, logterm:%v, index:%v, reject:%v", r.id, m.MsgType, m.From, m.To, m.Term, m.LogTerm, m.Index, m.Reject)
+	}
+	if _, ok := r.Prs[r.id]; !ok && len(r.Prs) != 0 {
+		log.Infof("\t\t%d drop step type:%v, from:%v, to:%v, prs:%v", r.id, m.MsgType, m.From, m.To, r.Prs)
 		return nil
 	}
 	if m.Term > r.Term {
@@ -620,13 +630,17 @@ func (r *Raft) sendHeartbeatResponse(to uint64, reject bool, index uint64) {
 func (r *Raft) handleHeartbeat(m pb.Message) {
 	// Your Code Here (2A).
 	if m.Term < r.Term {
-		//log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+		if rdebug {
+			//log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+		}
 		r.sendHeartbeatResponse(m.From, true, None)
 		return
 	}
 	// accept
 	r.resetElectionTimer()
-	//log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+	if rdebug {
+		//log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+	}
 	r.becomeFollower(m.Term, m.From)
 	index := r.RaftLog.LastIndex()
 	r.sendHeartbeatResponse(m.From, false, index)
@@ -670,22 +684,18 @@ func (r *Raft) addNode(id uint64) {
 	if _, ok := r.Prs[id]; ok {
 		return
 	}
-	log.Infof("%d add node %d", r.id, id)
 	r.PendingConfIndex = None
 	r.Prs[id] = &Progress{
 		Match:        0,
-		Next:         r.RaftLog.FirstIndex(),
+		Next:         1, // fall behind, send snapshot to new node
 		RecentActive: true,
 	}
-	// send heartbeat instantly to create peer
-	msg := pb.Message{
-		MsgType: pb.MessageType_MsgHeartbeat,
-		To:      id,
-		From:    r.id,
-		Term:    r.Term,
+	if r.State == StateLeader {
+		r.sendHeartbeat(id) // TODO: maybe useless, test later
+		log.Infof("%v send heartbeat to init follower:%v", r.id, id)
+		r.updateCommitted()
 	}
-	r.sendMsg(msg)
-	r.updateCommitted()
+	log.Infof("%d add node %d, prs:%v", r.id, id, r.Prs)
 }
 
 // removeNode remove a node from raft group
@@ -698,14 +708,18 @@ func (r *Raft) removeNode(id uint64) {
 	if _, ok := r.Prs[id]; !ok {
 		return
 	}
-	log.Infof("%d remove node %d", r.id, id)
 	r.PendingConfIndex = None
 	delete(r.Prs, id)
-	r.updateCommitted()
+	if r.State == StateLeader {
+		r.updateCommitted()
+	}
+	log.Infof("%d remove node %d, prs:%v", r.id, id, r.Prs)
 }
 
 func (r *Raft) broadcastHeartbeat() {
-	//log.Infof("%d broadcast heartbeat", r.id)
+	if rdebug {
+		//log.Infof("%d broadcast heartbeat prs:%v", r.id, r.Prs)
+	}
 	for p := range r.Prs {
 		if p != r.id {
 			r.sendHeartbeat(p)
@@ -731,7 +745,7 @@ func (r *Raft) sendRequestVote(to uint64) {
 
 func (r *Raft) broadcastRequestVote() {
 	if rdebug {
-		log.Infof("%d broadcast req vote", r.id)
+		//log.Infof("%d broadcast req vote to prs:%v", r.id, r.Prs)
 	}
 	for p := range r.Prs {
 		if p != r.id {
@@ -743,6 +757,11 @@ func (r *Raft) broadcastRequestVote() {
 func (r *Raft) broadcastAppend() {
 	if rdebug {
 		log.Infof("%d broadcast append, term:%v", r.id, r.Term)
+		if rdebug {
+			for i, p := range r.Prs {
+				log.Infof("prs: %v: active:%v, match:%v, next:%v", i, p.RecentActive, p.Match, p.Next)
+			}
+		}
 	}
 	for p := range r.Prs {
 		if p != r.id {
@@ -752,15 +771,19 @@ func (r *Raft) broadcastAppend() {
 }
 
 func (r *Raft) sendMsg(m pb.Message) {
-	r.msgs = append(r.msgs, m)
+	if _, ok := r.Prs[m.To]; ok || len(r.Prs) == 0 || (m.MsgType == pb.MessageType_MsgAppendResponse && m.To == None) { // None used to pass TestHandleMessageType_MsgAppend2AB
+		r.msgs = append(r.msgs, m)
+	} else {
+		log.Infof("send msg dropped, from:%v, to:%v, type:%s", m.From, m.To, m.MsgType)
+	}
 }
 
 func (r *Raft) handleHup(m pb.Message) {
 	if rdebug {
 		log.Infof("%d handle hup, term:%v", r.id, r.Term)
 	}
-	if !(m.From == 0 || m.From == r.id) {
-		log.Infof("reject hup")
+	if !(m.From == 0 || m.From == r.id) || len(r.Prs) == 0 {
+		log.Infof("%v reject hup, m.from:%v, prs:%v", r.id, m.From, r.Prs)
 		return
 	}
 	if !IsEmptySnap(r.RaftLog.pendingSnapshot) { // there's a leader sending snapshot
@@ -820,7 +843,9 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 	}
 	// count votes
 	r.votes[m.From] = !m.Reject
-	//log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
+	if rdebug {
+		//log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
+	}
 	acceptCnt := 0
 	rejectCnt := 0
 	for _, v := range r.votes {
@@ -831,13 +856,14 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 		}
 	}
 	if rdebug {
-		log.Infof("%d, cnt:%v, rejectcnt:%v, len:%v", r.id, acceptCnt, rejectCnt, len(r.Prs))
+		//log.Infof("%d, cnt:%v, rejectcnt:%v, len:%v", r.id, acceptCnt, rejectCnt, len(r.Prs))
 	}
 	if 2*acceptCnt > len(r.Prs) { // receive votes from the majority, convert to leader
 		r.becomeLeader()
 	}
 	// step down
 	if 2*rejectCnt > len(r.Prs) {
+		log.Infof("%v step down for reject votes", r.id)
 		r.becomeFollower(r.Term, None)
 	}
 }
@@ -863,6 +889,7 @@ func (r *Raft) handleBeat(m pb.Message) {
 
 func (r *Raft) handlePropose(m pb.Message) error {
 	if r.leadTransferee != None { // stop propose when transferring leader
+		log.Infof("%v stop propose for transferring leader to %v", r.id, r.leadTransferee)
 		return ErrProposalDropped
 	}
 	if rdebug {
@@ -870,13 +897,18 @@ func (r *Raft) handlePropose(m pb.Message) error {
 	}
 	// append entries
 	for _, entry := range m.Entries {
+		if rdebug {
+			//log.Infof("%v propose entry type:%s", r.id, entry.EntryType)
+		}
 		entry.Term = r.Term
 		entry.Index = r.RaftLog.LastIndex() + 1
 		// check confChange
 		if entry.EntryType == pb.EntryType_EntryConfChange {
 			if r.RaftLog.applied >= r.PendingConfIndex { // accept
+				log.Infof("%v accept propose confchange applied:%v, pending:%v", r.id, r.RaftLog.applied, r.PendingConfIndex)
 				r.PendingConfIndex = entry.Index
 			} else { // reject: only one conf change may be pending
+				log.Infof("%v reject propose confchange applied:%v, pending:%v", r.id, r.RaftLog.applied, r.PendingConfIndex)
 				continue
 			}
 		}
@@ -928,6 +960,9 @@ func (r *Raft) resetElectionTimer() {
 }
 
 func (r *Raft) updateCommitted() {
+	if rdebug {
+		//log.Infof("%d before update committed prs:%v, first:%v, last:%v, applied:%v, committed:%v", r.id, r.Prs, r.RaftLog.FirstIndex(), r.RaftLog.LastIndex(), r.RaftLog.applied, r.RaftLog.committed)
+	}
 	if r.RaftLog.committed == r.RaftLog.LastIndex() { // updated
 		return
 	}

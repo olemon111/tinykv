@@ -1,9 +1,8 @@
 package raftstore
 
 import (
-	"sync"
-
 	"github.com/pingcap-incubator/tinykv/kv/raftstore/message"
+	"sync"
 )
 
 // raftWorker is responsible for run raft commands and apply raft logs.

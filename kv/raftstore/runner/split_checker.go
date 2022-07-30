@@ -2,7 +2,6 @@ package runner
 
 import (
 	"encoding/hex"
-
 	"github.com/Connor1996/badger"
 	"github.com/pingcap-incubator/tinykv/kv/config"
 	"github.com/pingcap-incubator/tinykv/kv/raftstore/message"

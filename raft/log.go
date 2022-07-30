@@ -129,12 +129,18 @@ func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 // LastIndex return the last index of the log entries
 func (l *RaftLog) LastIndex() uint64 {
 	// Your Code Here (2A).
+	// check pending snapshot
+	index := uint64(0)
+	if !IsEmptySnap(l.pendingSnapshot) {
+		index = l.pendingSnapshot.Metadata.Index
+	}
+	// check entries
 	length := len(l.entries)
 	if length > 0 {
 		//log.Infof("last ent:%v, lastIndex:%v", l.entries[length-1], l.entries[length-1].Index)
-		return l.entries[length-1].Index
+		return max(l.entries[length-1].Index, index)
 	}
-	return l.first - 1
+	return max(index, l.first-1)
 }
 
 func (l *RaftLog) FirstIndex() uint64 {
