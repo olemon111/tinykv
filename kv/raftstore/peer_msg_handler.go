@@ -6,6 +6,7 @@ import (
 	"github.com/pingcap-incubator/tinykv/kv/raftstore/meta"
 	"github.com/pingcap-incubator/tinykv/kv/util/engine_util"
 	pb "github.com/pingcap-incubator/tinykv/proto/pkg/eraftpb"
+	"reflect"
 	"time"
 
 	"github.com/Connor1996/badger/y"
@@ -310,7 +311,7 @@ func (d *peerMsgHandler) applySplit(msg *raft_cmdpb.RaftCmdRequest, resp *raft_c
 	//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
 	//kvWB = &engine_util.WriteBatch{}
 	//d.notifyHeartbeatScheduler(oldRegion, d.peer)
-	//d.notifyHeartbeatScheduler(newRegion, newPeer)
+	d.notifyHeartbeatScheduler(newRegion, newPeer)
 	return err
 }
 
@@ -354,7 +355,7 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 				return kvWB
 			}
 		}
-		kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
+		//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
 		kvWB = &engine_util.WriteBatch{}
 	case raft_cmdpb.CmdType_Put:
 		log.Infof("%v apply put key:%s, value:%s", d.Tag, req.Put.Key, req.Put.Value)
@@ -492,15 +493,17 @@ func (d *peerMsgHandler) HandleRaftReady() {
 	}
 	// update region
 	if applySnapResult != nil {
-		d.SetRegion(applySnapResult.Region)
-		log.Infof("set new region: %v", d.peerStorage.region)
-		// update region state in global context
-		sm := d.ctx.storeMeta
-		sm.Lock()
-		sm.regions[applySnapResult.Region.Id] = applySnapResult.Region // id -> region
-		sm.regionRanges.Delete(&regionItem{region: applySnapResult.PrevRegion})
-		sm.regionRanges.ReplaceOrInsert(&regionItem{region: applySnapResult.Region})
-		sm.Unlock()
+		if !reflect.DeepEqual(applySnapResult.Region, d.Region()) {
+			d.SetRegion(applySnapResult.Region)
+			log.Infof("set new region: %v", d.peerStorage.region)
+			// update region state in global context
+			sm := d.ctx.storeMeta
+			sm.Lock()
+			sm.regions[applySnapResult.Region.Id] = applySnapResult.Region // id -> region
+			sm.regionRanges.Delete(&regionItem{region: applySnapResult.PrevRegion})
+			sm.regionRanges.ReplaceOrInsert(&regionItem{region: applySnapResult.Region})
+			sm.Unlock()
+		}
 	}
 	// send raft messages
 	//log.Infof("%v send raft msgs:%v", d.Tag, ready.Messages)
@@ -605,6 +608,11 @@ func (d *peerMsgHandler) proposeRaftCommand(msg *raft_cmdpb.RaftCmdRequest, cb *
 		return
 	}
 	// Your Code Here (2B).
+	if d.stopped {
+		log.Panicf("necessary, propose stopped here") // FIXME: temp test
+		cb.Done(ErrRespRegionNotFound(d.regionId))
+		return
+	}
 	if msg.AdminRequest != nil {
 		d.proposeAdminCommand(msg, cb)
 	} else {
@@ -717,10 +725,13 @@ func (d *peerMsgHandler) proposeSplit(msg *raft_cmdpb.RaftCmdRequest) error {
 		log.Panicf("marshal raft cmd request error %v", err)
 		return err
 	}
-	// FIXME: to test temporarily
+	// check new peer count
 	if len(msg.AdminRequest.Split.NewPeerIds) != len(d.Region().Peers) {
-		log.Panicf("%v split new peer count not match %v != %v", d.Tag, len(msg.AdminRequest.Split.NewPeerIds), len(d.Region().Peers))
-		return errors.New("split new peer count not match")
+		log.Infof("%v split new peer count not match %v != %v", d.Tag, len(msg.AdminRequest.Split.NewPeerIds), len(d.Region().Peers))
+		return &util.ErrEpochNotMatch{
+			Message: "split new peer count not match",
+			Regions: []*metapb.Region{d.Region()},
+		}
 	}
 	log.Infof("%v propose split, start:%s, end:%s key:%s \n msg:%v", d.Tag, d.Region().StartKey, d.Region().EndKey, msg.AdminRequest.Split.SplitKey, msg)
 	err = d.RaftGroup.Propose(data)

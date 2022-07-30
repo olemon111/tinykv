@@ -40,8 +40,8 @@ var stmap = [...]string{
 	"StateLeader",
 }
 
-//const rdebug = true // for raft detail debug control
-const rdebug = false
+const rdebug = true // for raft detail debug control
+//const rdebug = false
 
 func (st StateType) String() string {
 	return stmap[uint64(st)]
@@ -909,6 +909,7 @@ func (r *Raft) handlePropose(m pb.Message) error {
 				r.PendingConfIndex = entry.Index
 			} else { // reject: only one conf change may be pending
 				log.Infof("%v reject propose confchange applied:%v, pending:%v", r.id, r.RaftLog.applied, r.PendingConfIndex)
+				r.sendMsg(m) // FIXME: not sure if necessary
 				continue
 			}
 		}
