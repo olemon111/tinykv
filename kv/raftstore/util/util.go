@@ -6,7 +6,6 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	"github.com/pingcap-incubator/tinykv/kv/raftstore/meta"
-	"github.com/pingcap-incubator/tinykv/log"
 	"github.com/pingcap-incubator/tinykv/proto/pkg/eraftpb"
 	"github.com/pingcap-incubator/tinykv/proto/pkg/metapb"
 	"github.com/pingcap-incubator/tinykv/proto/pkg/raft_cmdpb"
@@ -117,8 +116,8 @@ func CheckRegionEpoch(req *raft_cmdpb.RaftCmdRequest, region *metapb.Region, inc
 	// KeyNotInRegion error.
 	if (checkConfVer && fromEpoch.ConfVer != currentEpoch.ConfVer) ||
 		(checkVer && fromEpoch.Version != currentEpoch.Version) {
-		log.Debugf("epoch not match, region id %v, from epoch %v, current epoch %v",
-			region.Id, fromEpoch, currentEpoch)
+		//log.Debugf("epoch not match, region id %v, from epoch %v, current epoch %v",
+		//	region.Id, fromEpoch, currentEpoch)
 
 		regions := []*metapb.Region{}
 		if includeRegion {

@@ -40,8 +40,8 @@ var stmap = [...]string{
 	"StateLeader",
 }
 
-const rdebug = true // for raft detail debug control
-//const rdebug = false
+//const rdebug = true // for raft detail debug control
+const rdebug = false
 
 func (st StateType) String() string {
 	return stmap[uint64(st)]

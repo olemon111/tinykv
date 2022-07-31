@@ -183,10 +183,12 @@ func (c *Cluster) AllocPeer(storeID uint64) *metapb.Peer {
 
 func (c *Cluster) Request(key []byte, reqs []*raft_cmdpb.Request, timeout time.Duration) (*raft_cmdpb.RaftCmdResponse, *badger.Txn) {
 	startTime := time.Now()
+	var r raft_cmdpb.RaftCmdRequest // tmp
 	for i := 0; i < 10 || time.Since(startTime) < timeout; i++ {
 		region := c.GetRegion(key)
 		regionID := region.GetId()
 		req := NewRequest(regionID, region.RegionEpoch, reqs)
+		r = req
 		resp, txn := c.CallCommandOnLeader(&req, timeout)
 		if resp == nil {
 			// it should be timeouted innerly
@@ -198,6 +200,10 @@ func (c *Cluster) Request(key []byte, reqs []*raft_cmdpb.Request, timeout time.D
 			continue
 		}
 		return resp, txn
+	}
+	log.Infof("admin req: %v", r.AdminRequest)
+	if len(r.Requests) > 0 {
+		log.Infof("normal req: %v", r.Requests[0])
 	}
 	panic("request timeout")
 }
@@ -240,7 +246,7 @@ func (c *Cluster) CallCommandOnLeader(request *raft_cmdpb.RaftCmdRequest, timeou
 		if resp.Header.Error != nil {
 			err := resp.Header.Error
 			if err.GetStaleCommand() != nil || err.GetEpochNotMatch() != nil || err.GetNotLeader() != nil {
-				log.Debugf("encouter retryable err %+v", resp)
+				//log.Debugf("encouter retryable err %+v", resp)
 				if err.GetNotLeader() != nil && err.GetNotLeader().Leader != nil {
 					leader = err.GetNotLeader().Leader
 				} else {

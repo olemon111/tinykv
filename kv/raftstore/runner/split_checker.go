@@ -1,7 +1,6 @@
 package runner
 
 import (
-	"encoding/hex"
 	"github.com/Connor1996/badger"
 	"github.com/pingcap-incubator/tinykv/kv/config"
 	"github.com/pingcap-incubator/tinykv/kv/raftstore/message"
@@ -42,7 +41,9 @@ func (r *splitCheckHandler) Handle(t worker.Task) {
 	region := spCheckTask.Region
 	regionId := region.Id
 	log.Debugf("executing split check worker.Task: [regionId: %d, startKey: %s, endKey: %s]", regionId,
-		hex.EncodeToString(region.StartKey), hex.EncodeToString(region.EndKey))
+		region.StartKey, region.EndKey)
+	//log.Debugf("executing split check worker.Task: [regionId: %d, startKey: %s, endKey: %s]", regionId,
+	//	hex.EncodeToString(region.StartKey), hex.EncodeToString(region.EndKey))
 	key := r.splitCheck(regionId, region.StartKey, region.EndKey)
 	if key != nil {
 		_, userKey, err := codec.DecodeBytes(key)
