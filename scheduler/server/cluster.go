@@ -279,7 +279,34 @@ func (c *RaftCluster) handleStoreHeartbeat(stats *schedulerpb.StoreStats) error 
 // processRegionHeartbeat updates the region information.
 func (c *RaftCluster) processRegionHeartbeat(region *core.RegionInfo) error {
 	// Your Code Here (3C).
-
+	// check whether there's a region with the same id in local storage
+	origin := c.GetRegion(region.GetID())
+	if origin != nil && (origin.GetRegionEpoch().GetConfVer() > region.GetRegionEpoch().GetConfVer() || origin.GetRegionEpoch().GetVersion() > region.GetRegionEpoch().GetVersion()) {
+		return ErrRegionIsStale(region.GetMeta(), origin.GetMeta())
+	}
+	// scan all regions that overlap with it
+	for _, r := range c.core.GetOverlaps(region) {
+		if region.GetRegionEpoch().GetConfVer() < r.GetRegionEpoch().GetConfVer() || region.GetRegionEpoch().GetVersion() < r.GetRegionEpoch().GetVersion() {
+			return ErrRegionIsStale(region.GetMeta(), r.GetMeta())
+		}
+	}
+	// check update
+	if !(origin == nil || region.GetRegionEpoch().GetVersion() > origin.GetRegionEpoch().GetConfVer() || region.GetRegionEpoch().GetConfVer() > origin.GetRegionEpoch().GetConfVer() || region.GetLeader().GetId() != origin.GetLeader().Id || len(region.GetPendingPeers()) > 0 || len(origin.GetPendingPeers()) > 0 || region.GetApproximateSize() != origin.GetApproximateSize() || len(region.GetPeers()) != len(origin.GetPeers())) {
+		return nil // no need to update
+	}
+	// update region tree and store status
+	err := c.putRegion(region)
+	if err != nil {
+		return err
+	}
+	if origin != nil {
+		for storeId := range origin.GetStoreIds() {
+			c.updateStoreStatusLocked(storeId)
+		}
+	}
+	for storeId := range region.GetStoreIds() {
+		c.updateStoreStatusLocked(storeId)
+	}
 	return nil
 }
 

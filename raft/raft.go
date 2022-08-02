@@ -371,7 +371,6 @@ func (r *Raft) becomeFollower(term uint64, lead uint64) {
 	r.Vote = None
 	r.leadTransferee = None
 	r.resetVotes()
-	r.resetTimer()
 }
 
 // becomeCandidate transform this peer's state to candidate
@@ -905,10 +904,10 @@ func (r *Raft) handlePropose(m pb.Message) error {
 		// check confChange
 		if entry.EntryType == pb.EntryType_EntryConfChange {
 			if r.RaftLog.applied >= r.PendingConfIndex { // accept
-				log.Infof("%v accept propose confchange applied:%v, pending:%v", r.id, r.RaftLog.applied, r.PendingConfIndex)
+				log.Infof("%v accept propose confchange index:%v, applied:%v, pending:%v", r.id, entry.Index, r.RaftLog.applied, r.PendingConfIndex)
 				r.PendingConfIndex = entry.Index
 			} else { // reject: only one conf change may be pending
-				log.Infof("%v reject propose confchange applied:%v, pending:%v", r.id, r.RaftLog.applied, r.PendingConfIndex)
+				log.Infof("%v reject propose confchange index:%v, applied:%v, pending:%v", r.id, entry.Index, r.RaftLog.applied, r.PendingConfIndex)
 				r.sendMsg(m) // FIXME: not sure if necessary
 				continue
 			}
@@ -983,7 +982,7 @@ func (r *Raft) updateCommitted() {
 		}
 		if 2*cnt > len(r.Prs) { // beyond half committed
 			if i != r.RaftLog.committed {
-				log.Infof("%d leader update r.committed:%v to %v, r.last:%v, applied:%v", r.id, r.RaftLog.committed, i, r.RaftLog.LastIndex(), r.RaftLog.applied)
+				log.Infof("%d leader update r.committed:%v to %v, r.last:%v, applied:%v, prs:%v", r.id, r.RaftLog.committed, i, r.RaftLog.LastIndex(), r.RaftLog.applied, r.Prs)
 				r.RaftLog.setCommitted(i)
 				r.broadcastAppend() // for followers to update committed
 			}

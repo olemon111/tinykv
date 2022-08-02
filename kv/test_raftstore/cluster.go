@@ -201,9 +201,10 @@ func (c *Cluster) Request(key []byte, reqs []*raft_cmdpb.Request, timeout time.D
 		}
 		return resp, txn
 	}
-	log.Infof("admin req: %v", r.AdminRequest)
 	if len(r.Requests) > 0 {
-		log.Infof("normal req: %v", r.Requests[0])
+		log.Warnf("normal req: %v", r.Requests[0])
+	} else {
+		log.Warnf("admin req: %v", r.AdminRequest)
 	}
 	panic("request timeout")
 }
