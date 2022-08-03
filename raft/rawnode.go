@@ -115,18 +115,6 @@ func (rn *RawNode) Propose(data []byte) error {
 
 // ProposeConfChange proposes a config change.
 func (rn *RawNode) ProposeConfChange(cc pb.ConfChange) error {
-	if cc.ChangeType == pb.ConfChangeType_RemoveNode && len(rn.Raft.Prs) == 2 && cc.NodeId == rn.Raft.id {
-		peer := None
-		for p := range rn.Raft.Prs {
-			if p != rn.Raft.id {
-				peer = p
-				break
-			}
-		}
-		log.Infof("raft: propose conf change to remove leader itself, ignore")
-		rn.TransferLeader(peer)
-		return ErrProposalDropped
-	}
 	data, err := cc.Marshal()
 	if err != nil {
 		log.Panicf("marshal conf change err:%v", err)

@@ -826,9 +826,6 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 		}
 	}
 	//log.Infof("%d handle req vote from %d, reject:%v, r.vote:%v, r.votes:%v, m.index:%v, m.logterm:%v, r.ents:%v", r.id, m.From, reject, r.Vote, r.votes, m.Index, m.LogTerm, r.RaftLog.entries)
-	//if !reject {
-	//	r.resetElectionTimer()
-	//}
 	r.sendRequestVoteResponse(m.From, reject)
 }
 

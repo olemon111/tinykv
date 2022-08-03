@@ -490,8 +490,7 @@ func (d *peerMsgHandler) matchProposal(resp *raft_cmdpb.RaftCmdResponse, entry *
 		p := d.proposals[0]
 		if p.index == entry.Index {
 			if p.term == entry.Term {
-				if txn != nil && p.cb != nil { // set for snap, maybe turn into nil later
-					//log.Infof("resp:%v, entry:%v, txn:%v, p:%v, cb:%v", resp, entry, txn, p, p.cb)
+				if txn != nil { // set for snap
 					p.cb.Txn = txn
 				}
 				log.Infof("cb.done resp:%v, term:%v, index:%v", resp, p.term, p.index)
@@ -654,7 +653,7 @@ func (d *peerMsgHandler) proposeRaftCommand(msg *raft_cmdpb.RaftCmdRequest, cb *
 	}
 	// Your Code Here (2B).
 	if d.stopped {
-		log.Panicf("necessary, propose stopped here") // FIXME: temp test
+		log.Panicf("necessary, propose stopped here") // FIXME: temp test, maybe remove later
 		cb.Done(ErrRespRegionNotFound(d.regionId))
 		return
 	}
@@ -700,13 +699,19 @@ func (d *peerMsgHandler) proposeNormalCommand(msg *raft_cmdpb.RaftCmdRequest, cb
 	d.appendProposal(cb)
 	err = d.RaftGroup.Propose(data)
 	if err != nil {
-		log.Infof("propose error %v", err)
+		log.Warnf("cb.done propose normal error %v", err)
 		cb.Done(ErrResp(err))
+		if cb != nil {
+			d.removeProposal()
+		}
 		return
 	}
 }
 
 func (d *peerMsgHandler) appendProposal(cb *message.Callback) {
+	if cb == nil {
+		return
+	}
 	d.proposals = append(d.proposals, &proposal{
 		index: d.nextProposalIndex(),
 		term:  d.Term(),
@@ -714,20 +719,57 @@ func (d *peerMsgHandler) appendProposal(cb *message.Callback) {
 	})
 }
 
+func (d *peerMsgHandler) removeProposal() {
+	d.proposals = d.proposals[:len(d.proposals)-1]
+}
+
 func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
 	switch msg.AdminRequest.CmdType {
 	case raft_cmdpb.AdminCmdType_InvalidAdmin:
 		log.Panicf("invalid admin command")
 	case raft_cmdpb.AdminCmdType_ChangePeer:
+		resp := &raft_cmdpb.RaftCmdResponse{
+			AdminResponse: &raft_cmdpb.AdminResponse{
+				CmdType: raft_cmdpb.AdminCmdType_ChangePeer,
+				ChangePeer: &raft_cmdpb.ChangePeerResponse{
+					Region: d.Region(),
+				},
+			},
+		}
+		// check: remove leader when there are only two peers, reject and transfer leader to another peer
+		if msg.AdminRequest.ChangePeer.ChangeType == pb.ConfChangeType_RemoveNode && d.IsLeader() && len(d.Region().Peers) == 2 && msg.AdminRequest.ChangePeer.Peer.Id == d.PeerId() {
+			log.Infof("%v propose conf change to remove leader itself, ignore", d.Tag)
+			to := raft.None
+			for _, p := range d.Region().Peers {
+				if p.Id != d.PeerId() {
+					to = p.Id
+					break
+				}
+			}
+			d.RaftGroup.TransferLeader(to)
+			cb.Done(resp)
+			return
+		}
 		d.appendProposal(cb)
-		d.proposeChangePeer(msg)
+		//_ = d.proposeChangePeer(msg) // FIXME: seems err may cause bug
+		err := d.proposeChangePeer(msg)
+		if err != nil {
+			log.Warnf("cb.done err propose changepeer error, %v", err)
+			cb.Done(ErrResp(err))
+			if cb != nil {
+				d.removeProposal()
+			}
+			return
+		}
 	case raft_cmdpb.AdminCmdType_Split:
-		// FIXME: it seems no need to callback
 		d.appendProposal(cb)
 		err := d.proposeSplit(msg)
 		if err != nil {
-			log.Infof("cb.done err split %v", err)
+			log.Infof("cb.done err propose split err %v", err)
 			cb.Done(ErrResp(err))
+			if cb != nil {
+				d.removeProposal()
+			}
 			return
 		}
 		//log.Infof("%v propose split, start:%s, end:%s key:%s \n msg:%v", d.Tag, d.Region().StartKey, d.Region().EndKey, msg.AdminRequest.Split.SplitKey, msg)
@@ -741,19 +783,19 @@ func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb 
 	}
 }
 
-func (d *peerMsgHandler) proposeChangePeer(msg *raft_cmdpb.RaftCmdRequest) {
-	req := msg.AdminRequest
+func (d *peerMsgHandler) proposeChangePeer(msg *raft_cmdpb.RaftCmdRequest) error {
+	req := msg.AdminRequest.ChangePeer
 	ctx, _ := msg.Marshal()
 	cc := pb.ConfChange{
-		ChangeType: req.ChangePeer.ChangeType,
-		NodeId:     req.ChangePeer.Peer.Id,
+		ChangeType: req.ChangeType,
+		NodeId:     req.Peer.Id,
 		Context:    ctx,
 	}
-	_ = d.RaftGroup.ProposeConfChange(cc)
+	return d.RaftGroup.ProposeConfChange(cc)
 }
 
 func (d *peerMsgHandler) proposeSplit(msg *raft_cmdpb.RaftCmdRequest) error {
-	log.Infof("%v before propose split msg:%v", d.Tag, msg)
+	//log.Infof("%v before propose split msg:%v", d.Tag, msg)
 	// check region
 	if msg.Header.RegionId != d.regionId {
 		log.Infof("split key region Id not match %v != %v", msg.Header.RegionId, d.regionId)
@@ -777,8 +819,7 @@ func (d *peerMsgHandler) proposeSplit(msg *raft_cmdpb.RaftCmdRequest) error {
 		return &util.ErrStaleCommand{}
 	}
 	log.Infof("%v propose split, start:%s, end:%s key:%s \n msg:%v", d.Tag, d.Region().StartKey, d.Region().EndKey, msg.AdminRequest.Split.SplitKey, msg)
-	_ = d.RaftGroup.Propose(data)
-	return nil
+	return d.RaftGroup.Propose(data)
 }
 
 func (d *peerMsgHandler) proposeCompactLog(msg *raft_cmdpb.RaftCmdRequest) {

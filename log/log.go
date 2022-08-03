@@ -273,9 +273,9 @@ func LogTypeToString(t LogType) (string, string) {
 }
 
 func New() *Logger {
-	os.Setenv("LOG_LEVEL", "debug")
+	//os.Setenv("LOG_LEVEL", "debug")
 	logger := NewLogger(os.Stderr, "")
-	logger.debug = true // for debug control
+	//logger.debug = true // for debug control
 	return logger
 }
 
