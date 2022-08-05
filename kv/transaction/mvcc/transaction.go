@@ -174,6 +174,7 @@ func (txn *MvccTxn) CurrentWrite(key []byte) (*Write, uint64, error) {
 func (txn *MvccTxn) MostRecentWrite(key []byte) (*Write, uint64, error) {
 	// Your Code Here (4A).
 	iter := txn.Reader.IterCF(engine_util.CfWrite)
+	defer iter.Close()
 	for ; iter.Valid(); iter.Next() { // no seek
 		userKey := DecodeUserKey(iter.Item().Key())
 		if bytes.Compare(userKey, key) == 0 { // match key
