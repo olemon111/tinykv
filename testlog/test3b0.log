@@ -1,0 +1,2465 @@
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (3.14s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.182s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (4.22s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.249s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 17:01:16.542799 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:01:17.065685 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:01:23.448893 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:01:23.966425 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:01:32.327648 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:01:32.862398 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (28.15s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	28.232s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 17:01:39.852950 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:01:39.853121 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853161 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853192 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853221 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853268 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853322 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853354 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853409 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853454 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853515 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853547 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853575 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853603 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:01:39.853631 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853658 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853703 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853739 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853767 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853795 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853863 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853901 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853929 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:39.853956 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:01:42.581687 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.581774 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.581845 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.581905 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.581951 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582013 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582055 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582125 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582171 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582198 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:01:42.582221 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582247 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582272 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582301 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582334 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582366 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582394 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582427 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582466 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582498 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582523 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:01:42.582557 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582595 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:42.582619 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:01:44.752307 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:01:45.548731 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:01:54.966267 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:01:55.545782 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:02:09.380955 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:02:09.932805 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (41.58s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.667s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+--- PASS: TestConfChangeUnreliable3B (33.41s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.471s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 17:02:58.586144 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:2 store_id:2 > to_peer:<id:5 store_id:5 > region_epoch:<conf_ver:4 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:02:58.586167 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:4 store_id:4 > to_peer:<id:5 store_id:5 > region_epoch:<conf_ver:3 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:03:03.818566 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:03:04.330913 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:03:12.148083 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:03:12.648530 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:03:23.645186 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:03:24.145615 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (35.08s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.225s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:03:32.435451 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:03:32.435623 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:03:32.435660 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:03:33.629354 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:03:33.629391 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:03:33.629418 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:03:37.772237 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:03:38.295418 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:03:46.737639 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:03:47.238808 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:03:57.547474 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:03:58.083911 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (32.86s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.938s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:04:12.612698 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:04:13.130455 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:04:25.465110 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:04:25.965411 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:04:37.097764 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:04:37.598180 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (40.29s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.387s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (9.71s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.744s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 17:05:03.961196 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:05:04.496636 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:05:14.051968 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:05:14.591013 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:05:21.654693 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:05:22.183162 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (30.25s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	30.359s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 17:05:34.046841 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:05:34.739723 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:05:49.106275 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:05:50.322573 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:06:43.407109 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:06:44.379613 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (121.46s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	121.559s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (38.94s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.020s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 17:08:17.160425 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:08:17.688909 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:08:28.922337 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:08:29.510773 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:08:39.766926 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:08:40.321557 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (36.98s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.112s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:08:51.988197 peer_msg_handler.go:1010: [0;31m[error] [region 17] send message failed message region_id:17 from_peer:<id:18 store_id:4 > to_peer:<id:21 store_id:3 > region_epoch:<conf_ver:2 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:08:51.993891 peer_msg_handler.go:1010: [0;31m[error] [region 17] send message failed message region_id:17 from_peer:<id:19 store_id:1 > to_peer:<id:21 store_id:3 > region_epoch:<conf_ver:2 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:08:54.406425 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:08:54.945941 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:09:04.262024 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:09:04.828306 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:09:15.097563 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:09:15.598111 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (34.30s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.398s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:09:29.807504 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:09:30.337626 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:09:40.024680 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:09:40.573957 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:09:51.324503 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:09:51.849658 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (37.89s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.051s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (3.77s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.791s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (5.80s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	5.820s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 17:10:19.613135 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:10:20.125632 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:10:27.506565 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:10:28.018857 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:10:36.271984 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:10:36.790677 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (29.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	29.820s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 17:10:49.350970 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:10:49.863792 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:11:01.106517 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:11:01.631317 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:11:14.579048 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:11:15.114066 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (42.35s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	42.422s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+2022/08/07 17:11:27.278537 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:11:27.278732 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:11:27.278793 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:11:27.278885 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+--- PASS: TestConfChangeUnreliable3B (30.64s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	30.679s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 17:12:00.855320 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:6 store_id:2 > to_peer:<id:7 store_id:5 > region_epoch:<conf_ver:11 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:12:02.422202 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:15 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:12:04.540530 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:12:05.063819 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:12:14.101578 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:12:14.602851 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:12:24.771820 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:12:25.272883 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (34.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.115s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:12:34.935027 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:12:34.935205 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:12:34.935347 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:12:39.759816 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:12:40.272136 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:12:49.761664 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:12:50.262212 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:13:01.361802 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:13:01.873948 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (37.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.607s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:13:16.507348 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:13:16.512822 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:13:16.512894 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:13:16.512929 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:13:16.518335 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:13:17.568562 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:13:18.135430 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:13:27.285625 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:13:27.836397 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:13:37.099936 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:13:37.634856 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (32.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.178s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (8.89s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	8.931s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 17:14:00.568769 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:14:01.097727 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:14:07.902120 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:14:08.458845 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:14:16.847955 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:14:17.393104 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (29.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	29.118s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 17:14:29.410375 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:14:30.021050 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:14:44.734658 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:14:45.584073 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:15:38.763286 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:15:39.885007 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (127.94s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	128.048s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (29.69s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	29.808s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 17:17:11.676292 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:17:12.351395 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:17:25.471946 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:17:26.040235 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:17:39.213289 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:17:39.782186 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (46.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.058s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:17:54.565501 peer_msg_handler.go:1010: [0;31m[error] [region 11] send message failed message region_id:11 from_peer:<id:12 store_id:4 > to_peer:<id:14 store_id:2 > region_epoch:<conf_ver:3 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:17:55.360796 peer_msg_handler.go:1010: [0;31m[error] [region 11] send message failed message region_id:11 from_peer:<id:12 store_id:4 > to_peer:<id:14 store_id:2 > region_epoch:<conf_ver:3 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:17:57.452785 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:17:57.981142 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:18:09.590961 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:18:10.151977 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:18:21.510251 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:18:22.021948 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (38.78s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.961s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:18:31.958650 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 17:18:32.559004 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 17:18:33.208606 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:1 store_id:1 > to_peer:<id:2 store_id:2 > region_epoch:<conf_ver:4 version:3 > is_tombstone:true  is dropped[0m
+2022/08/07 17:18:37.152207 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:18:37.669943 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:18:51.330537 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:18:51.857288 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:19:03.664780 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:19:04.227802 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (41.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.668s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (3.08s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.123s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (4.13s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.171s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 17:19:27.569965 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:19:28.086564 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:19:34.538549 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:19:35.051212 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:19:43.062589 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:19:43.580575 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (28.19s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	28.290s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 17:19:50.352814 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.352928 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.352963 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.352986 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353023 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353053 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353073 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353101 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353132 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353169 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353201 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353256 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353299 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353353 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:50.353405 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353464 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353509 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353545 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353590 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353636 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353677 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353710 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353751 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.353795 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:50.353839 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358064 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358124 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358171 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358218 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358259 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358300 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358361 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358427 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358474 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358517 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358562 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358626 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358668 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358731 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:50.358776 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358820 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358862 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358902 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358942 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.358983 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359028 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359072 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359117 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359160 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:50.359202 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359266 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359315 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359361 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359405 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359465 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359508 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359551 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359597 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359643 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359688 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359732 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359778 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359821 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359873 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:50.359927 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.359974 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360019 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360077 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360119 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360179 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360221 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360280 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360324 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:50.360367 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:50.360412 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.774859 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.774925 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:52.774963 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775011 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775068 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775102 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775144 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775193 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775266 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775318 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775346 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775371 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.775406 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.825679 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.825805 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:19:52.825870 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.825938 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.825980 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.826011 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.826066 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.826109 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.826142 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.860154 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.860231 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.860263 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:52.860290 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:19:55.566511 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:19:56.072789 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:20:02.720455 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:20:03.227253 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:20:13.653862 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:20:14.160384 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (32.19s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.258s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+--- PASS: TestConfChangeUnreliable3B (31.43s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.463s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 17:21:42.830205 cluster.go:205: [0;33m[warning] normal req: cmd_type:Snap snap:<> [0m
+panic: request timeout
+
+goroutine 261 [running]:
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Request(0x0, {0xc14c77ddb0, 0xa, 0x10}, {0xc14c724a40, 0x1, 0x1}, 0x12a05f200)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:209 +0x478
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.(*Cluster).Scan(0xc14c77dda0, {0xc14c77ddb0, 0xa, 0x10}, {0xc1887f1de0, 0xa, 0x20})
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/cluster.go:372 +0x21a
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.GenericTest.func1(0x0, 0x0)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:218 +0x6df
+github.com/pingcap-incubator/tinykv/kv/test_raftstore.runClient(0xc0001297d0, 0x6f6c6a, 0xc000161820, 0xc0001387c8)
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:27 +0x78
+created by github.com/pingcap-incubator/tinykv/kv/test_raftstore.SpawnClientsAndWait
+	/home/bunny/go/tinyserver/tinykv/kv/test_raftstore/test_test.go:37 +0x89
+FAIL	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.576s
+FAIL
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:21:52.450994 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:21:52.996474 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:22:02.803478 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:22:03.385826 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:22:14.721681 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:22:15.222467 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (38.11s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.250s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:22:26.224022 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:22:28.638066 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:22:28.643644 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:22:28.643729 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:22:28.643783 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:22:28.643843 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:22:30.864653 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:22:31.377228 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:22:40.114345 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:22:40.614777 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:22:50.875728 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:22:51.424694 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (33.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.650s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (7.89s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	7.914s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 17:23:13.645196 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:23:14.169784 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:23:24.161286 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:23:24.678518 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:23:31.871216 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:23:32.412342 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (31.75s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.881s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 17:23:45.742339 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:23:46.803027 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:24:11.343844 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:24:12.702795 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:25:13.147319 peer_msg_handler.go:1270: [0;31m[error] [region 84] 85 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 17:25:13.147657 peer_msg_handler.go:1270: [0;31m[error] [region 96] 97 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 17:25:13.148151 peer_msg_handler.go:1270: [0;31m[error] [region 102] 103 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+2022/08/07 17:25:13.148458 peer_msg_handler.go:1270: [0;31m[error] [region 108] 109 failed to load snapshot for 108_5_5 snapshot of 108_5_5 not exists[0m
+2022/08/07 17:25:13.159516 peer_msg_handler.go:1270: [0;31m[error] [region 84] 89 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 17:25:13.159908 peer_msg_handler.go:1270: [0;31m[error] [region 96] 101 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 17:25:13.160862 peer_msg_handler.go:1270: [0;31m[error] [region 102] 107 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+2022/08/07 17:25:13.161233 peer_msg_handler.go:1270: [0;31m[error] [region 108] 113 failed to load snapshot for 108_5_5 snapshot of 108_5_5 not exists[0m
+2022/08/07 17:25:13.176098 peer_msg_handler.go:1270: [0;31m[error] [region 84] 86 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 17:25:13.176873 peer_msg_handler.go:1270: [0;31m[error] [region 96] 98 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 17:25:13.177383 peer_msg_handler.go:1270: [0;31m[error] [region 102] 104 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+2022/08/07 17:25:13.177700 peer_msg_handler.go:1270: [0;31m[error] [region 108] 110 failed to load snapshot for 108_5_5 snapshot of 108_5_5 not exists[0m
+2022/08/07 17:25:13.181260 peer_msg_handler.go:1270: [0;31m[error] [region 84] 87 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 17:25:13.181611 peer_msg_handler.go:1270: [0;31m[error] [region 96] 99 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 17:25:13.181817 peer_msg_handler.go:1270: [0;31m[error] [region 96] 99 failed to load snapshot for 96_8_7 snapshot of 96_8_7 not exists[0m
+2022/08/07 17:25:13.199641 peer_msg_handler.go:1270: [0;31m[error] [region 102] 105 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+2022/08/07 17:25:13.199794 peer_msg_handler.go:1270: [0;31m[error] [region 108] 111 failed to load snapshot for 108_5_5 snapshot of 108_5_5 not exists[0m
+2022/08/07 17:25:25.889066 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:25:27.101069 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (149.12s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	149.207s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (31.37s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.459s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 17:26:48.765966 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:26:49.273270 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:26:57.505589 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:26:58.015074 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:27:06.731407 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:27:07.247617 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (29.12s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	29.221s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:27:14.290320 peer_msg_handler.go:1010: [0;31m[error] [region 12] send message failed message region_id:12 from_peer:<id:13 store_id:1 > to_peer:<id:16 store_id:4 > region_epoch:<conf_ver:4 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:27:15.189848 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:19 store_id:3 > to_peer:<id:5 store_id:5 > region_epoch:<conf_ver:7 version:3 > is_tombstone:true  is dropped[0m
+2022/08/07 17:27:15.688350 peer_msg_handler.go:1010: [0;31m[error] [region 6] send message failed message region_id:6 from_peer:<id:10 store_id:4 > to_peer:<id:9 store_id:3 > region_epoch:<conf_ver:5 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:27:15.688375 peer_msg_handler.go:1010: [0;31m[error] [region 6] send message failed message region_id:6 from_peer:<id:7 store_id:1 > to_peer:<id:9 store_id:3 > region_epoch:<conf_ver:4 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:27:16.388339 peer_msg_handler.go:1010: [0;31m[error] [region 6] send message failed message region_id:6 from_peer:<id:7 store_id:1 > to_peer:<id:9 store_id:3 > region_epoch:<conf_ver:4 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:27:21.711612 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:27:22.214289 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:27:30.336539 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:27:30.837831 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:27:39.280851 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:27:39.783466 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (32.55s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.758s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:27:51.212952 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:27:51.724597 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:28:03.863408 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:28:04.373114 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:28:16.947726 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:28:17.465854 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (37.01s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.245s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (1.73s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	1.760s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (2.83s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	2.852s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 17:28:33.843932 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:28:34.347050 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:28:39.692677 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:28:40.195187 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:28:47.214471 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:28:47.721294 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (24.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	24.516s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 17:29:00.230268 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:29:00.743299 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:29:13.989859 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:29:14.524452 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:29:28.111526 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:29:28.636896 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (46.46s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	46.571s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+--- PASS: TestConfChangeUnreliable3B (32.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.821s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 17:30:15.827530 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.827743 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.827801 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.827841 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.827885 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.833213 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.833308 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.833353 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.833386 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.833417 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.833475 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.850758 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.850875 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.850944 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.850983 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851017 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851055 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851088 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851128 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851163 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851198 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851236 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851305 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851335 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:15.851385 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:30:22.410524 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:30:22.935040 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:30:31.924775 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:30:32.447909 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:30:42.324522 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:30:42.824972 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (34.20s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.376s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:30:57.389634 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:30:57.914745 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:31:07.446514 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:31:07.947382 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:31:19.700836 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:31:20.212092 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (37.75s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.836s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:31:30.590420 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 17:31:36.307897 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:31:36.842685 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:31:45.588428 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:31:46.089142 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:31:55.824540 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:31:56.325371 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (34.01s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.120s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (8.60s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	8.638s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 17:32:20.189493 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:32:20.713068 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:32:27.705490 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:32:28.245232 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:32:36.357191 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:32:36.902403 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (28.90s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	28.974s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 17:32:48.755026 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:32:49.330687 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:33:04.606202 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:33:05.488783 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:34:01.793931 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:34:02.797648 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (120.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	120.338s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (33.76s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.860s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 17:35:24.484139 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:35:25.051069 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:35:35.905161 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:35:36.492340 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:35:45.633136 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:35:46.188864 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (35.44s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.571s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:35:57.669629 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:3 store_id:3 > to_peer:<id:4 store_id:4 > region_epoch:<conf_ver:8 version:3 > is_tombstone:true  is dropped[0m
+2022/08/07 17:35:59.212619 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:3 store_id:3 > to_peer:<id:4 store_id:4 > region_epoch:<conf_ver:8 version:3 > is_tombstone:true  is dropped[0m
+2022/08/07 17:36:02.227464 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:36:02.745338 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:36:14.518706 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:36:15.064100 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:36:27.204805 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:36:27.821055 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (41.73s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.847s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:36:38.072115 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 17:36:38.271558 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 17:36:39.541404 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:3 store_id:3 > to_peer:<id:2 store_id:2 > region_epoch:<conf_ver:3 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:36:44.071075 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:36:44.582225 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:36:52.953948 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:36:53.454421 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:37:04.958974 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:37:05.465711 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (33.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.114s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (2.63s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	2.680s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (3.98s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.999s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 17:37:21.235409 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:37:21.235592 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:37:21.235652 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:37:26.158470 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:37:26.670119 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:37:33.841442 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:37:34.353881 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:37:42.478665 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:37:42.997098 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (28.43s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	28.496s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 17:37:56.524638 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:37:57.031079 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:38:03.677655 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:38:04.191322 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:38:14.318544 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:38:14.825162 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (33.35s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.413s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+--- PASS: TestConfChangeUnreliable3B (31.91s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.937s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 17:39:02.405145 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:39:02.938861 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:39:10.584403 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:39:11.085645 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:39:22.073543 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:39:22.574806 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (33.51s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.655s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:39:37.646488 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:39:38.158809 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:39:47.108011 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:39:47.609187 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:39:58.857011 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:39:59.357460 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (36.77s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.850s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:40:10.865499 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:40:14.295106 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:40:14.818894 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:40:23.324286 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:40:23.840999 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:40:33.363176 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:40:33.864181 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (32.27s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.412s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (9.21s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.253s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 17:40:59.740514 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:41:00.258750 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:41:07.922514 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:41:08.491531 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:41:16.421410 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:41:16.940050 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (30.75s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	30.837s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 17:41:28.632032 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:41:29.336110 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:41:47.619663 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:41:48.498192 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:42:36.526501 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:42:37.767600 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:43:37.870770 peer_msg_handler.go:1270: [0;31m[error] [region 90] 94 failed to load snapshot for 90_5_5 snapshot of 90_5_5 not exists[0m
+2022/08/07 17:43:37.871224 peer_msg_handler.go:1270: [0;31m[error] [region 102] 106 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+2022/08/07 17:43:37.881928 peer_msg_handler.go:1270: [0;31m[error] [region 90] 93 failed to load snapshot for 90_5_5 snapshot of 90_5_5 not exists[0m
+2022/08/07 17:43:37.882003 peer_msg_handler.go:1270: [0;31m[error] [region 90] 95 failed to load snapshot for 90_5_5 snapshot of 90_5_5 not exists[0m
+2022/08/07 17:43:37.882301 peer_msg_handler.go:1270: [0;31m[error] [region 102] 105 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+2022/08/07 17:43:37.882452 peer_msg_handler.go:1270: [0;31m[error] [region 102] 107 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+2022/08/07 17:43:37.898915 peer_msg_handler.go:1270: [0;31m[error] [region 90] 91 failed to load snapshot for 90_5_5 snapshot of 90_5_5 not exists[0m
+2022/08/07 17:43:37.899425 peer_msg_handler.go:1270: [0;31m[error] [region 102] 103 failed to load snapshot for 102_5_5 snapshot of 102_5_5 not exists[0m
+--- PASS: TestSplitRecoverManyClients3B (138.35s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	138.418s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (38.09s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.195s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 17:44:27.355340 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:44:27.896254 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:44:38.521836 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:44:39.079704 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:44:54.988461 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:44:55.601233 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (47.26s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	47.380s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:45:09.788517 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:3 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:45:16.527014 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:45:17.066914 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:45:26.820937 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:45:27.357746 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:45:42.640187 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:45:43.481572 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (49.89s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	49.995s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:46:01.177852 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 17:46:02.852629 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:6 version:2 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:46:02.852681 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:6 version:2 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:46:06.285374 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:46:06.797951 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:46:18.887465 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:46:19.512276 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:46:33.597920 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:46:34.134360 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (41.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.595s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (2.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	2.730s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (4.01s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.040s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 17:46:55.829215 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:46:56.347591 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:47:02.867016 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:47:03.385649 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:47:11.574136 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:47:12.086745 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (27.58s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	27.645s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 17:47:19.773144 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773301 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773336 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773374 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773425 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773474 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773528 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773573 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773682 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:47:19.773747 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773793 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773847 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773892 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773956 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.773998 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774036 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774086 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774119 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774150 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774212 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774242 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774282 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 17:47:19.774323 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774367 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774403 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774467 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774505 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774537 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774613 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:19.774655 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:47:25.397548 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:47:25.903937 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:47:33.037887 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:47:33.544840 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:47:43.927360 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:47:44.433144 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (34.52s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.586s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+--- PASS: TestConfChangeUnreliable3B (31.94s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.983s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 17:48:27.303129 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:48:27.303315 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:48:27.303369 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:48:27.303401 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:48:27.303430 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:48:27.303458 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:48:32.620214 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:48:33.139191 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:48:41.121430 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:48:41.622220 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:48:52.681451 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:48:53.182068 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (34.06s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.208s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:49:07.149232 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:49:07.666956 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:49:17.086984 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:49:17.587697 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:49:27.906289 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:49:28.406880 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (34.41s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.473s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:49:38.449660 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:49:38.853887 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:3 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:49:42.796255 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:49:43.313765 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:49:51.742153 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:49:52.243021 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:50:02.682570 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:50:03.194790 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (34.73s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.922s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (9.72s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.749s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 17:50:28.959957 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:50:29.482419 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:50:38.876252 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:50:39.420852 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:50:47.027931 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:50:47.574642 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (30.66s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	30.756s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 17:50:59.761519 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:51:00.323032 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:51:19.678033 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:51:20.597108 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:52:20.688582 peer_msg_handler.go:1270: [0;31m[error] [region 54] 59 failed to load snapshot for 54_5_5 snapshot of 54_5_5 not exists[0m
+2022/08/07 17:52:20.689276 peer_msg_handler.go:1270: [0;31m[error] [region 126] 131 failed to load snapshot for 126_5_5 snapshot of 126_5_5 not exists[0m
+2022/08/07 17:52:20.749139 peer_msg_handler.go:1270: [0;31m[error] [region 54] 55 failed to load snapshot for 54_5_5 snapshot of 54_5_5 not exists[0m
+2022/08/07 17:52:20.749330 peer_msg_handler.go:1270: [0;31m[error] [region 54] 55 failed to load snapshot for 54_13_7 snapshot of 54_13_7 not exists[0m
+2022/08/07 17:52:20.749731 peer_msg_handler.go:1270: [0;31m[error] [region 126] 127 failed to load snapshot for 126_5_5 snapshot of 126_5_5 not exists[0m
+2022/08/07 17:52:20.760754 peer_msg_handler.go:1270: [0;31m[error] [region 54] 56 failed to load snapshot for 54_5_5 snapshot of 54_5_5 not exists[0m
+2022/08/07 17:52:20.761140 peer_msg_handler.go:1270: [0;31m[error] [region 126] 128 failed to load snapshot for 126_5_5 snapshot of 126_5_5 not exists[0m
+2022/08/07 17:52:20.843013 peer_msg_handler.go:1270: [0;31m[error] [region 54] 57 failed to load snapshot for 54_5_5 snapshot of 54_5_5 not exists[0m
+2022/08/07 17:52:20.859896 peer_msg_handler.go:1270: [0;31m[error] [region 126] 129 failed to load snapshot for 126_5_5 snapshot of 126_5_5 not exists[0m
+2022/08/07 17:52:24.993918 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:52:25.762133 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (149.58s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	149.648s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (30.12s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	30.223s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 17:54:02.341288 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:54:02.881284 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:54:14.397111 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:54:14.982910 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:54:27.972425 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:54:28.521731 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (41.76s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.905s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:54:40.740892 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:3 store_id:3 > to_peer:<id:14 store_id:1 > region_epoch:<conf_ver:8 version:3 > is_tombstone:true  is dropped[0m
+2022/08/07 17:54:43.603273 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:54:44.113716 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:54:54.018483 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:54:54.593607 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:55:08.966303 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:55:09.490835 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (39.49s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.638s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:55:22.284925 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:7 version:2 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:55:22.285071 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:7 version:2 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:55:25.552075 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:55:26.076281 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:55:35.743890 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:55:36.268775 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:55:47.194515 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:55:47.759418 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (36.84s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.014s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (2.79s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	2.832s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (4.15s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.170s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 17:56:06.811359 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:11 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:56:06.811504 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:11 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:56:06.811533 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:11 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:56:09.505223 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:56:10.017829 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:56:17.223316 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:56:17.736392 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:56:25.564165 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:56:26.076306 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (27.64s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	27.738s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 17:56:38.303187 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:56:38.815397 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:56:48.571078 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:56:49.116090 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:57:02.527024 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:57:03.103383 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (40.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.834s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+2022/08/07 17:57:18.909792 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:8 store_id:4 > to_peer:<id:3 store_id:3 > region_epoch:<conf_ver:10 version:1 > is_tombstone:true  is dropped[0m
+--- PASS: TestConfChangeUnreliable3B (30.03s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	30.124s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 17:57:50.827803 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:57:51.351356 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:58:00.380363 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:58:00.899976 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:58:11.431179 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:58:11.942716 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (33.38s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.483s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 17:58:21.648546 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:6 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 17:58:25.154548 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:58:25.658459 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:58:34.425441 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:58:34.926555 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:58:46.434079 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:58:46.940723 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (35.76s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.891s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 17:58:56.690832 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:1 store_id:1 > to_peer:<id:4 store_id:4 > region_epoch:<conf_ver:2 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 17:59:01.688889 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:59:02.189135 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:59:10.065511 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:59:10.565702 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:59:21.743954 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:59:22.245245 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (34.67s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.771s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (8.87s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	8.889s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 17:59:47.581244 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:59:48.099525 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 17:59:54.772863 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 17:59:55.284574 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:00:03.619404 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:00:04.200963 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (31.48s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.582s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 18:00:19.956501 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:00:20.619750 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:00:43.562401 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:00:44.683256 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:01:35.469247 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:01:36.323922 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (131.85s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	131.950s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (32.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.093s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 18:03:04.548071 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:03:05.093529 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:03:15.975166 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:03:16.573875 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:03:27.667673 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:03:28.235765 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (36.40s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.469s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 18:03:40.581718 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:03:42.098419 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:03:42.615457 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:03:52.130598 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:03:52.657975 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:04:03.178846 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:04:03.702931 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (35.87s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.036s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 18:04:13.042025 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 18:04:13.047485 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:04:13.628323 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:04:13.628345 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:04:13.628358 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:04:13.639086 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:04:13.639109 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:04:13.639124 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:04:13.671861 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 18:04:14.542547 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 18:04:14.777031 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 18:04:18.429742 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:04:18.975821 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:04:29.526161 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:04:30.038529 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:04:39.901067 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:04:40.407338 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (34.65s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.818s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (2.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	2.839s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (4.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.065s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 18:05:01.432912 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:05:01.946487 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:05:08.312634 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:05:08.824913 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:05:16.526335 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:05:17.038491 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (27.05s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	27.114s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 18:05:29.711472 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:05:30.234898 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:05:41.962619 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:05:42.528029 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:05:57.150272 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:05:57.706207 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (45.62s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	45.730s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+2022/08/07 18:06:11.570911 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.571105 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.571145 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:06:11.571178 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.592978 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593060 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593098 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593150 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593201 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593270 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593333 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593383 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593451 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593514 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:11.593582 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:4 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+--- PASS: TestConfChangeUnreliable3B (33.58s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	33.687s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 18:06:46.653710 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:06:52.518835 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:06:53.031305 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:07:01.146614 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:07:01.675247 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:07:11.701564 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:07:12.202627 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (35.78s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.852s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 18:07:22.116715 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:07:22.116881 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:07:22.116932 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:22.116997 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:07:22.117042 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:22.117084 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:24.583346 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:24.583433 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:24.583479 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:24.583507 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:5 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:07:27.857280 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:07:28.376089 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:07:38.042013 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:07:38.542632 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:07:49.156321 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:07:49.712739 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (35.26s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.389s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 18:07:58.120485 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.366626 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 18:07:58.799600 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.799620 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.799631 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.804979 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.804995 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.805011 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.805022 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.810450 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.810469 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:07:58.810483 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:08:00.967891 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 18:08:02.867464 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgRequestVote, ignore it[0m
+2022/08/07 18:08:03.794030 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:08:04.523777 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:08:13.894840 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:08:14.395877 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:08:25.395037 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:08:25.896178 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (34.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.976s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (11.02s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	11.066s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 18:08:51.129871 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:08:51.653932 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:09:02.012842 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:09:02.547273 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:09:09.800086 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:09:10.369326 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (30.93s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	31.052s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 18:09:26.522202 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:09:27.282576 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:09:57.454313 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:09:58.314239 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:10:52.774292 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:10:53.812917 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (148.61s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	148.673s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (32.42s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.488s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 18:12:25.542610 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:12:26.104810 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:12:37.095509 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:12:37.717938 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:12:51.305377 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:12:52.048798 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (40.66s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.771s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 18:13:06.939445 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:13:07.456897 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:13:16.952523 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:13:17.470208 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:13:28.297509 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:13:28.837540 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (34.48s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.675s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 18:13:42.318784 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:13:42.831318 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:13:53.746330 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:13:54.274767 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:14:04.992011 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:14:05.567534 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (36.44s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	36.580s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (2.64s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	2.684s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (4.11s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	4.156s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 18:14:21.703224 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:14:21.703404 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:2 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:14:27.034166 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:14:27.550540 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:14:32.982385 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:14:33.489265 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:14:40.792318 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:14:41.298435 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (25.44s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	25.472s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 18:14:54.687548 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:14:55.194533 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:15:01.924569 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:15:02.431312 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:15:13.272912 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:15:13.779261 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (34.33s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.412s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+--- PASS: TestConfChangeUnreliable3B (28.17s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	28.231s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 18:15:54.164690 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:7 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:15:58.552062 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:15:59.058745 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:16:05.869684 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:16:06.369973 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:16:16.934457 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:16:17.435646 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (32.70s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	32.733s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 18:16:32.332351 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:16:32.867112 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:16:42.101725 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:16:42.602006 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:16:54.969737 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:16:55.470555 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (38.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.167s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 18:17:11.878699 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:17:12.422249 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:17:21.269846 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:17:21.793103 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:17:31.702827 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:17:32.207709 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (34.91s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	35.027s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (9.00s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.041s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 18:17:55.937286 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:17:56.493196 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:18:02.950306 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:18:03.503783 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:18:11.838568 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:18:12.402271 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (29.42s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	29.497s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 18:18:25.388265 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:18:25.935073 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:18:38.331772 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:18:39.339140 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:19:31.005476 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:19:31.986830 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:20:32.043446 peer_msg_handler.go:1270: [0;31m[error] [region 66] 68 failed to load snapshot for 66_5_5 snapshot of 66_5_5 not exists[0m
+2022/08/07 18:20:32.043850 peer_msg_handler.go:1270: [0;31m[error] [region 72] 74 failed to load snapshot for 72_5_5 snapshot of 72_5_5 not exists[0m
+2022/08/07 18:20:32.044223 peer_msg_handler.go:1270: [0;31m[error] [region 84] 86 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:20:32.044679 peer_msg_handler.go:1270: [0;31m[error] [region 132] 134 failed to load snapshot for 132_5_5 snapshot of 132_5_5 not exists[0m
+2022/08/07 18:20:32.045032 peer_msg_handler.go:1270: [0;31m[error] [region 138] 140 failed to load snapshot for 138_5_5 snapshot of 138_5_5 not exists[0m
+2022/08/07 18:20:32.045289 peer_msg_handler.go:1270: [0;31m[error] [region 150] 152 failed to load snapshot for 150_5_5 snapshot of 150_5_5 not exists[0m
+2022/08/07 18:20:32.110836 peer_msg_handler.go:1270: [0;31m[error] [region 66] 71 failed to load snapshot for 66_5_5 snapshot of 66_5_5 not exists[0m
+2022/08/07 18:20:32.111139 peer_msg_handler.go:1270: [0;31m[error] [region 72] 77 failed to load snapshot for 72_5_5 snapshot of 72_5_5 not exists[0m
+2022/08/07 18:20:32.111431 peer_msg_handler.go:1270: [0;31m[error] [region 84] 89 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:20:32.111809 peer_msg_handler.go:1270: [0;31m[error] [region 132] 137 failed to load snapshot for 132_5_5 snapshot of 132_5_5 not exists[0m
+2022/08/07 18:20:32.112086 peer_msg_handler.go:1270: [0;31m[error] [region 138] 143 failed to load snapshot for 138_5_5 snapshot of 138_5_5 not exists[0m
+2022/08/07 18:20:32.112247 peer_msg_handler.go:1270: [0;31m[error] [region 150] 155 failed to load snapshot for 150_5_5 snapshot of 150_5_5 not exists[0m
+2022/08/07 18:20:32.116561 peer_msg_handler.go:1270: [0;31m[error] [region 66] 67 failed to load snapshot for 66_5_5 snapshot of 66_5_5 not exists[0m
+2022/08/07 18:20:32.116775 peer_msg_handler.go:1270: [0;31m[error] [region 66] 70 failed to load snapshot for 66_5_5 snapshot of 66_5_5 not exists[0m
+2022/08/07 18:20:32.116874 peer_msg_handler.go:1270: [0;31m[error] [region 72] 73 failed to load snapshot for 72_5_5 snapshot of 72_5_5 not exists[0m
+2022/08/07 18:20:32.117116 peer_msg_handler.go:1270: [0;31m[error] [region 84] 85 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:20:32.117198 peer_msg_handler.go:1270: [0;31m[error] [region 72] 76 failed to load snapshot for 72_5_5 snapshot of 72_5_5 not exists[0m
+2022/08/07 18:20:32.117493 peer_msg_handler.go:1270: [0;31m[error] [region 84] 88 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:20:32.117628 peer_msg_handler.go:1270: [0;31m[error] [region 132] 133 failed to load snapshot for 132_5_5 snapshot of 132_5_5 not exists[0m
+2022/08/07 18:20:32.117874 peer_msg_handler.go:1270: [0;31m[error] [region 138] 139 failed to load snapshot for 138_5_5 snapshot of 138_5_5 not exists[0m
+2022/08/07 18:20:32.117902 peer_msg_handler.go:1270: [0;31m[error] [region 132] 136 failed to load snapshot for 132_5_5 snapshot of 132_5_5 not exists[0m
+2022/08/07 18:20:32.118016 peer_msg_handler.go:1270: [0;31m[error] [region 150] 151 failed to load snapshot for 150_5_5 snapshot of 150_5_5 not exists[0m
+2022/08/07 18:20:32.118222 peer_msg_handler.go:1270: [0;31m[error] [region 138] 142 failed to load snapshot for 138_5_5 snapshot of 138_5_5 not exists[0m
+2022/08/07 18:20:32.118429 peer_msg_handler.go:1270: [0;31m[error] [region 150] 154 failed to load snapshot for 150_5_5 snapshot of 150_5_5 not exists[0m
+--- PASS: TestSplitRecoverManyClients3B (140.07s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	140.176s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (33.99s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.109s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 18:21:25.247643 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:21:25.782631 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:21:35.551778 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:21:36.108026 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:21:48.750073 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:21:49.322792 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (44.68s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	44.814s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 18:22:01.583659 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:01.583817 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:01.583847 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:07.811571 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:22:08.323587 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:22:19.217557 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:22:19.742185 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:22:31.029239 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:22:31.559092 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (37.74s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.882s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 18:22:39.868257 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:39.868371 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:22:39.868417 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:39.868439 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:39.873939 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:39.873987 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:22:39.874024 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:39.874047 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:39.874074 store_worker.go:82: [0;31m[error] handle raft message failed storeID 4, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:41.852752 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:1 store_id:1 > to_peer:<id:3 store_id:3 > region_epoch:<conf_ver:8 version:2 > is_tombstone:true  is dropped[0m
+2022/08/07 18:22:41.852769 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:16 store_id:2 > to_peer:<id:3 store_id:3 > region_epoch:<conf_ver:8 version:2 > is_tombstone:true  is dropped[0m
+2022/08/07 18:22:44.886769 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:9 version:2 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:22:46.085687 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:22:46.596682 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:22:59.199554 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:22:59.723271 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:23:10.774681 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:23:11.383562 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (38.24s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.414s
+rm -rf /tmp/*test-raftstore*
+rm -rf /tmp/*test-raftstore*
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestTransferLeader3B|| true
+=== RUN   TestTransferLeader3B
+--- PASS: TestTransferLeader3B (2.67s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	2.711s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestBasicConfChange3B|| true
+=== RUN   TestBasicConfChange3B
+--- PASS: TestBasicConfChange3B (3.96s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	3.985s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecover3B|| true
+=== RUN   TestConfChangeRecover3B
+2022/08/07 18:23:32.261928 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:23:32.773993 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:23:39.054975 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:23:39.567695 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:23:47.619742 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:23:48.132372 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecover3B (27.44s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	27.516s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeRecoverManyClients3B|| true
+=== RUN   TestConfChangeRecoverManyClients3B
+2022/08/07 18:23:58.629849 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630048 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630127 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630222 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630314 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630410 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630488 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630571 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630650 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630718 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630788 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630849 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.630918 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:23:58.630986 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631053 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631136 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631205 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631347 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631413 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631489 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631552 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631643 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631706 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631768 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631839 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:23:58.631924 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.631987 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632065 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632129 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632192 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632252 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632314 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632373 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632436 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632495 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632608 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632680 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632750 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632816 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.632899 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:23:58.632971 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633043 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633105 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633169 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633231 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633305 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633381 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633439 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633497 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633592 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633651 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633698 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgHeartbeatResponse, ignore it[0m
+2022/08/07 18:23:58.633729 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:23:58.633774 store_worker.go:82: [0;31m[error] handle raft message failed storeID 1, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:24:00.674098 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:24:01.220506 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:24:10.490919 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:24:11.045373 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:24:23.636481 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:24:24.155949 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeRecoverManyClients3B (41.47s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	41.522s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliable3B|| true
+=== RUN   TestConfChangeUnreliable3B
+2022/08/07 18:24:39.737427 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:24:39.737597 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:24:39.765097 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:24:39.765193 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:24:39.765256 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:24:39.765294 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:24:39.765342 store_worker.go:82: [0;31m[error] handle raft message failed storeID 3, tombstone peer [epoch: conf_ver:9 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+--- PASS: TestConfChangeUnreliable3B (28.19s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	28.254s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeUnreliableRecover3B|| true
+=== RUN   TestConfChangeUnreliableRecover3B
+2022/08/07 18:25:06.314567 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.319939 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320001 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320032 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320057 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320104 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320131 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320155 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320178 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320203 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.320231 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.325248 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.325348 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.325395 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.325424 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:06.325467 store_worker.go:82: [0;31m[error] handle raft message failed storeID 2, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:25:13.010182 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:25:13.544092 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:25:21.897572 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:25:22.398214 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:25:32.593416 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:25:33.173699 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeUnreliableRecover3B (34.66s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.727s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecover3B
+2022/08/07 18:25:47.443044 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:25:47.944157 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:25:57.939568 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:25:58.440362 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:26:10.053223 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:26:10.553787 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecover3B (36.95s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	37.056s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 18:26:23.492441 peer_msg_handler.go:1010: [0;31m[error] [region 1] send message failed message region_id:1 from_peer:<id:1 store_id:1 > to_peer:<id:4 store_id:4 > region_epoch:<conf_ver:5 version:1 > is_tombstone:true  is dropped[0m
+2022/08/07 18:26:24.981204 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:26:25.498613 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:26:35.056364 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:26:35.569031 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:26:45.569558 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:26:46.076489 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (33.92s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	34.042s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestOneSplit3B|| true
+=== RUN   TestOneSplit3B
+--- PASS: TestOneSplit3B (9.35s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	9.396s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecover3B|| true
+=== RUN   TestSplitRecover3B
+2022/08/07 18:27:10.233140 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:27:10.757685 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:27:18.051506 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:27:18.604812 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:27:26.843157 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:27:27.407307 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecover3B (28.30s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	28.369s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitRecoverManyClients3B|| true
+=== RUN   TestSplitRecoverManyClients3B
+2022/08/07 18:27:39.456377 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:27:40.019994 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:27:59.799832 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:28:00.670149 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:29:00.699905 peer_msg_handler.go:1270: [0;31m[error] [region 78] 80 failed to load snapshot for 78_5_5 snapshot of 78_5_5 not exists[0m
+2022/08/07 18:29:00.700488 peer_msg_handler.go:1270: [0;31m[error] [region 84] 86 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:29:00.700968 peer_msg_handler.go:1270: [0;31m[error] [region 96] 98 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 18:29:00.721576 peer_msg_handler.go:1270: [0;31m[error] [region 78] 83 failed to load snapshot for 78_5_5 snapshot of 78_5_5 not exists[0m
+2022/08/07 18:29:00.721884 peer_msg_handler.go:1270: [0;31m[error] [region 84] 89 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:29:00.722190 peer_msg_handler.go:1270: [0;31m[error] [region 96] 101 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 18:29:00.738771 peer_msg_handler.go:1270: [0;31m[error] [region 78] 81 failed to load snapshot for 78_5_5 snapshot of 78_5_5 not exists[0m
+2022/08/07 18:29:00.738771 peer_msg_handler.go:1270: [0;31m[error] [region 78] 79 failed to load snapshot for 78_5_5 snapshot of 78_5_5 not exists[0m
+2022/08/07 18:29:00.739317 peer_msg_handler.go:1270: [0;31m[error] [region 84] 87 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:29:00.739449 peer_msg_handler.go:1270: [0;31m[error] [region 84] 85 failed to load snapshot for 84_5_5 snapshot of 84_5_5 not exists[0m
+2022/08/07 18:29:00.739797 peer_msg_handler.go:1270: [0;31m[error] [region 96] 99 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 18:29:00.739886 peer_msg_handler.go:1270: [0;31m[error] [region 96] 97 failed to load snapshot for 96_5_5 snapshot of 96_5_5 not exists[0m
+2022/08/07 18:29:01.450307 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:29:02.364525 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitRecoverManyClients3B (172.94s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	173.032s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliable3B|| true
+=== RUN   TestSplitUnreliable3B
+--- PASS: TestSplitUnreliable3B (40.40s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	40.458s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitUnreliableRecover3B|| true
+=== RUN   TestSplitUnreliableRecover3B
+2022/08/07 18:31:15.527961 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:31:16.052126 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:31:26.685710 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:31:27.238021 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:31:39.368779 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:31:39.886937 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitUnreliableRecover3B (39.81s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	39.955s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecover3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecover3B
+2022/08/07 18:31:51.542484 store_worker.go:82: [0;31m[error] handle raft message failed storeID 5, tombstone peer [epoch: conf_ver:1 version:1 ] received an invalid message MsgAppendResponse, ignore it[0m
+2022/08/07 18:31:57.977381 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:31:58.502268 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:32:12.388362 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:32:12.901117 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:32:24.061726 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:32:24.626368 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecover3B (43.86s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	43.986s
+GO111MODULE=on go test -v --count=1 --parallel=1 -p=1 ./kv/test_raftstore -run ^TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B|| true
+=== RUN   TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B
+2022/08/07 18:32:40.315171 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:32:40.827899 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:32:51.924854 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:32:52.478393 test_test.go:264: [0;33m[warning] restart servers
+[0m
+2022/08/07 18:33:03.628649 test_test.go:257: [0;33m[warning] shutdown servers
+[0m
+2022/08/07 18:33:04.213069 test_test.go:264: [0;33m[warning] restart servers
+[0m
+--- PASS: TestSplitConfChangeSnapshotUnreliableRecoverConcurrentPartition3B (38.15s)
+PASS
+ok  	github.com/pingcap-incubator/tinykv/kv/test_raftstore	38.263s
+rm -rf /tmp/*test-raftstore*

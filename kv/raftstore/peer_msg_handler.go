@@ -704,6 +704,22 @@ func (d *peerMsgHandler) removeProposal() {
 	d.proposals = d.proposals[:len(d.proposals)-1]
 }
 
+func (d *peerMsgHandler) checkDuplicateChangePeer(req *raft_cmdpb.ChangePeerRequest) bool {
+	exist := false
+	for _, peer := range d.Region().Peers {
+		if peer.Id == req.Peer.Id {
+			exist = true
+		}
+	}
+	if req.ChangeType == pb.ConfChangeType_AddNode && !exist {
+		return false
+	}
+	if req.ChangeType == pb.ConfChangeType_RemoveNode && exist {
+		return false
+	}
+	return true
+}
+
 func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb *message.Callback) {
 	switch msg.AdminRequest.CmdType {
 	case raft_cmdpb.AdminCmdType_InvalidAdmin:
@@ -715,6 +731,12 @@ func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb 
 			ChangePeer: &raft_cmdpb.ChangePeerResponse{
 				Region: d.Region(),
 			},
+		}
+		// check duplicate request
+		if d.checkDuplicateChangePeer(msg.AdminRequest.ChangePeer) { // invalid change
+			log.Warnf("%v propose duplicate change peer %v, ignore", d.Tag, msg)
+			cb.Done(resp)
+			return
 		}
 		// check: remove leader when there are only two peers, reject and transfer leader to another peer
 		if msg.AdminRequest.ChangePeer.ChangeType == pb.ConfChangeType_RemoveNode && d.IsLeader() && len(d.Region().Peers) == 2 && msg.AdminRequest.ChangePeer.Peer.Id == d.PeerId() {
