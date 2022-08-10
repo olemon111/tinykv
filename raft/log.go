@@ -62,7 +62,6 @@ type RaftLog struct {
 // to the state that it just commits and applies the latest snapshot.
 func newLog(storage Storage) *RaftLog {
 	// Your Code Here (2A).
-	// TODO:
 	firstIndex, err := storage.FirstIndex()
 	if err != nil {
 		log.Panicf("storage.firstIndex error: %v", err)
@@ -76,7 +75,7 @@ func newLog(storage Storage) *RaftLog {
 	var entries []pb.Entry
 	if firstIndex <= lastIndex {
 		entries, _ = storage.Entries(firstIndex, lastIndex+1)
-		log.Infof("newlog first:%d, last:%d, ents:%v, committed:%v", firstIndex, lastIndex, entries, hardState.GetCommit())
+		log.Infof("newlog first:%d, last:%d, committed:%v", firstIndex, lastIndex, hardState.GetCommit())
 	}
 	log.Infof("newlog first:%d, last:%d, applied:%v, committed:%v", firstIndex, lastIndex, firstIndex-1, hardState.GetCommit())
 	return &RaftLog{
@@ -120,7 +119,7 @@ func (l *RaftLog) nextEnts() (ents []pb.Entry) {
 	if len(l.entries) == 0 {
 		return nil
 	}
-	if l.applied-l.first+1 < uint64(len(l.entries)) {
+	if l.applied <= l.committed && l.applied-l.first+1 < uint64(len(l.entries)) {
 		return l.entries[l.applied-l.first+1 : min(l.committed-l.first+1, uint64(len(l.entries)))]
 	}
 	return nil

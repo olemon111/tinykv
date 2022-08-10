@@ -40,8 +40,8 @@ var stmap = [...]string{
 	"StateLeader",
 }
 
-//const rdebug = true // for raft detail debug control
-const rdebug = false
+const rdebug = true // for raft detail debug control
+//const rdebug = false
 
 func (st StateType) String() string {
 	return stmap[uint64(st)]
@@ -227,6 +227,7 @@ func (r *Raft) sendAppend(to uint64) bool {
 	//	log.Infof("%d sendappend to %d", r.id, to)
 	//}
 	if err != nil { // fall behind
+		log.Infof("fall behind, err:%v", err)
 		err := r.sendSnapshot(to)
 		if err != nil {
 			return false
@@ -244,7 +245,7 @@ func (r *Raft) sendAppend(to uint64) bool {
 		Entries: entries,
 		Commit:  r.RaftLog.committed,
 	}
-	//log.Infof("%d send append to %d, msg:%v", r.id, to, msg)
+	log.Infof("%d send append to %d, prs:%v", r.id, to, r.Prs)
 	r.sendMsg(msg)
 	return true
 }
@@ -269,7 +270,6 @@ func (r *Raft) sendSnapshot(to uint64) error {
 	}
 	log.Infof("%d send snapshot to %d, msg:%v, meta.index:%d", r.id, to, msg, snapshot.Metadata.GetIndex())
 	r.sendMsg(msg)
-	// FIXME: maybe update match?
 	r.Prs[to].Next = snapshot.Metadata.GetIndex() + 1
 	return nil
 }
@@ -278,7 +278,7 @@ func (r *Raft) sendSnapshot(to uint64) error {
 func (r *Raft) sendHeartbeat(to uint64) {
 	// Your Code Here (2A).
 	if rdebug {
-		//log.Infof("%d send heartbeat to %v", r.id, to)
+		log.Infof("%d send heartbeat to %v", r.id, to)
 	}
 	msg := pb.Message{
 		MsgType: pb.MessageType_MsgHeartbeat,
@@ -294,7 +294,7 @@ func (r *Raft) sendHeartbeat(to uint64) {
 func (r *Raft) tick() {
 	// Your Code Here (2A).
 	// actions
-	//log.Infof("tick")
+	//log.Infof("raft tick")
 	switch r.State {
 	case StateLeader:
 		r.heartbeatTick()
@@ -368,7 +368,6 @@ func (r *Raft) becomeFollower(term uint64, lead uint64) {
 	r.State = StateFollower
 	r.Term = term
 	r.Lead = lead
-	r.Vote = None
 	r.leadTransferee = None
 	r.resetVotes()
 }
@@ -441,7 +440,7 @@ func (r *Raft) becomeLeader() {
 func (r *Raft) Step(m pb.Message) error {
 	// Your Code Here (2A).
 	if rdebug {
-		//log.Infof("\t\t%d step type:%v, from:%v, to:%v, term:%v, logterm:%v, index:%v, reject:%v", r.id, m.MsgType, m.From, m.To, m.Term, m.LogTerm, m.Index, m.Reject)
+		log.Infof("\t\t%d step type:%v, from:%v, to:%v, term:%v, logterm:%v, index:%v, reject:%v", r.id, m.MsgType, m.From, m.To, m.Term, m.LogTerm, m.Index, m.Reject)
 	}
 	if _, ok := r.Prs[r.id]; !ok && len(r.Prs) != 0 {
 		log.Infof("\t\t%d drop step type:%v, from:%v, to:%v, prs:%v", r.id, m.MsgType, m.From, m.To, r.Prs)
@@ -449,6 +448,7 @@ func (r *Raft) Step(m pb.Message) error {
 	}
 	if m.Term > r.Term {
 		r.becomeFollower(m.Term, None)
+		r.Vote = None
 	}
 	// now m.term <= r.term
 	switch r.State {
@@ -566,15 +566,16 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	r.resetElectionTimer()
 	r.becomeFollower(m.Term, m.From)
 	// match prevLogIndex and prevLogTerm
+	log.Infof("%d handle append entries from %d, ents:%v", r.id, m.From, len(m.Entries))
 	//log.Infof("%d handle append entries from %d, ents:%v, r.ents:%v", r.id, m.From, m.Entries, r.RaftLog.entries)
 	prevLogTerm, err := r.RaftLog.Term(m.Index)
 	// skip prevLogIndex == 0 && prevLogTerm == 0, which means entries empty, should not reject
 	if m.Index >= r.RaftLog.FirstIndex() && (err != nil || prevLogTerm != m.LogTerm) { // does not contain an entry with same index and term, send reject response
-		//log.Infof("%d reject append entries from %d, m.term:%d, r.term:%d, m.index:%v, m.logTerm:%v, prevLogTerm:%v", r.id, m.From, m.Term, r.Term, m.Index, m.LogTerm, prevLogTerm)
+		log.Infof("%d reject append entries for no match entry, from %d, m.term:%d, r.term:%d, m.index:%v, m.logTerm:%v, prevLogTerm:%v", r.id, m.From, m.Term, r.Term, m.Index, m.LogTerm, prevLogTerm)
 		r.sendAppendResponse(m.From, true, None)
 		return
 	}
-	//log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d, m.ents:%v", r.id, m.From, m.Term, r.Term, m.Entries)
+	log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d, m.ents:%v", r.id, m.From, m.Term, r.Term, len(m.Entries))
 	//may delete with prevLogIndex && prevLogTerm // FIXME: updated to test case
 	//_ = r.RaftLog.deleteFollowingEntries(m.Index + 1)
 	// check conflicts(same index but different terms)
@@ -630,7 +631,7 @@ func (r *Raft) handleHeartbeat(m pb.Message) {
 	// Your Code Here (2A).
 	if m.Term < r.Term {
 		if rdebug {
-			//log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+			log.Infof("%d reject heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 		}
 		r.sendHeartbeatResponse(m.From, true, None)
 		return
@@ -638,7 +639,7 @@ func (r *Raft) handleHeartbeat(m pb.Message) {
 	// accept
 	r.resetElectionTimer()
 	if rdebug {
-		//log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
+		log.Infof("%d accept heartbeat from %d, m.term:%d, r.term:%d", r.id, m.From, m.Term, r.Term)
 	}
 	r.becomeFollower(m.Term, m.From)
 	index := r.RaftLog.LastIndex()
@@ -651,7 +652,7 @@ func (r *Raft) handleSnapshot(m pb.Message) {
 	log.Infof("%d handle snapshot, m:%v", r.id, m)
 	metaData := m.Snapshot.Metadata
 	// discard any existing snapshot with a smaller index
-	if m.Term < r.Term || metaData.Index < r.RaftLog.committed {
+	if m.Term < r.Term || metaData.Index < r.RaftLog.committed || r.RaftLog.pendingSnapshot != nil {
 		//r.sendAppendResponse(m.From, true, r.RaftLog.committed) // FIXME: not sure
 		return
 	}
@@ -717,7 +718,7 @@ func (r *Raft) removeNode(id uint64) {
 
 func (r *Raft) broadcastHeartbeat() {
 	if rdebug {
-		//log.Infof("%d broadcast heartbeat prs:%v", r.id, r.Prs)
+		log.Infof("%d broadcast heartbeat prs:%v", r.id, r.Prs)
 	}
 	for p := range r.Prs {
 		if p != r.id {
@@ -744,7 +745,7 @@ func (r *Raft) sendRequestVote(to uint64) {
 
 func (r *Raft) broadcastRequestVote() {
 	if rdebug {
-		//log.Infof("%d broadcast req vote to prs:%v", r.id, r.Prs)
+		log.Infof("%d broadcast req vote to prs:%v", r.id, r.Prs)
 	}
 	for p := range r.Prs {
 		if p != r.id {
@@ -770,10 +771,11 @@ func (r *Raft) broadcastAppend() {
 }
 
 func (r *Raft) sendMsg(m pb.Message) {
-	if _, ok := r.Prs[m.To]; ok || len(r.Prs) == 0 || (m.MsgType == pb.MessageType_MsgAppendResponse && m.To == None) { // None used to pass TestHandleMessageType_MsgAppend2AB
+	if _, ok := r.Prs[m.To]; ok || len(r.Prs) == 0 || (m.MsgType == pb.MessageType_MsgAppendResponse && m.To == None) || m.MsgType == pb.MessageType_MsgPropose { // None used to pass TestHandleMessageType_MsgAppend2AB
 		r.msgs = append(r.msgs, m)
 	} else {
-		log.Infof("send msg dropped, from:%v, to:%v, type:%s", m.From, m.To, m.MsgType)
+		log.Infof("send msg dropped, from:%v, to:%v, type:%s, msg:%v", m.From, m.To, m.MsgType, m)
+		//log.Infof("send msg dropped, from:%v, to:%v, type:%s", m.From, m.To, m.MsgType)
 	}
 }
 
@@ -823,6 +825,7 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 		if lastLogTerm < m.LogTerm || (lastLogTerm == m.LogTerm && lastIndex <= m.Index) { // at least up-to-date, vote
 			r.Vote = m.From
 			reject = false
+			r.resetElectionTimer() // FIXME: not sure if it will cause bug
 		}
 	}
 	//log.Infof("%d handle req vote from %d, reject:%v, r.vote:%v, r.votes:%v, m.index:%v, m.logterm:%v, r.ents:%v", r.id, m.From, reject, r.Vote, r.votes, m.Index, m.LogTerm, r.RaftLog.entries)
@@ -840,7 +843,7 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 	// count votes
 	r.votes[m.From] = !m.Reject
 	if rdebug {
-		//log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
+		log.Infof("%v handle req vote resp from %v, reject:%v, votes:%v", r.id, m.From, m.Reject, r.votes)
 	}
 	acceptCnt := 0
 	rejectCnt := 0
@@ -905,7 +908,7 @@ func (r *Raft) handlePropose(m pb.Message) error {
 				r.PendingConfIndex = entry.Index
 			} else { // reject: only one conf change may be pending
 				log.Infof("%v reject propose confchange index:%v, applied:%v, pending:%v", r.id, entry.Index, r.RaftLog.applied, r.PendingConfIndex)
-				r.sendMsg(m) // FIXME: not sure if necessary
+				//r.sendMsg(m) // FIXME: not sure if necessary
 				continue
 			}
 		}
@@ -930,11 +933,6 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 			r.sendAppend(m.From)
 		}
 	} else { // accepted by follower
-		if r.leadTransferee == m.From {
-			r.leadTransferee = None
-			r.becomeFollower(m.Term, m.From)
-			return
-		}
 		term, _ := r.RaftLog.Term(m.Index)
 		// update progress
 		if m.Index > r.Prs[m.From].Match {
@@ -944,8 +942,17 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 		if term == r.Term {
 			r.updateCommitted()
 		}
+		if r.leadTransferee == m.From && r.Prs[m.From].Match == r.RaftLog.LastIndex() {
+			log.Infof("%d send timeout now to %d", r.id, m.From)
+			r.sendMsg(pb.Message{ // notify new leader
+				MsgType: pb.MessageType_MsgTimeoutNow,
+				To:      m.From,
+				From:    r.id,
+				Term:    r.Term,
+			})
+		}
 	}
-	//log.Infof("%d handle append resp from %d, index:%v, reject:%v", r.id, m.From, m.Index, m.Reject)
+	log.Infof("%d handle append resp from %d, index:%v, reject:%v", r.id, m.From, m.Index, m.Reject)
 }
 
 func (r *Raft) resetElectionTimer() {
@@ -958,7 +965,7 @@ func (r *Raft) resetElectionTimer() {
 
 func (r *Raft) updateCommitted() {
 	if rdebug {
-		//log.Infof("%d before update committed prs:%v, first:%v, last:%v, applied:%v, committed:%v", r.id, r.Prs, r.RaftLog.FirstIndex(), r.RaftLog.LastIndex(), r.RaftLog.applied, r.RaftLog.committed)
+		log.Infof("%d before update committed prs:%v, first:%v, last:%v, applied:%v, committed:%v", r.id, r.Prs, r.RaftLog.FirstIndex(), r.RaftLog.LastIndex(), r.RaftLog.applied, r.RaftLog.committed)
 	}
 	if r.RaftLog.committed == r.RaftLog.LastIndex() { // updated
 		return
@@ -1000,10 +1007,11 @@ func (r *Raft) handleTransferLeader(m pb.Message) {
 			return
 		}
 		r.leadTransferee = None // if already in transferring, abort the former
-		log.Infof("%d handle transfer leader to %d", r.id, m.From)
+		log.Infof("%d handle transfer leader to %d, match:%v, last:%v", r.id, m.From, r.Prs[transferee].Match, r.RaftLog.LastIndex())
 		r.electionElapsed = 0                                 // wait in baseElectionTimeout
 		r.leadTransferee = transferee                         // stop accepting new proposals by setting leadTransferee
 		if r.Prs[transferee].Match == r.RaftLog.LastIndex() { // log up to date
+			log.Infof("%d send timeout now to %d", r.id, transferee)
 			r.sendMsg(pb.Message{
 				MsgType: pb.MessageType_MsgTimeoutNow,
 				To:      transferee,

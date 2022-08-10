@@ -59,6 +59,7 @@ func (c *Cluster) Start() {
 
 	for storeID := uint64(1); storeID <= uint64(c.count); storeID++ {
 		dbPath, err := ioutil.TempDir("", c.baseDir)
+		//dbPath = "/home/bunny/go/tmp/tmp1" + dbPath
 		if err != nil {
 			panic(err)
 		}
@@ -184,11 +185,13 @@ func (c *Cluster) AllocPeer(storeID uint64) *metapb.Peer {
 func (c *Cluster) Request(key []byte, reqs []*raft_cmdpb.Request, timeout time.Duration) (*raft_cmdpb.RaftCmdResponse, *badger.Txn) {
 	startTime := time.Now()
 	var r raft_cmdpb.RaftCmdRequest // tmp
+	var rid uint64
 	for i := 0; i < 10 || time.Since(startTime) < timeout; i++ {
 		region := c.GetRegion(key)
 		regionID := region.GetId()
 		req := NewRequest(regionID, region.RegionEpoch, reqs)
 		r = req
+		rid = regionID
 		resp, txn := c.CallCommandOnLeader(&req, timeout)
 		if resp == nil {
 			// it should be timeouted innerly
@@ -196,13 +199,14 @@ func (c *Cluster) Request(key []byte, reqs []*raft_cmdpb.Request, timeout time.D
 			continue
 		}
 		if resp.Header.Error != nil {
+			log.Infof("round %d: request error:%v, req:%v", i, resp.Header.Error, req)
 			SleepMS(100)
 			continue
 		}
 		return resp, txn
 	}
 	if len(r.Requests) > 0 {
-		log.Warnf("normal req: %v", r.Requests[0])
+		log.Warnf("normal req: %v, regionID: %v", r.Requests[0], rid)
 	} else {
 		log.Warnf("admin req: %v", r.AdminRequest)
 	}

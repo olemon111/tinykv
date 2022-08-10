@@ -99,36 +99,12 @@ func (d *peerMsgHandler) applyConfChangeEntry(entry *pb.Entry, kvWB *engine_util
 		log.Infof("%v apply remove node %v", d.Tag, cc)
 		//log.Infof("%v before update regionid:%v, nodeid:%v", d.Tag, d.regionId, cc.NodeId)
 		if cc.NodeId == d.PeerId() { // remove self
-			log.Infof("%v remove self %v", d.Tag, cc.NodeId)
-			// FIXME: not sure if necessary
-			region := d.Region()
-			if d.IsLeader() && len(region.Peers) == 2 {
-				peer := raft.None
-				for _, p := range region.Peers {
-					if p.Id != d.PeerId() {
-						peer = p.Id
-						break
-					}
-				}
-				if peer != raft.None {
-					msg := []pb.Message{
-						{
-							To:      peer,
-							MsgType: pb.MessageType_MsgHeartbeat,
-							Commit:  d.peerStorage.raftState.HardState.Commit,
-						},
-					}
-					for i := 0; i < 10; i++ {
-						d.Send(d.ctx.trans, msg)
-						time.Sleep(100 * time.Millisecond)
-					}
-				}
-			}
+			log.Infof("%v remove self %v, proposal:%v", d.Tag, cc.NodeId, d.proposals)
 			d.destroyPeer()
-			return // FIXME: maybe other actions after destroy self?
+			return
 		}
 		if d.checkNodeInRegion(cc.NodeId, region) {
-			log.Infof("%v not in region:%v, drop", cc.NodeId, region)
+			log.Infof("check remove, %v in region:%v", cc.NodeId, region)
 			// update regionLocalState
 			region.RegionEpoch.ConfVer++
 			for i, p := range region.Peers { // remove peer
@@ -184,6 +160,13 @@ func (d *peerMsgHandler) applyNormalEntry(entry *pb.Entry, kvWB *engine_util.Wri
 	err := msg.Unmarshal(entry.Data)
 	if err != nil {
 		log.Panicf("unmarshal raft command request error %v", err)
+		return kvWB
+	}
+	// check regionEpoch
+	err = util.CheckRegionEpoch(msg, d.Region(), true)
+	if errEpochNotMatching, ok := err.(*util.ErrEpochNotMatch); ok {
+		log.Infof("%v apply region epoch not match, err:%v", d.Tag, errEpochNotMatching)
+		d.matchProposal(ErrResp(errEpochNotMatching), entry, nil)
 		return kvWB
 	}
 	//log.Infof("apply normal entry %v", msg)
@@ -346,10 +329,17 @@ func (d *peerMsgHandler) applySplit(msg *raft_cmdpb.RaftCmdRequest, resp *raft_c
 }
 
 func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entry *pb.Entry, kvWB *engine_util.WriteBatch) *engine_util.WriteBatch {
+	// check key in region
+	err := d.checkNormalRequestKeys(msg.Requests)
+	if err != nil {
+		d.matchProposal(ErrResp(err), entry, nil)
+		return kvWB
+	}
+	// apply requests
 	resp := newRaftCmdResponse()
 	var txn *badger.Txn
 	for _, req := range msg.Requests {
-		log.Infof("apply normal request: %v", req)
+		log.Infof("%v apply normal request: %v", d.Tag, req)
 		switch req.CmdType {
 		case raft_cmdpb.CmdType_Invalid:
 			log.Panicf("invalid raft command")
@@ -400,26 +390,11 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		case raft_cmdpb.CmdType_Snap:
 			log.Infof("%v apply snap %v", d.Tag, req)
 			txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
-			if entry.Term < d.Term() {                           // FIXME: not sure if useful
-				log.Infof("reject snap for stale term")
-				d.matchProposal(ErrRespStaleCommand(d.Term()), entry, txn)
-				return kvWB
-			}
-			// check regionEpoch
-			err := util.CheckRegionEpoch(msg, d.Region(), true)
-			if errEpochNotMatching, ok := err.(*util.ErrEpochNotMatch); ok {
-				log.Infof("%v snap region epoch not match, err:%v", d.Tag, errEpochNotMatching)
-				//resp = ErrResp(errEpochNotMatching)
-				//resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
-				//	CmdType: raft_cmdpb.CmdType_Snap,
-				//	Snap: &raft_cmdpb.SnapResponse{
-				//		Region: d.Region(),
-				//	},
-				//})
-				// propose callback
-				d.matchProposal(ErrResp(errEpochNotMatching), entry, txn)
-				return kvWB
-			}
+			//if entry.Term < d.Term() {                           // FIXME: not sure if useful
+			//	log.Infof("reject snap for stale term")
+			//	d.matchProposal(ErrRespStaleCommand(d.Term()), entry, txn)
+			//	return kvWB
+			//}
 			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 				CmdType: raft_cmdpb.CmdType_Snap,
 				Snap: &raft_cmdpb.SnapResponse{
@@ -504,9 +479,9 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		log.Infof("save ready state error: %v", err)
 	}
 	// update region
-	if applySnapResult != nil && !reflect.DeepEqual(applySnapResult.Region, d.Region()) {
+	if applySnapResult != nil && applySnapResult.Region.RegionEpoch.ConfVer >= d.Region().RegionEpoch.ConfVer && applySnapResult.Region.RegionEpoch.Version >= d.Region().RegionEpoch.Version && !reflect.DeepEqual(applySnapResult.Region, d.Region()) {
+		log.Infof("%v set new region: %v, old: %v", d.Tag, applySnapResult.Region, d.Region())
 		d.SetRegion(applySnapResult.Region)
-		log.Infof("set new region: %v", d.peerStorage.region)
 		// update region state in global context
 		sm := d.ctx.storeMeta
 		sm.Lock()
@@ -517,7 +492,7 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		sm.Unlock()
 	}
 	// send raft messages
-	//log.Infof("%v send raft msgs:%v", d.Tag, ready.Messages)
+	//log.Infof("%v raft ready send raft msgs:%v", d.Tag, ready.Messages)
 	d.Send(d.ctx.trans, ready.Messages)
 	// apply committed entries
 	kvWB := &engine_util.WriteBatch{}
@@ -526,8 +501,7 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		//log.Infof("apply entry:%v", en)
 		kvWB = d.applyEntry(&en, kvWB)
 		if d.stopped { // maybe remove self
-			// FIXME: maybe more action?
-			d.sendDuplicateMessage(d.ctx.trans, ready.Messages)
+			d.sendDuplicateMessage(ready.Messages)
 			return
 		}
 		if len(ready.CommittedEntries) > 0 && ready.CommittedEntries[len(ready.CommittedEntries)-1].Index > d.peerStorage.applyState.AppliedIndex {
@@ -547,12 +521,10 @@ func (d *peerMsgHandler) HandleRaftReady() {
 	d.RaftGroup.Advance(ready)
 }
 
-func (d *peerMsgHandler) sendDuplicateMessage(trans Transport, msgs []pb.Message) {
+func (d *peerMsgHandler) sendDuplicateMessage(msgs []pb.Message) {
+	log.Infof("%v send duplicate msg when stopped, msg:%v", d.Tag, msgs)
 	for _, msg := range msgs {
-		err := d.sendRaftMessage(msg, trans)
-		for err != nil {
-			err = d.sendRaftMessage(msg, trans)
-		}
+		_ = d.sendRaftMessage(msg, d.ctx.trans)
 	}
 }
 
@@ -626,11 +598,6 @@ func (d *peerMsgHandler) proposeRaftCommand(msg *raft_cmdpb.RaftCmdRequest, cb *
 		return
 	}
 	// Your Code Here (2B).
-	if d.stopped {
-		log.Panicf("necessary, propose stopped here") // FIXME: temp test, maybe remove later
-		cb.Done(ErrRespRegionNotFound(d.regionId))
-		return
-	}
 	if msg.AdminRequest != nil {
 		d.proposeAdminCommand(msg, cb)
 	} else {
@@ -757,6 +724,7 @@ func (d *peerMsgHandler) proposeAdminCommand(msg *raft_cmdpb.RaftCmdRequest, cb 
 		err := d.proposeChangePeer(msg)
 		if err != nil {
 			log.Warnf("cb.done err propose changepeer error, %v", err)
+			//log.Warnf("cb.done err propose changepeer error, %v", err)
 			cb.Done(ErrResp(err))
 			if cb != nil {
 				d.removeProposal()
@@ -1029,7 +997,7 @@ func handleStaleMsg(trans Transport, msg *rspb.RaftMessage, curEpoch *metapb.Reg
 		IsTombstone: true,
 	}
 	if err := trans.Send(gcMsg); err != nil {
-		log.Errorf("[region %d] send message failed %v", regionID, err)
+		//log.Errorf("[region %d] send message failed %v", regionID, err)
 	}
 }
 
@@ -1289,7 +1257,7 @@ func (d *peerMsgHandler) onGCSnap(snaps []snap.SnapKeyWithSending) {
 			log.Infof("%s snap file %s has been applied, delete", d.Tag, key)
 			a, err := d.ctx.snapMgr.GetSnapshotForApplying(key)
 			if err != nil {
-				log.Errorf("%s failed to load snapshot for %s %v", d.Tag, key, err)
+				//log.Errorf("%s failed to load snapshot for %s %v", d.Tag, key, err)
 				continue
 			}
 			d.ctx.snapMgr.DeleteSnapshot(key, a, false)
