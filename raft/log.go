@@ -196,6 +196,24 @@ func (l *RaftLog) getFollowingEntries(index uint64) []*pb.Entry {
 	return res
 }
 
+// get the index of the first log entry with a conflict term
+// used to update next index for leader to send append
+func (l *RaftLog) getHintIndex(logIndex uint64, logTerm uint64) uint64 {
+	if l.LastIndex() < logIndex {
+		return l.LastIndex()
+	}
+	term, _ := l.Term(logIndex)
+	// term conflict
+	if term != logTerm {
+		for _, ent := range l.entries {
+			if ent.Term == term {
+				return ent.Index - 1
+			}
+		}
+	}
+	return logIndex - 1
+}
+
 func (l *RaftLog) setCommitted(i uint64) {
 	l.committed = i
 }

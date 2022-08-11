@@ -223,9 +223,9 @@ func (r *Raft) sendAppend(to uint64) bool {
 	// Your Code Here (2A).
 	prevLogIndex := r.Prs[to].Next - 1 // index of log entry immediately preceding new ones
 	prevLogTerm, err := r.RaftLog.Term(prevLogIndex)
-	//if rdebug {
-	//	log.Infof("%d sendappend to %d", r.id, to)
-	//}
+	if rdebug {
+		log.Infof("%d send append to %d, previndex:%v, prevterm:%v, err:%v", r.id, to, prevLogIndex, prevLogTerm, err)
+	}
 	if err != nil { // fall behind
 		log.Infof("fall behind, err:%v", err)
 		err := r.sendSnapshot(to)
@@ -542,7 +542,7 @@ func (r *Raft) stepFollower(m pb.Message) error {
 
 func (r *Raft) sendAppendResponse(to uint64, reject bool, index uint64) {
 	if rdebug {
-		log.Infof("%d send appendresponse to %d, reject:%v, term:%v, index:%d", r.id, to, reject, r.Term, index)
+		log.Infof("%d send append response to %d, reject:%v, term:%v, index:%d", r.id, to, reject, r.Term, index)
 	}
 	r.sendMsg(pb.Message{
 		MsgType: pb.MessageType_MsgAppendResponse,
@@ -550,7 +550,7 @@ func (r *Raft) sendAppendResponse(to uint64, reject bool, index uint64) {
 		From:    r.id,
 		Term:    r.Term,
 		Reject:  reject,
-		Index:   index,
+		Index:   index, // hintIndex, used to update leader's nextIndex for follower
 	})
 }
 
@@ -571,11 +571,15 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	prevLogTerm, err := r.RaftLog.Term(m.Index)
 	// skip prevLogIndex == 0 && prevLogTerm == 0, which means entries empty, should not reject
 	if m.Index >= r.RaftLog.FirstIndex() && (err != nil || prevLogTerm != m.LogTerm) { // does not contain an entry with same index and term, send reject response
-		log.Infof("%d reject append entries for no match entry, from %d, m.term:%d, r.term:%d, m.index:%v, m.logTerm:%v, prevLogTerm:%v", r.id, m.From, m.Term, r.Term, m.Index, m.LogTerm, prevLogTerm)
-		r.sendAppendResponse(m.From, true, None)
+		if rdebug {
+			log.Infof("%d reject append entries for no match entry, from %d, m.term:%d, r.term:%d, m.index:%v, m.logTerm:%v, prevLogTerm:%v", r.id, m.From, m.Term, r.Term, m.Index, m.LogTerm, prevLogTerm)
+		}
+		r.sendAppendResponse(m.From, true, r.RaftLog.getHintIndex(m.Index, m.LogTerm))
 		return
 	}
-	log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d, m.ents:%v", r.id, m.From, m.Term, r.Term, len(m.Entries))
+	if rdebug {
+		log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d, m.ents:%v", r.id, m.From, m.Term, r.Term, len(m.Entries))
+	}
 	//may delete with prevLogIndex && prevLogTerm // FIXME: updated to test case
 	//_ = r.RaftLog.deleteFollowingEntries(m.Index + 1)
 	// check conflicts(same index but different terms)
@@ -927,11 +931,13 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 		return
 	}
 	if m.Reject { // rejected by follower
-		// decrement nextIndex and retries to append entry
-		if r.Prs[m.From].Next > 1 {
-			r.Prs[m.From].Next--
-			r.sendAppend(m.From)
-		}
+		//// decrement nextIndex and retries to append entry
+		//if r.Prs[m.From].Next > 1 {
+		//	r.Prs[m.From].Next--
+		//	r.sendAppend(m.From)
+		//}
+		r.Prs[m.From].Next = m.Index + 1 // update with follower's hintIndex
+		r.sendAppend(m.From)
 	} else { // accepted by follower
 		term, _ := r.RaftLog.Term(m.Index)
 		// update progress
