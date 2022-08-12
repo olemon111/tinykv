@@ -264,7 +264,7 @@ func (d *peerMsgHandler) applySplit(msg *raft_cmdpb.RaftCmdRequest, resp *raft_c
 			Version: InitEpochVer,
 		},
 	}
-	sm.regionRanges.Delete(&regionItem{region: oldRegion})
+	//sm.regionRanges.Delete(&regionItem{region: oldRegion})
 	// update old region
 	oldRegion.RegionEpoch.Version++
 	log.Infof("%v apply split, start:%s, end:%s, key:%s", d.Tag, d.Region().StartKey, d.Region().EndKey, split.SplitKey)
@@ -487,7 +487,7 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		sm.Lock()
 		//sm.regions[d.regionId] = applySnapResult.Region // id -> region // FIXME: choose one
 		sm.regions[applySnapResult.Region.Id] = applySnapResult.Region // id -> region
-		sm.regionRanges.Delete(&regionItem{region: applySnapResult.PrevRegion})
+		//sm.regionRanges.Delete(&regionItem{region: applySnapResult.PrevRegion})
 		sm.regionRanges.ReplaceOrInsert(&regionItem{region: applySnapResult.Region})
 		sm.Unlock()
 	}

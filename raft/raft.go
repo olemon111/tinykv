@@ -245,7 +245,9 @@ func (r *Raft) sendAppend(to uint64) bool {
 		Entries: entries,
 		Commit:  r.RaftLog.committed,
 	}
-	log.Infof("%d send append to %d, prs:%v", r.id, to, r.Prs)
+	if rdebug {
+		log.Infof("%d send append to %d, prs:%v", r.id, to, r.Prs)
+	}
 	r.sendMsg(msg)
 	return true
 }
@@ -829,7 +831,7 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 		if lastLogTerm < m.LogTerm || (lastLogTerm == m.LogTerm && lastIndex <= m.Index) { // at least up-to-date, vote
 			r.Vote = m.From
 			reject = false
-			r.resetElectionTimer() // FIXME: not sure if it will cause bug
+			//r.resetElectionTimer() // FIXME: not sure if it will cause bug
 		}
 	}
 	//log.Infof("%d handle req vote from %d, reject:%v, r.vote:%v, r.votes:%v, m.index:%v, m.logterm:%v, r.ents:%v", r.id, m.From, reject, r.Vote, r.votes, m.Index, m.LogTerm, r.RaftLog.entries)
@@ -868,6 +870,7 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 	if 2*rejectCnt > len(r.Prs) {
 		log.Infof("%v step down for reject votes", r.id)
 		r.becomeFollower(r.Term, None)
+		r.electionElapsed = 0
 	}
 }
 
