@@ -870,7 +870,7 @@ func (r *Raft) handleRequestVoteResponse(m pb.Message) {
 	if 2*rejectCnt > len(r.Prs) {
 		log.Infof("%v step down for reject votes", r.id)
 		r.becomeFollower(r.Term, None)
-		r.electionElapsed = 0
+		//r.electionElapsed = 0
 	}
 }
 

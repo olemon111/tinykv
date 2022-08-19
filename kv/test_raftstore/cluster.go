@@ -59,7 +59,7 @@ func (c *Cluster) Start() {
 
 	for storeID := uint64(1); storeID <= uint64(c.count); storeID++ {
 		dbPath, err := ioutil.TempDir("", c.baseDir)
-		//dbPath = "/home/bunny/go/tmp/tmp3" + dbPath
+		//dbPath = "/home/bunny/go/tmp/tmp1" + dbPath
 		if err != nil {
 			panic(err)
 		}
