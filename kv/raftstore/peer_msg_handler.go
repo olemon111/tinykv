@@ -135,9 +135,8 @@ func (d *peerMsgHandler) applyConfChangeEntry(entry *pb.Entry, kvWB *engine_util
 	}
 	d.matchProposal(resp, entry, nil)
 	if d.IsLeader() {
-		d.HeartbeatScheduler(d.ctx.schedulerTaskSender) // FIXME: not sure of usage
+		d.HeartbeatScheduler(d.ctx.schedulerTaskSender)
 	}
-	//d.heartbeatRegionScheduler(d.Region(), d.peer)
 }
 
 func (d *peerMsgHandler) heartbeatRegionScheduler(region *metapb.Region, peer *peer) {
@@ -197,22 +196,12 @@ func (d *peerMsgHandler) applyAdminRequest(msg *raft_cmdpb.RaftCmdRequest, entry
 		}
 		kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
 		kvWB = &engine_util.WriteBatch{}
-		//if d.IsLeader() {
-		//	d.HeartbeatScheduler(d.ctx.schedulerTaskSender) // FIXME: not sure
-		//}
 	}
 	return kvWB
 }
 
 func (d *peerMsgHandler) applyCompactLog(req *raft_cmdpb.AdminRequest, kvWB *engine_util.WriteBatch) *engine_util.WriteBatch {
 	if req.CompactLog.CompactIndex >= d.peerStorage.applyState.TruncatedState.Index && req.CompactLog.CompactIndex <= d.peerStorage.AppliedIndex() { // in case of no need to gc
-		//prev := &rspb.RaftApplyState{
-		//	AppliedIndex: d.peerStorage.applyState.AppliedIndex,
-		//	TruncatedState: &rspb.RaftTruncatedState{
-		//		Index: d.peerStorage.applyState.TruncatedState.Index,
-		//		Term:  d.peerStorage.applyState.TruncatedState.Term,
-		//	},
-		//}
 		// update raftApplyState
 		d.peerStorage.applyState.TruncatedState.Term = req.CompactLog.GetCompactTerm()
 		d.peerStorage.applyState.TruncatedState.Index = req.CompactLog.GetCompactIndex()
@@ -225,108 +214,6 @@ func (d *peerMsgHandler) applyCompactLog(req *raft_cmdpb.AdminRequest, kvWB *eng
 	}
 	return kvWB
 }
-
-//func (d *peerMsgHandler) applySplit(msg *raft_cmdpb.RaftCmdRequest, resp *raft_cmdpb.RaftCmdResponse, kvWB *engine_util.WriteBatch) error {
-//	// check region
-//	if msg.Header.RegionId != d.regionId {
-//		log.Infof("%v region id not match %v != %v", d.Tag, msg.Header.RegionId, d.regionId)
-//		return &util.ErrRegionNotFound{RegionId: msg.Header.RegionId}
-//	}
-//	// check regionEpoch
-//	err := util.CheckRegionEpoch(msg, d.Region(), true)
-//	if errEpochNotMatching, ok := err.(*util.ErrEpochNotMatch); ok {
-//		log.Infof("%v region epoch not match, err:%v", d.Tag, errEpochNotMatching)
-//		return errEpochNotMatching
-//	}
-//	// check key in region
-//	split := msg.AdminRequest.Split
-//	err = util.CheckKeyInRegion(split.SplitKey, d.Region())
-//	if err != nil {
-//		log.Infof("%v key not in region %v", d.Tag, err)
-//		return err
-//	}
-//	// check new peer count
-//	if len(split.NewPeerIds) != len(d.Region().Peers) {
-//		log.Infof("%v apply split err, new peer count not match %v != %v", d.Tag, len(msg.AdminRequest.Split.NewPeerIds), len(d.Region().Peers))
-//		return &util.ErrStaleCommand{}
-//	}
-//	// apply split
-//	// update global region state
-//	sm := d.ctx.storeMeta
-//	sm.Lock()
-//	oldRegion := d.Region()
-//	newRegion := &metapb.Region{
-//		Id:       split.NewRegionId,
-//		StartKey: split.SplitKey,
-//		EndKey:   oldRegion.EndKey,
-//		RegionEpoch: &metapb.RegionEpoch{
-//			ConfVer: InitEpochConfVer,
-//			Version: InitEpochVer,
-//		},
-//	}
-//	//sm.regionRanges.Delete(&regionItem{region: oldRegion})
-//	// update old region
-//	oldRegion.RegionEpoch.Version++
-//	log.Infof("%v apply split, start:%s, end:%s, key:%s", d.Tag, d.Region().StartKey, d.Region().EndKey, split.SplitKey)
-//	// old: startKey -> splitKey, new: splitKey -> endKey
-//	oldRegion.EndKey = split.SplitKey
-//	for i, id := range split.NewPeerIds {
-//		peer := &metapb.Peer{
-//			Id:      id,
-//			StoreId: oldRegion.Peers[i].StoreId,
-//		}
-//		newRegion.Peers = append(newRegion.Peers, peer)
-//		d.insertPeerCache(peer) // FIXME: not sure if necessary
-//	}
-//	newPeer, err := createPeer(d.storeID(), d.ctx.cfg, d.ctx.regionTaskSender, d.ctx.engine, newRegion)
-//	if err != nil {
-//		log.Infof("create peer error: %v", err)
-//		return err
-//	}
-//	log.Infof("split, old:%v, new:%v", oldRegion, newRegion)
-//	// FIXME: choose between
-//	//sm.setRegion(oldRegion, d.peer)
-//	//sm.setRegion(newRegion, newPeer)
-//	sm.regions[d.regionId] = oldRegion
-//	sm.regions[split.NewRegionId] = newRegion
-//	sm.regionRanges.ReplaceOrInsert(&regionItem{region: oldRegion})
-//	sm.regionRanges.ReplaceOrInsert(&regionItem{region: newRegion})
-//	sm.Unlock()
-//	// register new peer in router
-//	d.ctx.router.register(newPeer)
-//	err = d.ctx.router.send(newRegion.Id, message.Msg{ // start
-//		Type:     message.MsgTypeStart,
-//		RegionID: newRegion.Id,
-//		Data:     nil,
-//	})
-//	if err != nil {
-//		log.Infof("router send new region start error: %v", err)
-//		return err
-//	}
-//	// write regionLocalState to kvDB
-//	meta.WriteRegionState(kvWB, oldRegion, rspb.PeerState_Normal)
-//	meta.WriteRegionState(kvWB, newRegion, rspb.PeerState_Normal)
-//	d.resetRegionSize()
-//	if err != nil {
-//		log.Panicf("write region state err: %v", err)
-//		return err
-//	}
-//	// response
-//	resp.AdminResponse = &raft_cmdpb.AdminResponse{
-//		CmdType: raft_cmdpb.AdminCmdType_Split,
-//		Split: &raft_cmdpb.SplitResponse{
-//			Regions: []*metapb.Region{oldRegion, newRegion},
-//		},
-//	}
-//	//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
-//	//kvWB = &engine_util.WriteBatch{}
-//	//d.heartbeatRegionScheduler(oldRegion, d.peer)
-//	if d.IsLeader() {
-//		d.heartbeatRegionScheduler(oldRegion, d.peer)
-//		d.heartbeatRegionScheduler(newRegion, newPeer)
-//	}
-//	return err
-//}
 
 func (d *peerMsgHandler) applySplit(msg *raft_cmdpb.RaftCmdRequest, resp *raft_cmdpb.RaftCmdResponse, kvWB *engine_util.WriteBatch) error {
 	// check region
@@ -383,8 +270,6 @@ func (d *peerMsgHandler) applySplit(msg *raft_cmdpb.RaftCmdRequest, resp *raft_c
 	// write regionLocalState to kvDB
 	meta.WriteRegionState(kvWB, oldRegion, rspb.PeerState_Normal)
 	meta.WriteRegionState(kvWB, newRegion, rspb.PeerState_Normal)
-	//kvWB.MustWriteToDB(d.peerStorage.Engines.Kv)
-	//kvWB = &engine_util.WriteBatch{}
 	// create new peer
 	newPeer, err := createPeer(d.storeID(), d.ctx.cfg, d.ctx.regionTaskSender, d.ctx.engine, newRegion)
 	if err != nil {
@@ -484,11 +369,6 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 		case raft_cmdpb.CmdType_Snap:
 			log.Infof("%v apply snap %v", d.Tag, req)
 			txn = d.peerStorage.Engines.Kv.NewTransaction(false) // set badger Txn to callback explicitly
-			//if entry.Term < d.Term() {                           // FIXME: not sure if useful
-			//	log.Infof("reject snap for stale term")
-			//	d.matchProposal(ErrRespStaleCommand(d.Term()), entry, txn)
-			//	return kvWB
-			//}
 			resp.Responses = append(resp.Responses, &raft_cmdpb.Response{
 				CmdType: raft_cmdpb.CmdType_Snap,
 				Snap: &raft_cmdpb.SnapResponse{
@@ -499,13 +379,6 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 			// FIXME: not sure if necessary
 			// update raftApplyState
 			if entry.Index > d.peerStorage.applyState.AppliedIndex {
-				//prev := &rspb.RaftApplyState{
-				//	AppliedIndex: d.peerStorage.applyState.AppliedIndex,
-				//	TruncatedState: &rspb.RaftTruncatedState{
-				//		Index: d.peerStorage.applyState.TruncatedState.Index,
-				//		Term:  d.peerStorage.applyState.TruncatedState.Term,
-				//	},
-				//}
 				d.peerStorage.applyState.AppliedIndex = entry.Index
 				//log.Infof("req snap, applystate:%v to %v", prev, d.peerStorage.applyState)
 				err := kvWB.SetMeta(meta.ApplyStateKey(d.regionId), d.peerStorage.applyState)
@@ -525,10 +398,6 @@ func (d *peerMsgHandler) applyNormalRequest(msg *raft_cmdpb.RaftCmdRequest, entr
 }
 
 func (d *peerMsgHandler) matchProposal(resp *raft_cmdpb.RaftCmdResponse, entry *pb.Entry, txn *badger.Txn) {
-	//log.Infof("match proposals:%v, entry.index:%d, entry.term:%d", d.proposals, entry.Index, entry.Term)
-	//for _, p := range d.proposals {
-	//	log.Infof("p:%v, term:%v, index:%v, cb:%v", p, p.index, p.term, p.cb)
-	//}
 	for len(d.proposals) > 0 {
 		p := d.proposals[0]
 		if p.index == entry.Index {

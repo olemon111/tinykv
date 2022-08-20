@@ -40,8 +40,8 @@ var stmap = [...]string{
 	"StateLeader",
 }
 
-const rdebug = true // for raft detail debug control
-//const rdebug = false
+//const rdebug = true // for raft detail debug control
+const rdebug = false
 
 func (st StateType) String() string {
 	return stmap[uint64(st)]
@@ -212,8 +212,6 @@ func newRaft(c *Config) *Raft {
 		baseElectionTimeout: c.ElectionTick,
 		heartbeatElapsed:    0,
 		electionElapsed:     0,
-		//leadTransferee:   0, // TODO:
-		//PendingConfIndex: 0, // TODO:
 	}
 }
 
@@ -582,8 +580,6 @@ func (r *Raft) handleAppendEntries(m pb.Message) {
 	if rdebug {
 		log.Infof("%d accept append entries from %d, m.term:%d, r.term:%d, m.ents:%v", r.id, m.From, m.Term, r.Term, len(m.Entries))
 	}
-	//may delete with prevLogIndex && prevLogTerm // FIXME: updated to test case
-	//_ = r.RaftLog.deleteFollowingEntries(m.Index + 1)
 	// check conflicts(same index but different terms)
 	lastMatch := m.Index // index of last matched entry
 	startIndex := len(m.Entries)
@@ -680,8 +676,6 @@ func (r *Raft) handleSnapshot(m pb.Message) {
 			r.RaftLog.setCommitted(newCommitted)
 		}
 	}
-	// send response
-	//r.sendAppendResponse(m.From, false, r.RaftLog.LastIndex())
 }
 
 // addNode add a new node to raft group
@@ -831,7 +825,7 @@ func (r *Raft) handleRequestVote(m pb.Message) {
 		if lastLogTerm < m.LogTerm || (lastLogTerm == m.LogTerm && lastIndex <= m.Index) { // at least up-to-date, vote
 			r.Vote = m.From
 			reject = false
-			//r.resetElectionTimer() // FIXME: not sure if it will cause bug
+			//r.resetElectionTimer()
 		}
 	}
 	//log.Infof("%d handle req vote from %d, reject:%v, r.vote:%v, r.votes:%v, m.index:%v, m.logterm:%v, r.ents:%v", r.id, m.From, reject, r.Vote, r.votes, m.Index, m.LogTerm, r.RaftLog.entries)
@@ -934,11 +928,6 @@ func (r *Raft) handleAppendResponse(m pb.Message) {
 		return
 	}
 	if m.Reject { // rejected by follower
-		//// decrement nextIndex and retries to append entry
-		//if r.Prs[m.From].Next > 1 {
-		//	r.Prs[m.From].Next--
-		//	r.sendAppend(m.From)
-		//}
 		r.Prs[m.From].Next = m.Index + 1 // update with follower's hintIndex
 		r.sendAppend(m.From)
 	} else { // accepted by follower
