@@ -1,11 +1,12 @@
 package raftstore
 
 import (
+	"sync"
+	"sync/atomic"
+
 	"github.com/pingcap-incubator/tinykv/kv/raftstore/message"
 	"github.com/pingcap-incubator/tinykv/proto/pkg/raft_cmdpb"
 	"github.com/pingcap-incubator/tinykv/proto/pkg/raft_serverpb"
-	"sync"
-	"sync/atomic"
 
 	"github.com/pingcap/errors"
 )

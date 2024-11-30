@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+
 	"github.com/pingcap-incubator/tinykv/kv/transaction/mvcc"
 	"github.com/pingcap-incubator/tinykv/kv/util/engine_util"
 
@@ -225,18 +226,18 @@ func (server *Server) KvCommit(_ context.Context, req *kvrpcpb.CommitRequest) (*
 		if err != nil {
 			return resp, err
 		}
-		if recentWrite != nil && recentWrite.StartTS == req.StartVersion && commitTs == req.CommitVersion && recentWrite.Kind != mvcc.WriteKindRollback {
+		if recentWrite != nil && recentWrite.StartTS == req.StartVersion && commitTs == req.CommitVersion {
+			if recentWrite.Kind == mvcc.WriteKindRollback {
+				resp.Error = &kvrpcpb.KeyError{
+					Locked: nil,
+					Abort:  "abort",
+				}
+			}
 			return resp, nil
 		}
 		lock, err := txn.GetLock(key)
 		// lock maybe rollback by others for timeout
 		if err != nil || lock == nil {
-			resp.Error = &kvrpcpb.KeyError{
-				Locked:    nil,
-				Retryable: "retry", // since commit, client must retry util success
-				Abort:     "",
-				Conflict:  nil,
-			}
 			return resp, nil
 		}
 		// other transaction may add lock after rollback

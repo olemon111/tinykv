@@ -3,6 +3,7 @@ package mvcc
 import (
 	"bytes"
 	"encoding/binary"
+
 	"github.com/pingcap-incubator/tinykv/kv/util/engine_util"
 
 	"github.com/pingcap-incubator/tinykv/kv/storage"
@@ -98,7 +99,8 @@ func (txn *MvccTxn) GetValue(key []byte) ([]byte, error) {
 	defer iter.Close()
 	for iter.Seek(EncodeKey(key, txn.StartTS)); iter.Valid(); iter.Next() {
 		userKey := DecodeUserKey(iter.Item().Key())
-		if bytes.Compare(userKey, key) == 0 { // match key
+		if bytes.Equal(userKey, key) {
+			// if bytes.Compare(userKey, key) == 0 { // match key
 			val, err := iter.Item().Value()
 			if err != nil {
 				return nil, err
@@ -149,7 +151,8 @@ func (txn *MvccTxn) CurrentWrite(key []byte) (*Write, uint64, error) {
 	defer iter.Close()
 	for ; iter.Valid(); iter.Next() { // no seek
 		userKey := DecodeUserKey(iter.Item().Key())
-		if bytes.Compare(userKey, key) == 0 { // match key
+		if bytes.Equal(userKey, key) {
+			// if bytes.Compare(userKey, key) == 0 { // match key
 			val, err := iter.Item().Value()
 			if err != nil {
 				return nil, 0, err
@@ -177,7 +180,8 @@ func (txn *MvccTxn) MostRecentWrite(key []byte) (*Write, uint64, error) {
 	defer iter.Close()
 	for ; iter.Valid(); iter.Next() { // no seek
 		userKey := DecodeUserKey(iter.Item().Key())
-		if bytes.Compare(userKey, key) == 0 { // match key
+		if bytes.Equal(userKey, key) {
+			// if bytes.Compare(userKey, key) == 0 { // match key
 			val, err := iter.Item().Value()
 			if err != nil {
 				return nil, 0, err

@@ -15,9 +15,10 @@
 package raft
 
 import (
+	"errors"
+
 	"github.com/pingcap-incubator/tinykv/log"
 	pb "github.com/pingcap-incubator/tinykv/proto/pkg/eraftpb"
-	"github.com/pkg/errors"
 )
 
 // RaftLog manage the log entries, its struct look like:
@@ -99,6 +100,14 @@ func (l *RaftLog) maybeCompact() {
 		l.entries = l.entries[newFirst-l.first:]
 		l.first = newFirst
 	}
+}
+
+// allEntries return all the entries not compacted.
+// note, exclude any dummy entries from the return value.
+// note, this is one of the test stub functions you need to implement.
+func (l *RaftLog) allEntries() []pb.Entry {
+	// Your Code Here (2A).
+	return l.entries
 }
 
 // unstableEntries return all the unstable entries

@@ -2,6 +2,7 @@ package mvcc
 
 import (
 	"bytes"
+
 	"github.com/pingcap-incubator/tinykv/kv/util/engine_util"
 )
 
@@ -72,7 +73,8 @@ func (scan *Scanner) updateNextKey(curKey []byte) {
 	// update nextKey
 	for ; scan.iter.Valid(); scan.iter.Next() {
 		nextKey := DecodeUserKey(scan.iter.Item().Key())
-		if bytes.Compare(nextKey, curKey) != 0 { // move to the first different user key
+		if !bytes.Equal(nextKey, curKey) {
+			// if bytes.Compare(nextKey, curKey) != 0 { // move to the first different user key
 			scan.nextKey = nextKey
 			break
 		}

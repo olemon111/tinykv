@@ -79,7 +79,7 @@ func (d *storeWorker) handleMsg(msg message.Msg) {
 	switch msg.Type {
 	case message.MsgTypeStoreRaftMessage:
 		if err := d.onRaftMessage(msg.Data.(*rspb.RaftMessage)); err != nil {
-			//log.Errorf("handle raft message failed storeID %d, %v", d.id, err)
+			// log.Errorf("handle raft message failed storeID %d, %v", d.id, err)
 		}
 	case message.MsgTypeStoreTick:
 		d.onTick(msg.Data.(StoreTick))
@@ -161,8 +161,8 @@ func (d *storeWorker) onRaftMessage(msg *rspb.RaftMessage) error {
 		log.Debugf("handle raft message. from_peer:%d, to_peer:%d, store:%d, region:%d, msg:%+v",
 			msg.FromPeer.Id, msg.ToPeer.Id, d.storeState.id, regionID, msg.Message)
 	}
-	//log.Debugf("handle raft message. from_peer:%d, to_peer:%d, store:%d, region:%d, msg:%+v",
-	//	msg.FromPeer.Id, msg.ToPeer.Id, d.storeState.id, regionID, msg.Message)
+	// log.Debugf("handle raft message. from_peer:%d, to_peer:%d, store:%d, region:%d, msg:%+v",
+	// 	msg.FromPeer.Id, msg.ToPeer.Id, d.storeState.id, regionID, msg.Message)
 	if msg.ToPeer.StoreId != d.ctx.store.Id {
 		log.Warnf("store not match, ignore it. store_id:%d, to_store_id:%d, region_id:%d",
 			d.ctx.store.Id, msg.ToPeer.StoreId, regionID)

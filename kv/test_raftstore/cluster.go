@@ -34,7 +34,7 @@ type Cluster struct {
 	schedulerClient *MockSchedulerClient
 	count           int
 	engines         map[uint64]*engine_util.Engines
-	snapPaths       map[uint64]string
+	dbPaths         map[uint64]string
 	dirs            []string
 	simulator       Simulator
 	cfg             *config.Config
@@ -46,7 +46,7 @@ func NewCluster(count int, schedulerClient *MockSchedulerClient, simulator Simul
 		count:           count,
 		schedulerClient: schedulerClient,
 		engines:         make(map[uint64]*engine_util.Engines),
-		snapPaths:       make(map[uint64]string),
+		dbPaths:         make(map[uint64]string),
 		simulator:       simulator,
 		cfg:             cfg,
 		baseDir:         "test-raftstore",
@@ -59,15 +59,13 @@ func (c *Cluster) Start() {
 
 	for storeID := uint64(1); storeID <= uint64(c.count); storeID++ {
 		dbPath, err := ioutil.TempDir("", c.baseDir)
-		//dbPath = "/home/bunny/go/tmp/tmp1" + dbPath
 		if err != nil {
 			panic(err)
 		}
-		c.cfg.DBPath = dbPath
+		c.dbPaths[storeID] = dbPath
 		kvPath := filepath.Join(dbPath, "kv")
 		raftPath := filepath.Join(dbPath, "raft")
 		snapPath := filepath.Join(dbPath, "snap")
-		c.snapPaths[storeID] = snapPath
 		c.dirs = append(c.dirs, dbPath)
 
 		err = os.MkdirAll(kvPath, os.ModePerm)
@@ -168,7 +166,10 @@ func (c *Cluster) StopServer(storeID uint64) {
 
 func (c *Cluster) StartServer(storeID uint64) {
 	engine := c.engines[storeID]
-	err := c.simulator.RunStore(c.cfg, engine, context.TODO())
+	// do not share config because of different DBPath
+	storeCfg := *c.cfg
+	storeCfg.DBPath = c.dbPaths[storeID]
+	err := c.simulator.RunStore(&storeCfg, engine, context.TODO())
 	if err != nil {
 		panic(err)
 	}
@@ -184,14 +185,10 @@ func (c *Cluster) AllocPeer(storeID uint64) *metapb.Peer {
 
 func (c *Cluster) Request(key []byte, reqs []*raft_cmdpb.Request, timeout time.Duration) (*raft_cmdpb.RaftCmdResponse, *badger.Txn) {
 	startTime := time.Now()
-	var r raft_cmdpb.RaftCmdRequest // tmp
-	var rid uint64
 	for i := 0; i < 10 || time.Since(startTime) < timeout; i++ {
 		region := c.GetRegion(key)
 		regionID := region.GetId()
 		req := NewRequest(regionID, region.RegionEpoch, reqs)
-		r = req
-		rid = regionID
 		resp, txn := c.CallCommandOnLeader(&req, timeout)
 		if resp == nil {
 			// it should be timeouted innerly
@@ -199,16 +196,10 @@ func (c *Cluster) Request(key []byte, reqs []*raft_cmdpb.Request, timeout time.D
 			continue
 		}
 		if resp.Header.Error != nil {
-			log.Infof("round %d: request error:%v, req:%v", i, resp.Header.Error, req)
 			SleepMS(100)
 			continue
 		}
 		return resp, txn
-	}
-	if len(r.Requests) > 0 {
-		log.Warnf("normal req: %v, regionID: %v", r.Requests[0], rid)
-	} else {
-		log.Warnf("admin req: %v", r.AdminRequest)
 	}
 	panic("request timeout")
 }
@@ -251,7 +242,7 @@ func (c *Cluster) CallCommandOnLeader(request *raft_cmdpb.RaftCmdRequest, timeou
 		if resp.Header.Error != nil {
 			err := resp.Header.Error
 			if err.GetStaleCommand() != nil || err.GetEpochNotMatch() != nil || err.GetNotLeader() != nil {
-				//log.Debugf("encouter retryable err %+v", resp)
+				log.Debugf("encouter retryable err %+v", resp)
 				if err.GetNotLeader() != nil && err.GetNotLeader().Leader != nil {
 					leader = err.GetNotLeader().Leader
 				} else {
@@ -285,7 +276,6 @@ func (c *Cluster) GetRegion(key []byte) *metapb.Region {
 		// retry to get the region again.
 		SleepMS(20)
 	}
-	panic(fmt.Sprintf("find no region for %s", key))
 	panic(fmt.Sprintf("find no region for %s", hex.EncodeToString(key)))
 }
 

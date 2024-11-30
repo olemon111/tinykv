@@ -16,6 +16,7 @@ package raft
 
 import (
 	"errors"
+
 	"github.com/pingcap-incubator/tinykv/log"
 	pb "github.com/pingcap-incubator/tinykv/proto/pkg/eraftpb"
 )
